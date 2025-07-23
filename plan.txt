@@ -1,0 +1,286 @@
+==========Pawns=============
+
+Xenotypes presets - No customization
+
+Droids:
+- No learning
+- Mainly used to round out missing skills that a colony might need (e.g construction to build a geo, fabrication for higher quality weapons etc.)
+
+# Basic
+	- 8 in all skills 
+	- 60% global work speed 
+	- Incapable of caring
+	- Unlocked by multianalyzer 
+	- Costs components & steel 
+	
+# Advanced
+	- 10 in all skills
+	- 80% global work speed 
+	- Unlocked by fabrication 
+	- Costs advanced components and plasteel
+
+Battle Droids:
+- Combat only
+- Cannot wear armor 
+- Unlocked by fabrication 
+
+#Skirmisher 
+	- High shooting and melee stats 
+	- Fast
+	- Lightly armored 
+	- Costs advanced components and plasteel
+#Line 
+	- Cheap 
+	- Average stats 
+	- Costs components & steel 
+
+#Juggernaut 
+	- Melee only
+	- Slow
+	- Heavily armored
+	- Costs advanced components and steel
+
+
+Androids - Mostly customizable
+
+Changes to VRE:
+	- Pickable base race
+	- Complexity soft cap can be increased via mechanitor research or new hardware genes at the cost of more materials 
+	- Unlocked by fabrication + advanced power
+	- More power source choices 
+	- 8 base skill level
+	
+Synths - Fully customizable
+
+#Customization
+	- Backstories
+	- Traits
+	- Appearence 
+	- Race 
+	- Fleshtype (mechanical or bio)
+	- 10 base skill level
+	
+==========Buildings=============
+
+#Droid Fabricator
+	- Produces basic, advanced and battle droids. 
+	- Crafts automatically once filled
+	
+#Synthetics Printer 
+	- Produces androids / synths 
+	- Crafts automatically once filled
+
+#Synthesis Pod 
+	- Modify / Repair synths
+	- Convert bio pawns into androids / synths
+	
+#Charging station
+	- Only for droids / androids / synths
+	- Linkable to reduce waste production / increase charge rate / increase efficiency 
+	
+#Turbo Charger 
+	- Charges as fast as your power grid can handle 
+	- Less efficient 
+	- Only for androids / synths with super capacitor gene 
+	- Linkable to reduce waste production / increase charge rate / increase efficiency 
+
+#Module Gantry 
+	- Used to automatically install specialized body parts onto droids 
+	- Specialized droid parts don't need to be crafted separately 
+	
+==========Genes=============
+
+Hardware genes: affects the cost of android / synth production, in exchange for more significant effects
+
+#Catalyctic neutromine regeneration 
+	- Slowly regenrates lost neutromine 
+	- Regen rate scales inversly with amount loss. (0 at 100% loss and requires manual refill)
+	- Extra advanced component cost 
+	
+#Mech Flesh (Default)
+	- Built in armor rating
+	- No self repair 
+	
+#Synth Flesh 
+	- Self regenerating 
+	- Extra nutrition cost
+	
+#Basic Co-Processor 
+	- 10% global work speed increase
+	- Extra advanced component, gold and basic subcore cost
+	
+#Advanced Co-Processor 
+	- 20% global work speed increase
+	- Extra advanced component, gold and standard subcore cost
+	
+#High Co-Processor 
+	- 30% global work speed increase
+	- Extra advanced component, gold and high subcore cost
+	
+#Archotech Co-Processor 
+	- 50% global work speed increase
+	- Extra advanced component, gold and persona core cost
+	
+#Core Shunt 
+	- When the body of the android is butchred, a high subcore with the information of the pawn is returned. The subcore can then be installed into a new android to restore the encoded pawn
+	- Possible memory corruption (skill loss, trait randomization etc)
+	- Extra advanced component, high subcore cost 
+	
+#Rechargable Battery 
+	- No reactor replacement requirement 
+	- Needs to recharge 
+	- Extra component, gold cost
+	
+#Super Capacitor 
+	- Lower max power capacity
+	- Very fast charging, as fast as your power grid can handle 
+	- Not geat for long range expeditions 
+	- Extra advanced component, gold and hyperweave cost
+	
+#Vanometric Generator
+	- No power need
+	- Extra advanced component, vanometric power cell cost
+	
+#Bio Reactor
+	- Can eat food for power 
+	- Extra advanced component cost.
+	
+#Chem Reactor 
+	- Can "drink" chemfuel for power 
+	- Explodes when killed
+	- Extra advanced component cost.
+
+#Tox Reactor 
+	- Can eat waste packs / uranium for power 
+	- Gives everyone cancer 
+	- Extra advanced component cost.
+	
+#Auxillary Battery Pack
+	- Increased max power capacity 
+	- Reduces pawn speed 
+	- Extra component, gold cost
+
+#Hardware Integration - I
+	- 20% reduction to complexity cost of all genes
+	- 50% increase build time
+	- 25% increase build cost
+	- Requires Hardware Integration - I Research
+	
+#Hardware Integration - II
+	- 40% reduction to complexity cost of all genes
+	- 70% increase build time
+	- 35% increase build cost
+	- Requires Hardware Integration - II Research
+	
+#Hardware Integration - III
+	- 60% reduction to complexity cost of all genes
+	- 100% increase build time
+	- 50% increase build cost
+	- Requires Hardware Integration - III Research
+	
+#Composite Armor
+	- Minor armor buff 
+	- Extra hyperweave and plasteel cost 
+
+#Heavy Armor 
+	- Major armor buff 
+	- Reduces pawn speed 
+	- Extra steel and uranium cost 
+
+#Advanced Servos
+	- Pawn speed buff 
+	- Accuracy and attack speed buff
+	- Skilled labour work speed buff 
+	- Extra advanced component, gold cost
+	
+#Heavy Hydraulics 
+	- Pawn carry capacity buff 
+	- Melee damage buff 
+	- Unskilled labour work speed buff 
+	- Extra advanced component, plasteel cost
+
+#Auxillary Mechanites 
+	- Enables passive regeneration (Mech flesh)
+	- Enables lost part regeneration (Synth flesh)
+	- Enables neutromine regeneration (Without Catalyctic neutromine regeneration)
+	- Removes inverse neutromine regeneration scaling, increases base regen speed (Catalyctic neutromine regeneration)
+	- Extra healer mech serum cost
+
+#Reconstruction Mechanites 	
+	- Enables lost part regeneration, increases regeneration speed (Mech flesh)
+	- Auto resurrection after some time w/ cooldown (Synth flesh)
+	- At will healer mech serum ability w/ cooldown
+	- Extra resurrector mech serum cost
+	
+#Psy Resonator 
+	- Grants psylink 
+	- + 100% psy sensitivity 
+	- Extra psylink cost
+	
+#Mechanitor 
+	- Mechanitor 
+	- Extra Mechanitor uplink
+	
+#Anomalous RAM expansion 
+	- +100% research speed 
+	- +50% global workspeed 
+	- Extra bioferrite cost
+	- ???
+
+==========Items=============
+
+#Battery Packs 
+	- Robot "Food" 
+	- Durability based charge 
+	- Both single use and rechargable varient
+
+==========Factions=============
+
+-Spacer tech neutral and raider factions 
+-Quests? 
+	
+
+==========Other Random Stuff=============
+- Turn non humanoids into robots, make your pets experience the certainty of plasteel
+
+- Extendable graphics variants for robotic presenting vs organic presenting pawns (e.g if i make a robot with modded race as a base, i should be able to make an addon mod with a robotized version of the race, which will be automatically swapped over if i choose to make it robotic presenting)
+
+
+==========Psycast=============
+
+VPE and RWoM each have their own Tech themed psycast trees, I want to have less overlap 
+Probably as a sub mod
+
+#Disruption pulse 
+	- Shuts down bionics on bio pawns, including death acidifiers (damages archotech bionics)
+	- Stuns mechanical pawns + damages random components 
+	
+#Overclock 
+	- Increase work speed of mechanical pawns 
+	- Increases part efficiency of bionics 
+
+#Mech drop 
+	- Spawns mechanoid drop pods at target position
+	- Mechanoids are hostile to any non-mechanoids
+	
+#Optical Cloak 
+	- Makes target invisible to mechanical pawns, and pawns with bionic eyes
+	
+#Decode
+	- Removes biocoding from target weapon 
+	
+#Weapon Jamming
+	- Weapons of high tech and above may randomly jam while firing
+	- Has a chance of exploding 
+	
+#Deconstruct 
+	- Short range 
+	- Turns target back into raw materials
+		- Deconstructs buildings 
+		- Uncrafts items if possible
+		- Butchers target pawn  
+		
+#Flux Dump 
+	- Converts neural heat to energy and can be dumped into batteries or mechanical pawn energy buffers.
+	- Can overfill hostile mech pawns for explosion 
+	

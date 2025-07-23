@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_SkillFloor_8</defName>
+		<label>Skill Floor: 8</label>
+		<description>A baseline package of skills.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<!-- <isCoreComponent>true</isCoreComponent> -->
+		<modExtensions>
+			<li Class="Androids2.Genes.SkillFloor">
+				<floor>8</floor>
+			</li>
+		</modExtensions>	
+	</VREAndroids.AndroidGeneDef>
+
+	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_WorkSpeed_6</defName>
+		<label>Work Speed: 60%</label>
+		<description>Basic droids are built to be cheap and flexible, at the expense of efficiency and speed.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<!-- <isCoreComponent>true</isCoreComponent> -->
+		<statFactors>
+			<WorkSpeedGlobal>0.6</WorkSpeedGlobal>
+		</statFactors>
+	</VREAndroids.AndroidGeneDef>
+
+	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_WorkSpeed_8</defName>
+		<label>Work Speed: 80%</label>
+		<description>Advanced droids are packed with more sophisticated hardware, allowing them to be more efficient and faster at work.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<!-- <isCoreComponent>true</isCoreComponent> -->
+		<statFactors>
+			<WorkSpeedGlobal>0.8</WorkSpeedGlobal>
+		</statFactors>
+	</VREAndroids.AndroidGeneDef>
+
+</Defs>
