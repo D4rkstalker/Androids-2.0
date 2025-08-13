@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_SkillFloor_8</defName>
 		<label>Skill Floor: 8</label>
 		<description>A baseline package of skills.</description>
@@ -9,13 +9,24 @@
 		
 		<displayCategory>VREA_Hardware</displayCategory>
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<!-- <isCoreComponent>true</isCoreComponent> -->
+		<isCoreComponent>false</isCoreComponent>
+		<ingredients>
+		  <li>
+			<filter>
+			  <thingDefs>
+				<li>Steel</li>
+			  </thingDefs>
+			</filter>
+			<count>1</count>
+		  </li>
+		</ingredients>
+		
 		<modExtensions>
-			<li Class="Androids2.Genes.SkillFloor">
+			<li Class="Androids2.SkillFloor">
 				<floor>8</floor>
 			</li>
 		</modExtensions>	
-	</VREAndroids.AndroidGeneDef>
+	</Androids2.A2GeneDef>
 
 	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_WorkSpeed_6</defName>
@@ -26,7 +37,7 @@
 		
 		<displayCategory>VREA_Hardware</displayCategory>
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<!-- <isCoreComponent>true</isCoreComponent> -->
+		<isCoreComponent>false</isCoreComponent>
 		<statFactors>
 			<WorkSpeedGlobal>0.6</WorkSpeedGlobal>
 		</statFactors>
@@ -41,7 +52,7 @@
 		
 		<displayCategory>VREA_Hardware</displayCategory>
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<!-- <isCoreComponent>true</isCoreComponent> -->
+		<isCoreComponent>false</isCoreComponent>
 		<statFactors>
 			<WorkSpeedGlobal>0.8</WorkSpeedGlobal>
 		</statFactors>

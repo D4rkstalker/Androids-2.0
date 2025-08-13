@@ -15,8 +15,8 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\1.6\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -76,13 +76,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Androids2Content\Building_SynthPrinter.cs" />
+    <Compile Include="Androids2Content\AI\WorkGIver_PawnCrafter.cs" />
+    <Compile Include="Androids2Content\Buildings\Building_DroidFab.cs" />
+    <Compile Include="Androids2Content\Buildings\Building_PawnCrafter.cs" />
+    <Compile Include="Androids2Content\Buildings\Building_SynthPrinter.cs" />
+    <Compile Include="Androids2Content\Buildings\IPawnCrafter.cs" />
+    <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
-    <Compile Include="Androids2Content\Window_CustomizeAndroid.cs" />
+    <Compile Include="Androids2Content\UI\Gizmo_PrinterPawnInfo.cs" />
+    <Compile Include="Androids2Content\UI\Gizmo_TogglePrinting.cs" />
+    <Compile Include="Androids2Content\UI\Window_CustomizeAndroid.cs" />
     <Compile Include="Androids2.cs" />
     <Compile Include="Utils\AlienRaceCompat.cs" />
     <Compile Include="Utils\AndroidCustomizationTweaks.cs" />
     <Compile Include="Utils\AndroidMakerPatch.cs" />
+    <Compile Include="Utils\AndroidRecipe.cs" />
+    <Compile Include="Utils\ThingOrderProcessor.cs" />
     <Compile Include="VREExtensions\AndroidCreationStationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VREPatches\Patch_AndroidCreationStation.cs" />

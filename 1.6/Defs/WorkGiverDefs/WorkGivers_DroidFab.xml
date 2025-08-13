@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<WorkGiverDef>
+		<defName>A2_DroidFab_WGD</defName>
+		<label>fill droid fabricator</label>
+		<giverClass>Androids2.WorkGiver_PawnCrafter</giverClass>
+		<workType>Hauling</workType>
+		<verb>fill</verb>
+		<gerund>filling</gerund>
+		<priorityInType>60</priorityInType>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+		<prioritizeSustains>true</prioritizeSustains>
+		<modExtensions>
+			<li Class="Androids2.PawnCrafterWorkgiverProperties">
+				<defToScan>A2_DroidFab</defToScan>
+				<fillJob>A2_FillDroidFab</fillJob>
+			</li>
+		</modExtensions>
+	</WorkGiverDef>
+</Defs>

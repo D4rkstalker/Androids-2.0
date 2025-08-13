@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<Androids2.AndroidRecipe>
+		<defName>A2_BaseDroid</defName>
+		<label>Base Droid</label>
+		<workAmount>1600</workAmount>
+		<xenotype>A2_DroidXenotypeBase</xenotype>
+		<nutrition>0</nutrition>
+		<ingredients>
+		  <li>
+			<filter>
+			  <thingDefs>
+				<li>WoodLog</li>
+			  </thingDefs>
+			</filter>
+			<count>1</count>
+		  </li>
+		</ingredients>
+	</Androids2.AndroidRecipe>
+
+</Defs>

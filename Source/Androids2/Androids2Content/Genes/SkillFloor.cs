@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 
-namespace Androids2.Genes
+namespace Androids2
 {
     public class SkillFloor : DefModExtension
     {

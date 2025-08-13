@@ -1,0 +1,578 @@
+﻿using Androids2.Utils;
+using RimWorld;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Verse;
+
+namespace Androids2
+{
+    /// <summary>
+    /// The state the printer currently is in.
+    /// </summary>
+    public enum CrafterStatus
+    {
+        /// <summary>
+        /// Does nothing in this mode.
+        /// </summary>
+        Idle = 0,
+        /// <summary>
+        /// Requires filling in the mode.
+        /// </summary>
+        Filling,
+        /// <summary>
+        /// Crafting in which it actively subtracts inputted resources.
+        /// </summary>
+        Crafting,
+        /// <summary>
+        /// Finished state where it resets itself to Idle.
+        /// </summary>
+        Finished
+    }
+
+    /// <summary>
+    /// Base class for all printers and crafters.
+    /// </summary>
+    public class Building_PawnCrafter : Building, IThingHolder, IStoreSettingsParent, IPawnCrafter
+    {
+
+        public void Notify_SettingsChanged()
+        {
+
+        }
+
+        //Variables
+        /// <summary>
+        /// Stored ingredients for use in producing one pawn.
+        /// </summary>
+        public ThingOwner<Thing> innerContainer = new ThingOwner<Thing>();
+        /// <summary>
+        /// Printer state.
+        /// </summary>
+        public CrafterStatus crafterStatus;
+        /// <summary>
+        /// Pawn to print.
+        /// </summary>
+        public Pawn pawnBeingCrafted;
+
+        public AndroidRecipe recipe;
+        /// <summary>
+        /// Storage settings for what nutrition sources to use.
+        /// </summary>
+        public StorageSettings inputSettings;
+
+        //Convenience variables
+        /// <summary>
+        /// Power component.
+        /// </summary>
+        public CompPowerTrader powerComp;
+        /// <summary>
+        /// Flickable component.
+        /// </summary>
+        public CompFlickable flickableComp;
+        /// <summary>
+        /// Convenience class for setting what resources is needed to make one pawn.
+        /// </summary>
+        public ThingOrderProcessor orderProcessor;
+
+        //Variables, Construction
+        /// <summary>
+        /// Ticks left until pawn is finished printing.
+        /// </summary>
+        public int craftingTicksLeft = 0;
+        /// <summary>
+        /// Next resource drain trick-
+        /// </summary>
+        public int nextResourceTick = 0;
+        /// <summary>
+        /// Set by custom implementations.
+        /// </summary>
+        public int craftingTime = 0;
+
+        public float powerConsumptionFactorIdle = 0.1f;
+
+        /// <summary>
+        /// Label on the letter when finished crafting.
+        /// </summary>
+        public string pawnCraftedLetterLabel = "AndroidPrintedLetterLabel";
+
+        /// <summary>
+        /// Text on the letter when finished crafting.
+        /// </summary>
+        public string pawnCraftedLetterText = "AndroidPrintedLetterDescription";
+
+        /// <summary>
+        /// Status text on the crafter.
+        /// </summary>
+        public string crafterStatusText = "AndroidPrinterStatus";
+
+        /// <summary>
+        /// Enum prefix text.
+        /// </summary>
+        public string crafterStatusEnumText = "AndroidPrinterStatusEnum";
+
+        /// <summary>
+        /// Crafter progress text.
+        /// </summary>
+        public string crafterProgressText = "AndroidPrinterProgress";
+
+        /// <summary>
+        /// Crafter materials text.
+        /// </summary>
+        public string crafterMaterialsText = "AndroidPrinterMaterials";
+
+        /// <summary>
+        /// Crafter material need.
+        /// </summary>
+        public string crafterMaterialNeedText = "AndroidPrinterNeed";
+
+        /// <summary>
+        /// Crafter nutrition text.
+        /// </summary>
+        public string crafterNutritionText = "AndroidNutrition";
+
+
+
+        /// <summary>
+        /// How finished the crafting is in percentage based time. 0.0f to 1.0f
+        /// </summary>
+        public float CraftingFinishedPercentage
+        {
+            get
+            {
+                return (float)((float)craftingTime - craftingTicksLeft) / craftingTime;
+            }
+        }
+
+        /// <summary>
+        /// How many ticks it take to craft a pawn.
+        /// </summary>
+        public int CraftingTicks = 0;
+
+        /// <summary>
+        /// Sets the Storage tab to be visible.
+        /// </summary>
+        public bool StorageTabVisible => true;
+
+        public bool CanAcceptIngredient(Thing thing, IEnumerable<IngredientCount> ingredients)
+        {
+            return GetRequiredCountOf(thing.def, ingredients) > 0;
+        }
+        public int GetRequiredCountOf(ThingDef thingDef, IEnumerable<IngredientCount> ingredients)
+        {
+            foreach (var ingredient in ingredients)
+            {
+                if (ingredient.FixedIngredient == thingDef)
+                {
+                    int num = innerContainer.TotalStackCountOfDef(ingredient.FixedIngredient);
+                    return (int)ingredient.GetBaseCount() - num;
+                }
+            }
+            return 0;
+        }
+
+        public void GetChildHolders(List<IThingHolder> outChildren)
+        {
+            //None
+        }
+
+        public ThingOwner GetDirectlyHeldThings()
+        {
+            return innerContainer;
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+
+            powerComp = GetComp<CompPowerTrader>();
+            flickableComp = GetComp<CompFlickable>();
+
+            if (inputSettings == null)
+            {
+                inputSettings = new StorageSettings(this);
+                if (def.building.defaultStorageSettings != null)
+                {
+                    inputSettings.CopyFrom(def.building.defaultStorageSettings);
+                }
+            }
+
+            orderProcessor = new ThingOrderProcessor(innerContainer, inputSettings);
+            //orderProcessor.requestedItems.AddRange(printerProperties.costList);
+
+
+            AdjustPowerNeed();
+        }
+
+        public override void PostMake()
+        {
+            base.PostMake();
+
+            inputSettings = new StorageSettings(this);
+            if (def.building.defaultStorageSettings != null)
+            {
+                inputSettings.CopyFrom(def.building.defaultStorageSettings);
+            }
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            //Save \ Load
+            Scribe_Deep.Look(ref innerContainer, "ingredients");
+            Scribe_Values.Look(ref crafterStatus, "crafterStatus");
+            Scribe_Values.Look(ref craftingTicksLeft, "craftingTicksLeft");
+            Scribe_Values.Look(ref nextResourceTick, "nextResourceTick");
+            Scribe_Deep.Look(ref pawnBeingCrafted, "pawnBeingCrafted");
+            Scribe_Deep.Look(ref inputSettings, "inputSettings");
+            Scribe_Values.Look(ref craftingTime, "craftingTime");
+        }
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            //Drop ingredients.
+            if (mode != DestroyMode.Vanish)
+                innerContainer.TryDropAll(PositionHeld, MapHeld, ThingPlaceMode.Near);
+
+            base.Destroy(mode);
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            List<Gizmo> gizmos = new List<Gizmo>(base.GetGizmos());
+
+            if (pawnBeingCrafted != null)
+                gizmos.Insert(0, new Gizmo_PrinterPawnInfo(this));
+
+            if (crafterStatus != CrafterStatus.Finished)
+                gizmos.Insert(0, new Gizmo_TogglePrinting(this));
+
+            if (DebugSettings.godMode && pawnBeingCrafted != null)
+            {
+                gizmos.Insert(0, new Command_Action()
+                {
+                    defaultLabel = "DEBUG: Finish crafting.",
+                    defaultDesc = "Finishes crafting the pawn.",
+                    action = delegate ()
+                    {
+                        crafterStatus = CrafterStatus.Finished;
+                    }
+                });
+            }
+
+            return gizmos;
+        }
+
+        /// <summary>
+        /// Is the crafter ready to craft?
+        /// </summary>
+        /// <returns>True if it is.</returns>
+        public virtual bool ReadyToCraft()
+        {
+            var pendingRequests = orderProcessor.PendingRequests();
+            bool readyToCraft = pendingRequests == null;
+            if (pendingRequests != null && !pendingRequests.Any())
+                readyToCraft = true;
+
+            return crafterStatus == CrafterStatus.Filling && readyToCraft;
+        }
+
+        /// <summary>
+        /// Initiates the crafting of a Pawn. Usually by first opening a interface to customize the Pawn. Should set 'crafterStatus' to 'CrafterStatus.Filling' when got 'pawnBeingCrafted' set.
+        /// </summary>
+        public virtual void InitiatePawnCrafting()
+        {
+        }
+
+        /// <summary>
+        /// Prepares the crafter for crafting and starts the process.
+        /// </summary>
+        public virtual void StartPrinting()
+        {
+            //Setup printing procedure
+            craftingTicksLeft = CraftingTicks;
+            nextResourceTick = recipe.resourceTick;
+            crafterStatus = CrafterStatus.Crafting;
+        }
+
+        /// <summary>
+        /// Aborts the crafter and refunds any inputted resources.
+        /// </summary>
+        public virtual void StopPawnCrafting()
+        {
+            //Reset printer status.
+            crafterStatus = CrafterStatus.Idle;
+
+            if (pawnBeingCrafted != null)
+                pawnBeingCrafted.Destroy();
+            pawnBeingCrafted = null;
+
+            //Eject unused materials.
+            innerContainer.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near);
+        }
+
+        /// <summary>
+        /// Extra actions to do whenever in the Filling and Printing states.
+        /// </summary>
+        public virtual void ExtraCrafterTickAction()
+        {
+            switch (crafterStatus)
+            {
+                case CrafterStatus.Filling:
+                    //Emit smoke
+                    if (powerComp.PowerOn && Current.Game.tickManager.TicksGame % 300 == 0)
+                    {
+                        FleckMaker.ThrowSmoke(Position.ToVector3(), Map, 1f);
+                    }
+                    break;
+
+                case CrafterStatus.Crafting:
+                    //Emit smoke
+                    if (powerComp.PowerOn && Current.Game.tickManager.TicksGame % 100 == 0)
+                    {
+                        FleckMaker.ThrowSmoke(Position.ToVector3(), Map, 1.33f);
+                    }
+                    break;
+            }
+        }
+
+        public virtual void FinishAction()
+        {
+            //Add effects
+            FilthMaker.TryMakeFilth(InteractionCell, Map, RimWorld.ThingDefOf.Filth_Slime, 5);
+        }
+
+        public override string GetInspectString()
+        {
+            if (ParentHolder != null && !(ParentHolder is Map))
+                return base.GetInspectString();
+
+            StringBuilder builder = new StringBuilder(base.GetInspectString());
+
+            builder.AppendLine();
+            builder.AppendLine(crafterStatusText.Translate((crafterStatusEnumText + (int)crafterStatus).Translate()));
+
+            if (crafterStatus == CrafterStatus.Crafting)
+            {
+                builder.AppendLine(crafterProgressText.Translate(CraftingFinishedPercentage.ToStringPercent()));
+            }
+
+            if (crafterStatus == CrafterStatus.Filling)
+            {
+                bool needsFulfilled = true;
+
+                foreach (IngredientCount thingOrderRequest in orderProcessor.requestedItems)
+                {
+                    int itemCount = 0;
+                    //ingredients.TotalStackCountOfDef(thingOrderRequest.thingDef);
+                    foreach (ThingDef t in thingOrderRequest.filter.thingDefs)
+                    {
+                        itemCount += innerContainer.TotalStackCountOfDef(t);
+                    }
+                    if (itemCount < thingOrderRequest.count)
+                    {
+                        builder.Append(crafterMaterialNeedText.Translate(thingOrderRequest.count - itemCount) + thingOrderRequest.Summary);
+                        needsFulfilled = false;
+                    }
+
+                }
+
+                if (!needsFulfilled)
+                    builder.AppendLine();
+            }
+
+            if (innerContainer.Count > 0)
+                builder.Append(crafterMaterialsText.Translate() + " ");
+            foreach (Thing item in innerContainer)
+            {
+                builder.Append(item.LabelCap + "; ");
+            }
+
+            return builder.ToString().TrimEndNewlines();
+        }
+
+        public override void TickInterval(int delta)
+        {
+            base.TickInterval(delta);
+
+            AdjustPowerNeed();
+
+            if (flickableComp == null || (flickableComp != null && flickableComp.SwitchIsOn))
+            {
+                //State machine
+                switch (crafterStatus)
+                {
+                    case CrafterStatus.Filling:
+                        {
+                            ExtraCrafterTickAction();
+
+                            //If we aren't being filled, then start.
+                            var pendingRequests = orderProcessor.PendingRequests();
+                            bool startPrinting = pendingRequests == null;
+                            if (pendingRequests != null && !pendingRequests.Any())
+                                startPrinting = true;
+
+                            if (startPrinting)
+                            {
+                                //Initiate printing phase.
+                                StartPrinting();
+                            }
+                        }
+                        break;
+
+                    case CrafterStatus.Crafting:
+                        {
+                            ExtraCrafterTickAction();
+
+                            if (powerComp.PowerOn)
+                            {
+                                //Periodically use resources.
+                                nextResourceTick -= delta;
+
+                                if (nextResourceTick <= 0)
+                                {
+                                    nextResourceTick = recipe.resourceTick;
+
+                                    //Deduct resources from each category.
+                                    foreach (IngredientCount thingOrderRequest in orderProcessor.requestedItems)
+                                    {
+                                        //Item
+                                        if (innerContainer.Any(thing => thingOrderRequest.filter.thingDefs.Contains(thing.def)))
+                                        {
+                                            //Grab first stack of Plasteel.
+                                            Thing item = innerContainer.First(thing => thingOrderRequest.filter.thingDefs.Contains(thing.def));
+
+                                            if (item != null)
+                                            {
+                                                int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.count / ((float)CraftingTicks / recipe.resourceTick)));
+
+                                                int amount = Math.Min(resourceTickAmount, item.stackCount);
+                                                Thing takenItem = innerContainer.Take(item, amount);
+
+                                                takenItem.Destroy();
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                //Are we done yet?
+                                if (craftingTicksLeft > 0)
+                                    craftingTicksLeft -= delta;
+                                else
+                                    crafterStatus = CrafterStatus.Finished;
+                            }
+                        }
+                        break;
+
+                    case CrafterStatus.Finished:
+                        {
+                            if (pawnBeingCrafted != null)
+                            {
+                                ExtraCrafterTickAction();
+
+                                //Clear remaining materials.
+                                innerContainer.ClearAndDestroyContents();
+
+                                //Spawn
+                                GenSpawn.Spawn(pawnBeingCrafted, InteractionCell, Map);
+                                //Make and send letter.
+                                ChoiceLetter letter = LetterMaker.MakeLetter(pawnCraftedLetterLabel.Translate(pawnBeingCrafted.Name.ToStringShort), pawnCraftedLetterText.Translate(pawnBeingCrafted.Name.ToStringFull), LetterDefOf.PositiveEvent, pawnBeingCrafted);
+                                Find.LetterStack.ReceiveLetter(letter);
+
+                                //Reset
+                                pawnBeingCrafted = null;
+                                crafterStatus = CrafterStatus.Idle;
+
+                                FinishAction();
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adjusts the required power depending on the state of the printer.
+        /// </summary>
+        public void AdjustPowerNeed()
+        {
+            if (flickableComp == null || (flickableComp != null && flickableComp.SwitchIsOn))
+            {
+                if (crafterStatus == CrafterStatus.Crafting)
+                {
+                    powerComp.PowerOutput = -powerComp.Props.PowerConsumption;
+                }
+                else
+                {
+                    powerComp.PowerOutput = -powerComp.Props.PowerConsumption * powerConsumptionFactorIdle;
+                }
+            }
+            else
+            {
+                powerComp.PowerOutput = 0f;
+            }
+        }
+
+        /// <summary>
+        /// Counts all available nutrition in the printer.
+        /// </summary>
+        /// <returns>Total nutrition.</returns>
+        public float CountNutrition()
+        {
+            float totalNutrition = 0f;
+
+            //Count nutrition.
+            foreach (Thing item in innerContainer)
+            {
+                Corpse corpse = item as Corpse;
+                if (corpse != null)
+                {
+                    if (!corpse.IsDessicated())
+                        totalNutrition += FoodUtility.GetBodyPartNutrition(corpse, corpse.InnerPawn.RaceProps.body.corePart);
+                }
+                else
+                {
+                    if (item.def.IsIngestible)
+                        totalNutrition += (item.def?.ingestible.CachedNutrition ?? 0.05f) * item.stackCount;
+                }
+            }
+
+            return totalNutrition;
+        }
+
+        public StorageSettings GetStoreSettings()
+        {
+            return inputSettings;
+        }
+
+        public StorageSettings GetParentStoreSettings()
+        {
+            return def.building.fixedStorageSettings;
+        }
+
+        /// <summary>
+        /// Gets the current Pawn being crafted.
+        /// </summary>
+        /// <returns>Pawn being crafted or null.</returns>
+        public Pawn PawnBeingCrafted()
+        {
+            return pawnBeingCrafted;
+        }
+
+        /// <summary>
+        /// Gets the status of the crafter.
+        /// </summary>
+        /// <returns>Crafter status.</returns>
+        public CrafterStatus PawnCrafterStatus()
+        {
+            return crafterStatus;
+        }
+
+    }
+}
