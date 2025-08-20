@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<JobDef>
-		<defName>A2_FillAndroidPrinter</defName>
+		<defName>A2_FillSynthPrinter</defName>
 		<driverClass>JobDriver_HaulToContainer</driverClass>
 		<reportString>hauling TargetA.</reportString>
 	</JobDef>

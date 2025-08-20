@@ -10,16 +10,10 @@
 		<displayCategory>VREA_Hardware</displayCategory>
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
 		<isCoreComponent>false</isCoreComponent>
-		<ingredients>
-		  <li>
-			<filter>
-			  <thingDefs>
-				<li>Steel</li>
-			  </thingDefs>
-			</filter>
-			<count>1</count>
-		  </li>
-		</ingredients>
+		<timeCost>1600</timeCost>
+		<costList>
+			<ComponentIndustrial>8</ComponentIndustrial>
+		</costList>
 		
 		<modExtensions>
 			<li Class="Androids2.SkillFloor">

@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,17 +86,23 @@
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_PrinterPawnInfo.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_TogglePrinting.cs" />
+    <Compile Include="Androids2Content\UI\ISynthPrinter.cs" />
+    <Compile Include="Androids2Content\UI\Window_CreateSynth.cs" />
     <Compile Include="Androids2Content\UI\Window_CustomizeAndroid.cs" />
     <Compile Include="Androids2.cs" />
+    <Compile Include="Utils\A2Defs.cs" />
     <Compile Include="Utils\AlienRaceCompat.cs" />
     <Compile Include="Utils\AndroidCustomizationTweaks.cs" />
     <Compile Include="Utils\AndroidMakerPatch.cs" />
     <Compile Include="Utils\AndroidRecipe.cs" />
+    <Compile Include="Utils\Settings.cs" />
     <Compile Include="Utils\ThingOrderProcessor.cs" />
+    <Compile Include="Utils\ThingOrderRequest.cs" />
     <Compile Include="VREExtensions\AndroidCreationStationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VREPatches\Patch_AndroidCreationStation.cs" />
     <Compile Include="VREPatches\Patch_AdvancedAndroidCreation.cs" />
+    <Compile Include="VREPatches\Patch_CharacterCardUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="VanillaPatches\" />

@@ -64,38 +64,60 @@ namespace Androids2
             }
 
             //Check if there is anything to fill.
-            IEnumerable<IngredientCount> potentionalRequests = pawnCrafter.orderProcessor.PendingRequests();
+            IEnumerable<ThingOrderRequest> potentionalRequests = pawnCrafter.orderProcessor.PendingRequests();
+            bool validRequest = false;
             if (potentionalRequests != null)
             {
-               return FindIngredient(pawn, pawnCrafter, potentionalRequests.ToList()).count > 0;
-
+                foreach (ThingOrderRequest request in potentionalRequests)
+                {
+                    Thing ingredientThing = FindIngredient(pawn, pawnCrafter, request);
+                    if (ingredientThing != null)
+                    {
+                        validRequest = true;
+                        break;
+                    }
+                }
             }
 
-            return false;
+            return validRequest;
         }
 
         public override Job JobOnThing(Pawn pawn, Thing crafterThing, bool forced = false)
         {
             Building_PawnCrafter pawnCrafter = crafterThing as Building_PawnCrafter;
 
-            IEnumerable<IngredientCount> potentionalRequests = pawnCrafter.orderProcessor.PendingRequests();
+            IEnumerable<ThingOrderRequest> potentionalRequests = pawnCrafter.orderProcessor.PendingRequests();
 
             if (potentionalRequests != null)
             {
-                ThingCount thingCount = FindIngredient(pawn, pawnCrafter,potentionalRequests);
-
-                if (thingCount.thing != null)
+                foreach (ThingOrderRequest request in potentionalRequests)
                 {
-                    return new Job(WorkGiverProperties.fillJob, thingCount.thing, crafterThing)
-                    {
-                        count = (int)thingCount.count
-                    };
-                }
+                    Thing ingredientThing = FindIngredient(pawn, pawnCrafter, request);
 
+                    if (ingredientThing != null)
+                    {
+                        if (request.nutrition)
+                        {
+                            int nutritionCount = (int)(Math.Ceiling(request.amount / (ingredientThing.def.ingestible.CachedNutrition)));
+
+                            if (nutritionCount > 0)
+                                return new Job(WorkGiverProperties.fillJob, ingredientThing, crafterThing)
+                                {
+                                    count = nutritionCount
+                                };
+                        }
+                        else
+                            return new Job(WorkGiverProperties.fillJob, ingredientThing, crafterThing)
+                            {
+                                count = (int)request.amount
+                            };
+                    }
+                }
             }
 
             return null;
         }
+
 
         /// <summary>
         /// Tries to find a appropiate ingredient.
@@ -104,25 +126,18 @@ namespace Androids2
         /// <param name="androidPrinter">Printer to fill.</param>
         /// <param name="request">Thing order request to fulfill.</param>
         /// <returns>Valid thing if found, otherwise null.</returns>
-        private ThingCount FindIngredient(Pawn pawn, Building_PawnCrafter androidPrinter, IEnumerable<IngredientCount> ingredients)
+        private Thing FindIngredient(Pawn pawn, Building_PawnCrafter androidPrinter, ThingOrderRequest request)
         {
-            Thing thing = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
-               ThingRequest.ForGroup(ThingRequestGroup.HaulableEver),
-               PathEndMode.ClosestTouch, TraverseParms.For(pawn), 9999f, Validator);
-            if (thing == null)
+            if (request != null)
             {
-                return default(ThingCount);
+                Predicate<Thing> extraPredicate = request.ExtraPredicate();
+                Predicate<Thing> predicate = (Thing x) => !x.IsForbidden(pawn) && pawn.CanReserve(x, 1, -1, null, false) && extraPredicate(x);
+                Predicate<Thing> validator = predicate;
+
+                return GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, request.Request(), PathEndMode.ClosestTouch, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), 9999f, validator, null, 0, -1, false, RegionType.Set_Passable, false);
             }
-            int requiredCountOf = androidPrinter.GetRequiredCountOf(thing.def, ingredients);
-            return new ThingCount(thing, Mathf.Min(thing.stackCount, requiredCountOf));
-            bool Validator(Thing x)
-            {
-                if (x.IsForbidden(pawn) || !pawn.CanReserve(x))
-                {
-                    return false;
-                }
-                return androidPrinter.CanAcceptIngredient(x, ingredients);
-            }
+
+            return null;
         }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<WorkGiverDef>
-		<defName>ChJAndroidPrinter</defName>
+		<defName>A2_SynthPrinter_WGD</defName>
 		<label>fill android printers</label>
-		<giverClass>Androids.WorkGiver_AndroidPrinter</giverClass>
+		<giverClass>Androids2.WorkGiver_PawnCrafter</giverClass>
 		<workType>Hauling</workType>
 		<verb>fill</verb>
 		<gerund>filling</gerund>
@@ -12,5 +12,11 @@
 			<li>Manipulation</li>
 		</requiredCapacities>
 		<prioritizeSustains>true</prioritizeSustains>
+		<modExtensions>
+			<li Class="Androids2.PawnCrafterWorkgiverProperties">
+				<defToScan>A2_SynthPrinter</defToScan>
+				<fillJob>A2_FillSynthPrinter</fillJob>
+			</li>
+		</modExtensions>
 	</WorkGiverDef>
 </Defs>

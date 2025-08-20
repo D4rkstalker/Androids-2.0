@@ -8,195 +8,115 @@ using System.Threading.Tasks;
 using UnityEngine;
 using VEF.Genes;
 using Verse;
+using Verse.Sound;
 using VREAndroids;
 
-namespace Androids2.Androids2Content
+namespace Androids2
 {
-    [StaticConstructorOnStartup]
-
-    public class Building_SynthPrinter : Building
+    public class Building_SynthPrinter : Building_PawnCrafter
     {
-        public CompPowerTrader compPower;
 
-        public CustomXenotype curAndroidProject;
-
-        public PawnKindDef curPKD;
-
-        public UnfinishedAndroid unfinishedAndroid;
-
-        public float currentWorkAmountDone;
-
-        public float totalWorkAmount;
-
-        public List<ThingDefCount> requiredItems;
-        public IEnumerable<IngredientCount> RequiredIngredients()
-        {
-            var ingredientCountList = new List<IngredientCount>();
-            foreach (var data in requiredItems)
-                ingredientCountList.Add(new ThingDefCountClass(data.thingDef, data.count).ToIngredientCount());
-            return ingredientCountList;
-        }
-
-        public void DoWork(Pawn crafter, out bool workDone)
-        {
-            var workAmount = crafter.GetStatValue(StatDefOf.WorkSpeedGlobal);
-            currentWorkAmountDone += workAmount;
-            if (currentWorkAmountDone >= totalWorkAmount)
-                workDone = true;
-            else
-                workDone = false;
-            unfinishedAndroid.workLeft = totalWorkAmount - currentWorkAmountDone;
-        }
+        //Static values
+        /// <summary>
+        /// Requested nutrition to print one Android.
+        /// </summary>
+        public float requestedNutrition = 0f;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            compPower = this.TryGetComp<CompPowerTrader>();
-        }
-
-        public bool ReadyForAssembling(Pawn crafter, out string failReason)
-        {
-            failReason = null;
-            if (!compPower.PowerOn) failReason = "NoPower".Translate();
-            if (curAndroidProject is null) return false;
-            return failReason is null;
-        }
-        //public void CreateUnfinishedAndroid(List<Thing> resources)
-        //{
-        //    unfinishedAndroid = ThingMaker.MakeThing(VREA_DefOf.VREA_UnfinishedAndroid) as UnfinishedAndroid;
-        //    unfinishedAndroid.resources = new List<Thing>();
-        //    unfinishedAndroid.station = this;
-        //    foreach (Thing thing in resources)
-        //    {
-        //        unfinishedAndroid.resources.Add(thing);
-        //        thing.DeSpawn();
-        //    }
-        //    GenSpawn.Spawn(unfinishedAndroid, Position, Map);
-        //}
-
-        public void FinishAndroidProject()
-        {
-            var android = PawnGenerator.GeneratePawn(new PawnGenerationRequest(curPKD, Faction.OfPlayer,
-                allowDowned: true, allowAddictions: false));
-            android.apparel.wornApparel.Clear();
-            android.equipment.equipment.Clear();
-            android.inventory.innerContainer.Clear();
-
-            android.ageTracker.AgeBiologicalTicks = 0;
-            android.ageTracker.AgeChronologicalTicks = 0;
-            var neutroloss = HediffMaker.MakeHediff(VREA_DefOf.VREA_NeutroLoss, android);
-            neutroloss.Severity = 1;
-            android.health.AddHediff(neutroloss);
-            android.genes.xenotypeName = curAndroidProject.name;
-            android.genes.iconDef = curAndroidProject.IconDef;
-            foreach (var gene in VREAndroids.Utils.allAndroidGenes)
+            powerComp = GetComp<CompPowerTrader>();
+            flickableComp = GetComp<CompFlickable>();
+            if (inputSettings == null)
             {
-                var existingGene = android.genes.GetGene(gene);
-                if (existingGene != null)
+                inputSettings = new StorageSettings(this);
+                if (def.building.defaultStorageSettings != null)
                 {
-                    android.genes.RemoveGene(existingGene);
+                    inputSettings.CopyFrom(def.building.defaultStorageSettings);
                 }
             }
 
-            foreach (GeneDef gene in curAndroidProject.genes.OrderByDescending(x => x.CanBeRemovedFromAndroid() is false).ToList())
+            if (!respawningAfterLoad)
             {
-                android.genes.AddGene(gene, true);
-                if (gene.GetModExtension<SkillFloor>() is SkillFloor extension)
-                {
-                    android.skills.skills.ForEach(skill =>
-                     {
-                         skill.levelInt = extension.floor;
-
-                     });
-                }
+                orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
 
             }
-            curAndroidProject = null;
-            GenSpawn.Spawn(android, Position, Map);
-            currentWorkAmountDone = 0;
-            totalWorkAmount = 0;
-            unfinishedAndroid?.Destroy();
-            unfinishedAndroid = null;
+
+            AdjustPowerNeed();
         }
 
-        public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
+        public override void PostMake()
         {
-            foreach (var opt in base.GetFloatMenuOptions(selPawn))
+            base.PostMake();
+
+            inputSettings = new StorageSettings(this);
+            if (def.building.defaultStorageSettings != null)
             {
-                yield return opt;
-            }
-            if (this.curAndroidProject is null)
-            {
-                yield return new FloatMenuOption("VREA.CreateAndroid".Translate(), delegate
-                {
-                    CallAndroidCreationWindow(selPawn);
-                });
+                inputSettings.CopyFrom(def.building.defaultStorageSettings);
             }
         }
 
-        public override IEnumerable<Gizmo> GetGizmos()
+        public override void DeSpawn(DestroyMode mode)
         {
-            foreach (var g in base.GetGizmos())
+
+            StopPawnCrafting();
+
+            base.DeSpawn(mode);
+        }
+
+
+        public string FormatIngredientCosts(out bool needsFulfilled, IEnumerable<ThingOrderRequest> requestedItems, bool deductCosts = true)
+        {
+            StringBuilder builder = new StringBuilder();
+            needsFulfilled = true;
+
+            foreach (ThingOrderRequest thingOrderRequest in requestedItems)
             {
-                yield return g;
-            }
-            if (curAndroidProject != null)
-            {
-                yield return new Command_Action
+                if (thingOrderRequest.nutrition)
                 {
-                    defaultLabel = "VREA.CancelAndroid".Translate(),
-                    defaultDesc = "VREA.CancelAndroidDesc".Translate(),
-                    icon = ContentFinder<Texture2D>.Get("UI/Gizmos/CancelAnAndroid"),
-                    action = delegate
+                    float totalNutrition = CountNutrition();
+
+                    if (deductCosts)
                     {
-                        if (this.unfinishedAndroid != null)
+                        float nutritionDifference = thingOrderRequest.amount - totalNutrition;
+                        if (nutritionDifference > 0f)
                         {
-                            this.unfinishedAndroid.CancelProject();
-                        }
-                        else
-                        {
-                            curAndroidProject = null;
+                            builder.Append(crafterMaterialNeedText.Translate((nutritionDifference), crafterNutritionText.Translate()) + " ");
+                            needsFulfilled = false;
                         }
                     }
-                };
-
-                if (DebugSettings.godMode)
-                {
-                    yield return new Command_Action
+                    else
                     {
-                        defaultLabel = "DEV: finish project",
-                        action = FinishAndroidProject
-                    };
+                        builder.Append(crafterMaterialNeedText.Translate((thingOrderRequest.amount), crafterNutritionText.Translate()) + " ");
+                    }
+                }
+                else
+                {
+                    int itemCount = ingredients.TotalStackCountOfDef(thingOrderRequest.thingDef);
+                    if (deductCosts)
+                    {
+                        if (itemCount < thingOrderRequest.amount)
+                        {
+                            builder.Append(crafterMaterialNeedText.Translate((thingOrderRequest.amount - itemCount), thingOrderRequest.thingDef.LabelCap) + " ");
+                            needsFulfilled = false;
+                        }
+                    }
+                    else
+                    {
+                        builder.Append(crafterMaterialNeedText.Translate((thingOrderRequest.amount), thingOrderRequest.thingDef.LabelCap) + " ");
+                    }
                 }
             }
-            else
-            {
-                yield return new Command_Action
-                {
-                    defaultLabel = "VREA.CreateAndroid".Translate(),
-                    defaultDesc = "VREA.CreateAndroidDesc".Translate(),
-                    icon = ContentFinder<Texture2D>.Get("UI/Gizmos/CreateAnAndroid"),
-                    action = delegate
-                    {
-                        CallAndroidCreationWindow(null);
-                    }
-                };
-            }
+
+            return builder.ToString();
         }
 
-        public void CallAndroidCreationWindow(Pawn creator)
+        public override void InitiatePawnCrafting()
         {
-            //Find.WindowStack.Add(new Window_AndroidCreation(this, creator, null));
+            //Open Android Customization window.
+            Find.WindowStack.Add(new Window_CreateSynth(this, null));
         }
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_References.Look(ref unfinishedAndroid, "unfinishedAndroid");
-            Scribe_Deep.Look(ref curAndroidProject, "curAndroidProject");
-            Scribe_Values.Look(ref currentWorkAmountDone, "currentWorkAmountDone");
-            Scribe_Values.Look(ref totalWorkAmount, "totalWorkAmount");
-            Scribe_Collections.Look(ref requiredItems, "requiredItems", LookMode.Deep);
-        }
+
 
     }
 }

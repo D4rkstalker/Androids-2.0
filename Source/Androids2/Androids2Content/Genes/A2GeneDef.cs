@@ -12,7 +12,8 @@ namespace Androids2
     public class A2GeneDef : AndroidGeneDef
     {
         public bool removable;
-        public List<IngredientCount> ingredients = new List<IngredientCount>();
-        public int extraTime = 0;
+        public List<ThingOrderRequest> costList = new List<ThingOrderRequest>();
+        public int timeCost = 0;
+        public float nutrition = 0;
     }
 }

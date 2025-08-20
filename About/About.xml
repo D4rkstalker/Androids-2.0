@@ -15,6 +15,7 @@
 	</modDependencies>
 	<loadAfter>
 		<li>erdelf.HumanoidAlienRaces</li>
+		<li>vanillaracesexpanded.android</li>
 	</loadAfter>
 <description>
 A rewrite of the classic androids mod, using biotech and VRE instead of HAR

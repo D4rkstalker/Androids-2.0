@@ -34,7 +34,7 @@ namespace Androids2.VREPatches
             {
                 var extra = __instance.GetExtra();
 
-                AndroidMakerPatch.ApplyXenotype(extra.generatedAndroid, __instance.curAndroidProject); 
+                AndroidMakerPatch.ApplyXenotype(extra.generatedAndroid, __instance.curAndroidProject.genes); 
 
                 __instance.curAndroidProject = null;
                 GenSpawn.Spawn(extra.generatedAndroid, __instance.Position, __instance.Map);

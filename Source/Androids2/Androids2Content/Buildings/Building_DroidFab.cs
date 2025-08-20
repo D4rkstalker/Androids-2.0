@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
+using VREAndroids;
+using static UnityEngine.TouchScreenKeyboard;
 
 namespace Androids2
 {
@@ -15,13 +17,8 @@ namespace Androids2
 
     public class Building_DroidFab : Building_PawnCrafter
     {
-        /// <summary>
-        /// Sustained sound.
-        /// </summary>
-        Sustainer soundSustainer;
 
         //Repeat crafting stuff.
-        public bool repeatLastPawn = false;
 
         public override void InitiatePawnCrafting()
         {
@@ -83,87 +80,53 @@ namespace Androids2
         {
             //Update costs.
             orderProcessor.requestedItems.Clear();
-            Log.Warning("Base ingredient count: " + def.ingredients.Count);
+            Log.Warning("Base ingredient count: " + def.costList.Count);
             def.CalcCost();
-            foreach (IngredientCount cost in def.ingredients)
+            foreach (ThingOrderRequest cost in def.costList)
             {
-                Log.Warning("Adding Ingredient " + cost.filter.ToString() + " x" + cost.count);
-                IngredientCount costCopy = new IngredientCount();
-                costCopy.filter = cost.filter;
-                costCopy.count = cost.count;
+                ThingOrderRequest costCopy = new ThingOrderRequest();
+                costCopy.nutrition = cost.nutrition;
+                costCopy.thingDef = cost.thingDef;
+                costCopy.amount = cost.amount;
 
                 orderProcessor.requestedItems.Add(costCopy);
             }
 
-            craftingTime = (int)def.workAmount;
+            craftingTime = (int)def.timeCost;
             if(def == null)
             {
                 Log.Error("No recipedef for droid crafting!");
                 return;
             }
-            if(def.xenotype == null)
+            if(def.customXenotype == null)
             {
                 Log.Error("No xenotype for droid crafting: " + def.defName);
                 return;
             }
             pawnBeingCrafted = PawnGenerator.GeneratePawn(PawnKindDefOf.Colonist, Faction);
             Log.Warning("Setting xenotype for pawn.");
-            pawnBeingCrafted.genes.SetXenotype(def.xenotype);
-            AndroidMakerPatch.ApplyXenotype(pawnBeingCrafted,false);
+            pawnBeingCrafted.genes.xenotypeName = def.customXenotype.name;
+            pawnBeingCrafted.genes.iconDef = def.customXenotype.IconDef;
+            foreach (var gene in VREAndroids.Utils.allAndroidGenes)
+            {
+                var existingGene = pawnBeingCrafted.genes.GetGene(gene);
+                if (existingGene != null)
+                {
+                    pawnBeingCrafted.genes.RemoveGene(existingGene);
+                }
+            }
+
+            foreach (GeneDef gene in recipe.customXenotype.genes.OrderByDescending(x => x.CanBeRemovedFromAndroid() is false).ToList())
+            {
+                pawnBeingCrafted.genes.AddGene(gene, true);
+            }
+            AndroidMakerPatch.ApplyXenotype(pawnBeingCrafted, def.customXenotype.genes,false);
             pawnBeingCrafted.apparel?.wornApparel?.Clear();
             pawnBeingCrafted.equipment?.equipment?.Clear();
             pawnBeingCrafted.inventory?.innerContainer?.Clear();
             crafterStatus = CrafterStatus.Filling;
         }
 
-        public override void ExtraCrafterTickAction()
-        {
-            if (!powerComp.PowerOn && soundSustainer != null && !soundSustainer.Ended)
-                soundSustainer.End();
-
-            //Make construction effects
-            switch (crafterStatus)
-            {
-                case CrafterStatus.Filling:
-                    //Emit smoke
-                    if (powerComp.PowerOn && Current.Game.tickManager.TicksGame % 300 == 0)
-                    {
-                        FleckMaker.ThrowSmoke(Position.ToVector3(), Map, 1f);
-                    }
-                    break;
-
-                case CrafterStatus.Crafting:
-                    //Emit smoke
-                    if (powerComp.PowerOn && Current.Game.tickManager.TicksGame % 100 == 0)
-                    {
-                        for (int i = 0; i < 5; i++)
-                            FleckMaker.ThrowMicroSparks(Position.ToVector3() + new Vector3(Rand.Range(-1, 1), 0f, Rand.Range(-1, 1)), Map);
-                        for (int i = 0; i < 3; i++)
-                            FleckMaker.ThrowSmoke(Position.ToVector3() + new Vector3(Rand.Range(-1f, 1f), 0f, Rand.Range(-1f, 1f)), Map, Rand.Range(0.5f, 0.75f));
-                        FleckMaker.ThrowHeatGlow(Position, Map, 1f);
-
-                        //if (soundSustainer == null || soundSustainer.Ended)
-                        //{
-                        //    SoundDef soundDef = printerProperties.craftingSound;
-                        //    if (soundDef != null && soundDef.sustain)
-                        //    {
-                        //        SoundInfo info = SoundInfo.InMap(this, MaintenanceType.PerTick);
-                        //        soundSustainer = soundDef.TrySpawnSustainer(info);
-                        //    }
-                        //}
-                    }
-                    if (soundSustainer != null && !soundSustainer.Ended)
-                        soundSustainer.Maintain();
-                    break;
-
-                default:
-                    {
-                        if (soundSustainer != null && !soundSustainer.Ended)
-                            soundSustainer.End();
-                    }
-                    break;
-            }
-        }
 
         public override void FinishAction()
         {
@@ -179,7 +142,6 @@ namespace Androids2
         {
             base.ExposeData();
 
-            Scribe_Deep.Look(ref orderProcessor, "orderProcessor", innerContainer, inputSettings);
             Scribe_Defs.Look(ref recipe, "recipe");
             Scribe_Values.Look(ref repeatLastPawn, "repeatLastPawn");
         }
@@ -190,7 +152,7 @@ namespace Androids2
 
             if (!respawningAfterLoad)
             {
-                orderProcessor = new ThingOrderProcessor(innerContainer, inputSettings);
+                orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
             }
         }
 

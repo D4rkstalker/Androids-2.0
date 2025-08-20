@@ -3,19 +3,12 @@
 	<Androids2.AndroidRecipe>
 		<defName>A2_BaseDroid</defName>
 		<label>Base Droid</label>
-		<workAmount>1600</workAmount>
-		<xenotype>A2_DroidXenotypeBase</xenotype>
+		<timeCost>1600</timeCost>
+		<xenotypeDef>A2_DroidXenotypeBase</xenotypeDef>
 		<nutrition>0</nutrition>
-		<ingredients>
-		  <li>
-			<filter>
-			  <thingDefs>
-				<li>WoodLog</li>
-			  </thingDefs>
-			</filter>
-			<count>1</count>
-		  </li>
-		</ingredients>
+		<costList>
+			<Steel>225</Steel>
+		</costList>
 	</Androids2.AndroidRecipe>
 
 </Defs>

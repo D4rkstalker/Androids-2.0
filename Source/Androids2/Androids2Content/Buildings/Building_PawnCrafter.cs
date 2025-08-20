@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Verse;
+using Verse.Sound;
 
 namespace Androids2
 {
@@ -46,7 +47,7 @@ namespace Androids2
         /// <summary>
         /// Stored ingredients for use in producing one pawn.
         /// </summary>
-        public ThingOwner<Thing> innerContainer = new ThingOwner<Thing>();
+        public ThingOwner<Thing> ingredients = new ThingOwner<Thing>();
         /// <summary>
         /// Printer state.
         /// </summary>
@@ -132,6 +133,9 @@ namespace Androids2
         /// </summary>
         public string crafterNutritionText = "AndroidNutrition";
 
+        public Sustainer soundSustainer;
+
+        public bool repeatLastPawn = false;
 
 
         /// <summary>
@@ -165,7 +169,7 @@ namespace Androids2
             {
                 if (ingredient.FixedIngredient == thingDef)
                 {
-                    int num = innerContainer.TotalStackCountOfDef(ingredient.FixedIngredient);
+                    int num = this.ingredients.TotalStackCountOfDef(ingredient.FixedIngredient);
                     return (int)ingredient.GetBaseCount() - num;
                 }
             }
@@ -179,7 +183,7 @@ namespace Androids2
 
         public ThingOwner GetDirectlyHeldThings()
         {
-            return innerContainer;
+            return ingredients;
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -198,7 +202,7 @@ namespace Androids2
                 }
             }
 
-            orderProcessor = new ThingOrderProcessor(innerContainer, inputSettings);
+            orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
             //orderProcessor.requestedItems.AddRange(printerProperties.costList);
 
 
@@ -221,20 +225,22 @@ namespace Androids2
             base.ExposeData();
 
             //Save \ Load
-            Scribe_Deep.Look(ref innerContainer, "ingredients");
+            Scribe_Deep.Look(ref ingredients, "ingredients");
             Scribe_Values.Look(ref crafterStatus, "crafterStatus");
             Scribe_Values.Look(ref craftingTicksLeft, "craftingTicksLeft");
             Scribe_Values.Look(ref nextResourceTick, "nextResourceTick");
             Scribe_Deep.Look(ref pawnBeingCrafted, "pawnBeingCrafted");
             Scribe_Deep.Look(ref inputSettings, "inputSettings");
             Scribe_Values.Look(ref craftingTime, "craftingTime");
+            Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
+
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             //Drop ingredients.
             if (mode != DestroyMode.Vanish)
-                innerContainer.TryDropAll(PositionHeld, MapHeld, ThingPlaceMode.Near);
+                ingredients.TryDropAll(PositionHeld, MapHeld, ThingPlaceMode.Near);
 
             base.Destroy(mode);
         }
@@ -310,7 +316,7 @@ namespace Androids2
             pawnBeingCrafted = null;
 
             //Eject unused materials.
-            innerContainer.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near);
+            ingredients.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near);
         }
 
         /// <summary>
@@ -363,29 +369,35 @@ namespace Androids2
             {
                 bool needsFulfilled = true;
 
-                foreach (IngredientCount thingOrderRequest in orderProcessor.requestedItems)
+                foreach (ThingOrderRequest thingOrderRequest in orderProcessor.requestedItems)
                 {
-                    int itemCount = 0;
-                    //ingredients.TotalStackCountOfDef(thingOrderRequest.thingDef);
-                    foreach (ThingDef t in thingOrderRequest.filter.thingDefs)
+                    if (thingOrderRequest.nutrition)
                     {
-                        itemCount += innerContainer.TotalStackCountOfDef(t);
+                        float totalNutrition = CountNutrition();
+                        if (totalNutrition > 0f)
+                        {
+                            builder.Append(crafterMaterialNeedText.Translate((thingOrderRequest.amount - totalNutrition), crafterNutritionText.Translate()) + " ");
+                            needsFulfilled = false;
+                        }
                     }
-                    if (itemCount < thingOrderRequest.count)
+                    else
                     {
-                        builder.Append(crafterMaterialNeedText.Translate(thingOrderRequest.count - itemCount) + thingOrderRequest.Summary);
-                        needsFulfilled = false;
+                        int itemCount = ingredients.TotalStackCountOfDef(thingOrderRequest.thingDef);
+                        if (itemCount < thingOrderRequest.amount)
+                        {
+                            builder.Append(crafterMaterialNeedText.Translate((thingOrderRequest.amount - itemCount), thingOrderRequest.thingDef.LabelCap) + " ");
+                            needsFulfilled = false;
+                        }
                     }
-
                 }
 
                 if (!needsFulfilled)
                     builder.AppendLine();
             }
 
-            if (innerContainer.Count > 0)
+            if (ingredients.Count > 0)
                 builder.Append(crafterMaterialsText.Translate() + " ");
-            foreach (Thing item in innerContainer)
+            foreach (Thing item in ingredients)
             {
                 builder.Append(item.LabelCap + "; ");
             }
@@ -393,11 +405,14 @@ namespace Androids2
             return builder.ToString().TrimEndNewlines();
         }
 
-        public override void TickInterval(int delta)
+        public override void Tick()
         {
-            base.TickInterval(delta);
+            base.Tick();
 
             AdjustPowerNeed();
+            if (!powerComp.PowerOn && soundSustainer != null && !soundSustainer.Ended)
+                soundSustainer.End();
+
 
             if (flickableComp == null || (flickableComp != null && flickableComp.SwitchIsOn))
             {
@@ -429,38 +444,82 @@ namespace Androids2
                             if (powerComp.PowerOn)
                             {
                                 //Periodically use resources.
-                                nextResourceTick -= delta;
+                                nextResourceTick --;
 
                                 if (nextResourceTick <= 0)
                                 {
                                     nextResourceTick = recipe.resourceTick;
 
                                     //Deduct resources from each category.
-                                    foreach (IngredientCount thingOrderRequest in orderProcessor.requestedItems)
+                                    foreach (ThingOrderRequest thingOrderRequest in orderProcessor.requestedItems)
                                     {
-                                        //Item
-                                        if (innerContainer.Any(thing => thingOrderRequest.filter.thingDefs.Contains(thing.def)))
+                                        if (thingOrderRequest.nutrition)
                                         {
-                                            //Grab first stack of Plasteel.
-                                            Thing item = innerContainer.First(thing => thingOrderRequest.filter.thingDefs.Contains(thing.def));
-
-                                            if (item != null)
+                                            //Food
+                                            if (CountNutrition() > 0f)
                                             {
-                                                int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.count / ((float)CraftingTicks / recipe.resourceTick)));
+                                                //Grab first stack of Nutrition.
+                                                Thing item = ingredients.First(thing => thing.def.IsIngestible);
 
-                                                int amount = Math.Min(resourceTickAmount, item.stackCount);
-                                                Thing takenItem = innerContainer.Take(item, amount);
+                                                if (item != null)
+                                                {
+                                                    int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.amount / ((double)CraftingTicks / recipe.resourceTick)));
 
-                                                takenItem.Destroy();
+                                                    int amount = Math.Min(resourceTickAmount, item.stackCount);
+                                                    Thing outThing = null;
+
+                                                    Corpse outCorpse = item as Corpse;
+                                                    if (outCorpse != null)
+                                                    {
+                                                        if (outCorpse.IsDessicated())
+                                                        {
+                                                            //If rotten, just drop it.
+                                                            ingredients.TryDrop(outCorpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out outThing);
+                                                        }
+                                                        else
+                                                        {
+                                                            //Not rotten, dump all equipment.
+                                                            ingredients.TryDrop(outCorpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out outThing);
+                                                            outCorpse.InnerPawn?.equipment?.DropAllEquipment(InteractionCell, false);
+                                                            outCorpse.InnerPawn?.apparel?.DropAll(InteractionCell, false);
+
+                                                            item.Destroy();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Thing takenItem = ingredients.Take(item, amount);
+                                                        takenItem.Destroy();
+                                                    }
+                                                }
                                             }
                                         }
+                                        else
+                                        {
+                                            //Item
+                                            if (ingredients.Any(thing => thing.def == thingOrderRequest.thingDef))
+                                            {
+                                                //Grab first stack of Plasteel.
+                                                Thing item = ingredients.First(thing => thing.def == thingOrderRequest.thingDef);
 
+                                                if (item != null)
+                                                {
+                                                    int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.amount / ((float)CraftingTicks / recipe.resourceTick)));
+
+                                                    int amount = Math.Min(resourceTickAmount, item.stackCount);
+                                                    Thing takenItem = ingredients.Take(item, amount);
+
+                                                    takenItem.Destroy();
+                                                }
+                                            }
+                                        }
                                     }
+
                                 }
 
                                 //Are we done yet?
                                 if (craftingTicksLeft > 0)
-                                    craftingTicksLeft -= delta;
+                                    craftingTicksLeft--;
                                 else
                                     crafterStatus = CrafterStatus.Finished;
                             }
@@ -474,7 +533,7 @@ namespace Androids2
                                 ExtraCrafterTickAction();
 
                                 //Clear remaining materials.
-                                innerContainer.ClearAndDestroyContents();
+                                ingredients.ClearAndDestroyContents();
 
                                 //Spawn
                                 GenSpawn.Spawn(pawnBeingCrafted, InteractionCell, Map);
@@ -492,6 +551,10 @@ namespace Androids2
                         break;
 
                     default:
+                        {
+                            if (soundSustainer != null && !soundSustainer.Ended)
+                                soundSustainer.End();
+                        }
                         break;
                 }
             }
@@ -528,7 +591,7 @@ namespace Androids2
             float totalNutrition = 0f;
 
             //Count nutrition.
-            foreach (Thing item in innerContainer)
+            foreach (Thing item in ingredients)
             {
                 Corpse corpse = item as Corpse;
                 if (corpse != null)

@@ -10,11 +10,12 @@ namespace Androids2
         private static Androids2 _instance;
         public static Androids2 Instance => _instance;
 
+        public static Harmony harmony;
+
         public Androids2(ModContentPack content) : base(content)
         {
-            var harmony = new Harmony("firedragonmc.androids2");
+            harmony = new Harmony("firedragonmc.androids2");
             harmony.PatchAll();
-
             _instance = this;
         }
 

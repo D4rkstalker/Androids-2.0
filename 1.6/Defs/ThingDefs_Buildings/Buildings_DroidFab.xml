@@ -70,21 +70,5 @@
 		<researchPrerequisites>
 			<li>ChJDroidPrinter</li>
 		</researchPrerequisites>
-		<modExtensions>
-			<li Class="Androids.PawnCrafterProperties">
-				<!--pawnKind>ChjDroidColonist</pawnKind>
-				<costList>
-					<Steel>225</Steel>
-					<ComponentIndustrial>8</ComponentIndustrial>
-				</costList-->
-				<craftingSound>Interact_ConstructMetal</craftingSound>
-				<customOrderProcessor>true</customOrderProcessor>
-				<customCraftingTime>true</customCraftingTime>
-				<pawnCraftedLetterLabel>AndroidDroidManufactoryLetterLabel</pawnCraftedLetterLabel>
-				<pawnCraftedLetterText>AndroidDroidManufactoryLetterDescription</pawnCraftedLetterText>
-				<!--ticksToCraft>15000</ticksToCraft-->
-				<resourceTick>2500</resourceTick>
-			</li>
-		</modExtensions>
 	</ThingDef>
 </Defs>

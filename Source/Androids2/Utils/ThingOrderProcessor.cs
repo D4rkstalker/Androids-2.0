@@ -25,7 +25,7 @@ namespace Androids2
         /// <summary>
         /// List of requested. And ideal.
         /// </summary>
-        public List<IngredientCount> requestedItems = new List<IngredientCount>();
+        public List<ThingOrderRequest> requestedItems = new List<ThingOrderRequest>();
 
         public ThingOrderProcessor()
         {
@@ -42,21 +42,36 @@ namespace Androids2
         /// Gets all pending requests that need to be processed using ideal requests as a base.
         /// </summary>
         /// <returns>Pending requests or none.</returns>
-        public IEnumerable<IngredientCount> PendingRequests()
+        public IEnumerable<ThingOrderRequest> PendingRequests()
         {
-            //Log.Warning("Pending requests: " + requestedItems.Count);
-            foreach (IngredientCount idealRequest in requestedItems)
+            foreach (ThingOrderRequest idealRequest in requestedItems)
             {
-                //Item
-                float totalItemCoun = thingHolder.TotalStackCountOfDef(idealRequest.FixedIngredient);
-                
-                if (totalItemCount < idealRequest.count)
+                if (idealRequest.nutrition)
                 {
-                    IngredientCount request = new IngredientCount();
-                    request.filter = idealRequest.filter;
-                    request.count = idealRequest.count - totalItemCount;
-                    //Log.Warning("Found thing!)");
-                    yield return request;
+                    //Food
+                    float totalNutrition = CountNutrition();
+                    if (totalNutrition < idealRequest.amount)
+                    {
+                        ThingOrderRequest request = new ThingOrderRequest();
+                        request.nutrition = true;
+                        request.amount = idealRequest.amount - totalNutrition;
+                        request.thingFilter = storageSettings.filter;
+
+                        yield return request;
+                    }
+                }
+                else
+                {
+                    //Item
+                    float totalItemCount = thingHolder.TotalStackCountOfDef(idealRequest.thingDef);
+                    if (totalItemCount < idealRequest.amount)
+                    {
+                        ThingOrderRequest request = new ThingOrderRequest();
+                        request.thingDef = idealRequest.thingDef;
+                        request.amount = idealRequest.amount - totalItemCount;
+
+                        yield return request;
+                    }
                 }
             }
         }
