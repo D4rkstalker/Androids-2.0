@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Androids2Content\AI\WorkGIver_PawnCrafter.cs" />
+    <Compile Include="Androids2Content\Buildings\Building_Converter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_DroidFab.cs" />
     <Compile Include="Androids2Content\Buildings\Building_PawnCrafter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_SynthPrinter.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Androids2Content\UI\Gizmo_PrinterPawnInfo.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_TogglePrinting.cs" />
     <Compile Include="Androids2Content\UI\ISynthPrinter.cs" />
+    <Compile Include="Androids2Content\UI\ITab_ContentsConversionChamber.cs" />
     <Compile Include="Androids2Content\UI\Window_CreateSynth.cs" />
     <Compile Include="Androids2Content\UI\Window_CustomizeAndroid.cs" />
     <Compile Include="Androids2.cs" />
