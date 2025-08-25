@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<Androids2.AndroidRecipe>
-		<defName>A2_BaseDroid</defName>
-		<label>Base Droid</label>
+		<defName>A2_BasicDroid</defName>
+		<label>Basic Droid</label>
 		<timeCost>1600</timeCost>
-		<xenotypeDef>A2_DroidXenotypeBase</xenotypeDef>
+		<xenotypeDef>A2_BasicDroid</xenotypeDef>
+		<nutrition>0</nutrition>
+		<costList>
+			<Steel>225</Steel>
+		</costList>
+	</Androids2.AndroidRecipe>
+
+	<Androids2.AndroidRecipe>
+		<defName>A2_AdvancedDroid</defName>
+		<label>Advanced Droid</label>
+		<timeCost>1600</timeCost>
+		<xenotypeDef>A2_AdvancedDroid</xenotypeDef>
 		<nutrition>0</nutrition>
 		<costList>
 			<Steel>225</Steel>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<JobDef>
+		<defName>A2_FillConverter</defName>
+		<driverClass>JobDriver_HaulToContainer</driverClass>
+		<reportString>hauling TargetA.</reportString>
+	</JobDef>
+	<JobDef>
+		<defName>A2_EnterConverter</defName>
+		<driverClass>Androids2.JobDriver_A2EnterConverter</driverClass>
+		<reportString>entering TargetA.</reportString>
+	</JobDef>
+</Defs>

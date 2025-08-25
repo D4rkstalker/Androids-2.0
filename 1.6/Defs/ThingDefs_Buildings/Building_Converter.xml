@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<ThingDef ParentName="BuildingBase">
+		<defName>A2_Converter</defName>
+		<label>conversion chamber</label>
+		<thingClass>Androids2.Building_Converter</thingClass>
+		<description>A standard android conversion chamber. Replaces a willing individuals organic components with android analogs. It can also be used to improve already existing androids.</description>
+		<graphicData>
+			<texPath>Things/Building/ConversionChamber/ConversionChamber</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<drawSize>(1,2)</drawSize>
+			<damageData>
+				<cornerTL>Damage/Corner</cornerTL>
+				<cornerTR>Damage/Corner</cornerTR>
+				<cornerBL>Damage/Corner</cornerBL>
+				<cornerBR>Damage/Corner</cornerBR>
+			</damageData>
+			<shadowData>
+				<volume>(0.83, 0.3, 1.7)</volume>
+			</shadowData>
+		</graphicData>
+		<minifiedDef>MinifiedThing</minifiedDef>
+		<thingCategories>
+			<li>BuildingsProduction</li>
+		</thingCategories>
+		<costStuffCount>100</costStuffCount>
+		<costList>
+			<Plasteel>200</Plasteel>
+			<ComponentIndustrial>25</ComponentIndustrial>
+			<ComponentSpacer>15</ComponentSpacer>
+			<MedicineUltratech>5</MedicineUltratech>
+		</costList>
+		<tickerType>Normal</tickerType>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<altitudeLayer>Building</altitudeLayer>
+		<fillPercent>0.5</fillPercent>
+		<useHitPoints>True</useHitPoints>
+		<statBases>
+			<WorkToBuild>8000</WorkToBuild>
+			<MaxHitPoints>200</MaxHitPoints>
+			<Flammability>0</Flammability>
+			<Mass>200</Mass>
+		</statBases>
+		<size>(1,2)</size>
+		<designationCategory>Production</designationCategory>
+		<passability>PassThroughOnly</passability>
+		<pathCost>70</pathCost>
+		<hasInteractionCell>True</hasInteractionCell>
+		<interactionCellOffset>(1,0,0)</interactionCellOffset>
+		<comps>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<shortCircuitInRain>true</shortCircuitInRain>
+				<basePowerConsumption>1500</basePowerConsumption>
+			</li>
+			<li Class="CompProperties_Glower">
+				<glowRadius>5</glowRadius>
+				<glowColor>(255, 255, 255,0)</glowColor>
+			</li>
+			<li Class="CompProperties_Forbiddable"/>
+			<li Class="CompProperties_Flickable"/>
+		</comps>
+		<building>
+			<fixedStorageSettings>
+				<priority>Critical</priority>
+				<filter>
+					<categories>
+						<li>Foods</li>
+						<li>Corpses</li>
+					</categories>
+					<disallowedCategories>
+						<li>CorpsesMechanoid</li>
+					</disallowedCategories>
+				</filter>
+			</fixedStorageSettings>
+			<defaultStorageSettings>
+				<priority>Critical</priority>
+				<filter>
+					<categories>
+						<li>Foods</li>
+						<li>Corpses</li>
+					</categories>
+					<disallowedThingDefs>
+						<li>Chocolate</li>
+						<li>Pemmican</li>
+						<li>InsectJelly</li>
+					</disallowedThingDefs>
+					<disallowedCategories>
+						<li>FoodMeals</li>
+						<li>EggsFertilized</li>
+						<li>CorpsesMechanoid</li>
+					</disallowedCategories>
+					<specialFiltersToDisallow>
+						<li>AllowCorpsesColonist</li>
+					</specialFiltersToDisallow>
+				</filter>
+			</defaultStorageSettings>
+			<isPlayerEjectable>false</isPlayerEjectable>
+		</building>
+		<constructionSkillPrerequisite>14</constructionSkillPrerequisite>
+		<inspectorTabs>
+			<li>Androids2.ITab_ContentsConversionChamber</li>
+			<li>Androids2.ITab_SynthPrinter</li>
+		</inspectorTabs>
+		<researchPrerequisites>
+			<li>DekAndroidConversion</li>
+		</researchPrerequisites>
+		<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+	</ThingDef>
+</Defs>

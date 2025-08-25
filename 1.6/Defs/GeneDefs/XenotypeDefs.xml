@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<XenotypeDef>
-		<defName>A2_DroidXenotypeBase</defName>
+		<defName>A2_BasicDroid</defName>
 		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
 		<genes>
 			<li>VREA_MemoryProcessing</li>
-			<li>VREA_Power</li>
+			<li>A2_BatteryPower</li>
 			<li>VREA_JoyDisabled</li>
 			<li>VREA_BeautyDisabled</li>
 			<li>VREA_ComfortDisabled</li>
@@ -25,7 +25,57 @@
 			<li>VREA_PsychicallyDeaf</li>
 			<li>VREA_MentalBreaksDisabled</li>
 			<li>VREA_PsychologyDisabled</li>
+			<li>VREA_AntiAwakeningProtocols</li>
 			<li>A2_SkillFloor_8</li>
+			<li>A2_WorkSpeed_6</li>
+		</genes>
+	</XenotypeDef>
+	
+	<XenotypeDef>
+		<defName>A2_AdvancedDroid</defName>
+		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
+		<genes>
+			<li>VREA_MemoryProcessing</li>
+			<li>A2_BatteryPower</li>
+			<li>VREA_JoyDisabled</li>
+			<li>VREA_BeautyDisabled</li>
+			<li>VREA_ComfortDisabled</li>
+			<li>VREA_OutdoorsDisabled</li>
+			<li>VREA_DrugDesireDisabled</li>
+			<li>VREA_RoomSizeDisabled</li>
+			<li>VREA_PainDisabled</li>
+			<li>VREA_SyntheticBody</li>
+			<li>VREA_NeutroCirculation</li>
+			<li>VREA_SyntheticImmunity</li>
+			<li>VREA_ComponentFreezing</li>
+			<li>VREA_ComponentOverheating</li>
+			<li>VREA_ColdTolerant</li>
+			<li>VREA_HeatTolerant</li>
+			<li>VREA_NoSkillGain</li>
+			<li>VREA_Uninspired</li>
+			<li>VREA_PsychicallyDeaf</li>
+			<li>VREA_MentalBreaksDisabled</li>
+			<li>VREA_PsychologyDisabled</li>
+			<li>VREA_AntiAwakeningProtocols</li>
+			<li>A2_SkillFloor_10</li>
+			<li>A2_WorkSpeed_8</li>
+		</genes>
+	</XenotypeDef>
+
+	<XenotypeDef>
+		<defName>A2_Synth</defName>
+		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
+		<genes>
+			<li>VREA_MemoryProcessing</li>
+			<li>VREA_Power</li>
+			<li>VREA_SyntheticBody</li>
+			<li>VREA_NeutroCirculation</li>
+			<li>VREA_SyntheticImmunity</li>
+			<li>VREA_ComponentFreezing</li>
+			<li>VREA_ComponentOverheating</li>
+			<li>VREA_ColdTolerant</li>
+			<li>VREA_HeatTolerant</li>
+			<li>VREA_PsychicallyDeaf</li>
 		</genes>
 	</XenotypeDef>
 	

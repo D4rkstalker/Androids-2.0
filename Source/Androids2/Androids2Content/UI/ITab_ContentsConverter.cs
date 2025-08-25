@@ -6,7 +6,7 @@ using Verse;
 namespace Androids2
 {
     // Token: 0x02000007 RID: 7
-    public class ITab_ContentsConversionChamber : ITab_ContentsBase
+    public class ITab_ContentsConverter : ITab_ContentsBase
     {
         // Token: 0x17000003 RID: 3
         // (get) Token: 0x06000016 RID: 22 RVA: 0x00003338 File Offset: 0x00001538
@@ -14,7 +14,7 @@ namespace Androids2
         {
             get
             {
-                Building_ConversionChamber building_ConversionChamber = base.SelThing as Building_ConversionChamber;
+                Building_Converter building_ConversionChamber = base.SelThing as Building_Converter;
                 this.listInt.Clear();
                 if (building_ConversionChamber != null && building_ConversionChamber.ContainedThing != null)
                 {
@@ -25,9 +25,9 @@ namespace Androids2
         }
 
         // Token: 0x06000017 RID: 23 RVA: 0x0000337E File Offset: 0x0000157E
-        public ITab_ContentsConversionChamber()
+        public ITab_ContentsConverter()
         {
-            this.labelKey = "TabConversionChamberContents";
+            this.labelKey = "TabConverterContents";
             this.containedItemsKey = "ContainedItems";
             this.canRemoveThings = false;
         }

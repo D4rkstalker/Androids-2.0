@@ -86,11 +86,6 @@ namespace Androids2
         /// Next resource drain trick-
         /// </summary>
         public int nextResourceTick = 0;
-        /// <summary>
-        /// Set by custom implementations.
-        /// </summary>
-        public int craftingTime = 0;
-
         public float powerConsumptionFactorIdle = 0.1f;
 
         /// <summary>
@@ -145,14 +140,9 @@ namespace Androids2
         {
             get
             {
-                return (float)((float)craftingTime - craftingTicksLeft) / craftingTime;
+                return (float)((float)recipe.timeCost - craftingTicksLeft) / recipe.timeCost;
             }
         }
-
-        /// <summary>
-        /// How many ticks it take to craft a pawn.
-        /// </summary>
-        public int CraftingTicks = 0;
 
         /// <summary>
         /// Sets the Storage tab to be visible.
@@ -231,7 +221,6 @@ namespace Androids2
             Scribe_Values.Look(ref nextResourceTick, "nextResourceTick");
             Scribe_Deep.Look(ref pawnBeingCrafted, "pawnBeingCrafted");
             Scribe_Deep.Look(ref inputSettings, "inputSettings");
-            Scribe_Values.Look(ref craftingTime, "craftingTime");
             Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
 
         }
@@ -298,7 +287,7 @@ namespace Androids2
         public virtual void StartPrinting()
         {
             //Setup printing procedure
-            craftingTicksLeft = CraftingTicks;
+            craftingTicksLeft = recipe.timeCost;
             nextResourceTick = recipe.resourceTick;
             crafterStatus = CrafterStatus.Crafting;
         }
@@ -421,132 +410,19 @@ namespace Androids2
                 {
                     case CrafterStatus.Filling:
                         {
-                            ExtraCrafterTickAction();
-
-                            //If we aren't being filled, then start.
-                            var pendingRequests = orderProcessor.PendingRequests();
-                            bool startPrinting = pendingRequests == null;
-                            if (pendingRequests != null && !pendingRequests.Any())
-                                startPrinting = true;
-
-                            if (startPrinting)
-                            {
-                                //Initiate printing phase.
-                                StartPrinting();
-                            }
+                            FillingTick();
                         }
                         break;
 
                     case CrafterStatus.Crafting:
                         {
-                            ExtraCrafterTickAction();
-
-                            if (powerComp.PowerOn)
-                            {
-                                //Periodically use resources.
-                                nextResourceTick --;
-
-                                if (nextResourceTick <= 0)
-                                {
-                                    nextResourceTick = recipe.resourceTick;
-
-                                    //Deduct resources from each category.
-                                    foreach (ThingOrderRequest thingOrderRequest in orderProcessor.requestedItems)
-                                    {
-                                        if (thingOrderRequest.nutrition)
-                                        {
-                                            //Food
-                                            if (CountNutrition() > 0f)
-                                            {
-                                                //Grab first stack of Nutrition.
-                                                Thing item = ingredients.First(thing => thing.def.IsIngestible);
-
-                                                if (item != null)
-                                                {
-                                                    int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.amount / ((double)CraftingTicks / recipe.resourceTick)));
-
-                                                    int amount = Math.Min(resourceTickAmount, item.stackCount);
-                                                    Thing outThing = null;
-
-                                                    Corpse outCorpse = item as Corpse;
-                                                    if (outCorpse != null)
-                                                    {
-                                                        if (outCorpse.IsDessicated())
-                                                        {
-                                                            //If rotten, just drop it.
-                                                            ingredients.TryDrop(outCorpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out outThing);
-                                                        }
-                                                        else
-                                                        {
-                                                            //Not rotten, dump all equipment.
-                                                            ingredients.TryDrop(outCorpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out outThing);
-                                                            outCorpse.InnerPawn?.equipment?.DropAllEquipment(InteractionCell, false);
-                                                            outCorpse.InnerPawn?.apparel?.DropAll(InteractionCell, false);
-
-                                                            item.Destroy();
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        Thing takenItem = ingredients.Take(item, amount);
-                                                        takenItem.Destroy();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            //Item
-                                            if (ingredients.Any(thing => thing.def == thingOrderRequest.thingDef))
-                                            {
-                                                //Grab first stack of Plasteel.
-                                                Thing item = ingredients.First(thing => thing.def == thingOrderRequest.thingDef);
-
-                                                if (item != null)
-                                                {
-                                                    int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.amount / ((float)CraftingTicks / recipe.resourceTick)));
-
-                                                    int amount = Math.Min(resourceTickAmount, item.stackCount);
-                                                    Thing takenItem = ingredients.Take(item, amount);
-
-                                                    takenItem.Destroy();
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                }
-
-                                //Are we done yet?
-                                if (craftingTicksLeft > 0)
-                                    craftingTicksLeft--;
-                                else
-                                    crafterStatus = CrafterStatus.Finished;
-                            }
-                        }
+                            CraftingTick();
+                       }
                         break;
 
                     case CrafterStatus.Finished:
                         {
-                            if (pawnBeingCrafted != null)
-                            {
-                                ExtraCrafterTickAction();
-
-                                //Clear remaining materials.
-                                ingredients.ClearAndDestroyContents();
-
-                                //Spawn
-                                GenSpawn.Spawn(pawnBeingCrafted, InteractionCell, Map);
-                                //Make and send letter.
-                                ChoiceLetter letter = LetterMaker.MakeLetter(pawnCraftedLetterLabel.Translate(pawnBeingCrafted.Name.ToStringShort), pawnCraftedLetterText.Translate(pawnBeingCrafted.Name.ToStringFull), LetterDefOf.PositiveEvent, pawnBeingCrafted);
-                                Find.LetterStack.ReceiveLetter(letter);
-
-                                //Reset
-                                pawnBeingCrafted = null;
-                                crafterStatus = CrafterStatus.Idle;
-
-                                FinishAction();
-                            }
+                            FinishedTick();
                         }
                         break;
 
@@ -557,6 +433,136 @@ namespace Androids2
                         }
                         break;
                 }
+            }
+        }
+
+        public virtual void FillingTick()
+        {
+            ExtraCrafterTickAction();
+
+            //If we aren't being filled, then start.
+            var pendingRequests = orderProcessor.PendingRequests();
+            bool startPrinting = pendingRequests == null;
+            if (pendingRequests != null && !pendingRequests.Any())
+                startPrinting = true;
+
+            if (startPrinting)
+            {
+                //Initiate printing phase.
+                StartPrinting();
+            }
+
+        }
+
+        public virtual void CraftingTick()
+        {
+
+            ExtraCrafterTickAction();
+
+            if (powerComp.PowerOn)
+            {
+                //Periodically use resources.
+                nextResourceTick--;
+
+                if (nextResourceTick <= 0)
+                {
+                    nextResourceTick = recipe.resourceTick;
+
+                    //Deduct resources from each category.
+                    foreach (ThingOrderRequest thingOrderRequest in orderProcessor.requestedItems)
+                    {
+                        if (thingOrderRequest.nutrition)
+                        {
+                            //Food
+                            if (CountNutrition() > 0f)
+                            {
+                                //Grab first stack of Nutrition.
+                                Thing item = ingredients.First(thing => thing.def.IsIngestible);
+
+                                if (item != null)
+                                {
+                                    int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.amount / ((double)recipe.timeCost / recipe.resourceTick)));
+
+                                    int amount = Math.Min(resourceTickAmount, item.stackCount);
+                                    Thing outThing = null;
+
+                                    Corpse outCorpse = item as Corpse;
+                                    if (outCorpse != null)
+                                    {
+                                        if (outCorpse.IsDessicated())
+                                        {
+                                            //If rotten, just drop it.
+                                            ingredients.TryDrop(outCorpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out outThing);
+                                        }
+                                        else
+                                        {
+                                            //Not rotten, dump all equipment.
+                                            ingredients.TryDrop(outCorpse, InteractionCell, Map, ThingPlaceMode.Near, 1, out outThing);
+                                            outCorpse.InnerPawn?.equipment?.DropAllEquipment(InteractionCell, false);
+                                            outCorpse.InnerPawn?.apparel?.DropAll(InteractionCell, false);
+
+                                            item.Destroy();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Thing takenItem = ingredients.Take(item, amount);
+                                        takenItem.Destroy();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //Item
+                            if (ingredients.Any(thing => thing.def == thingOrderRequest.thingDef))
+                            {
+                                //Grab first stack of Plasteel.
+                                Thing item = ingredients.First(thing => thing.def == thingOrderRequest.thingDef);
+
+                                if (item != null)
+                                {
+                                    int resourceTickAmount = (int)Math.Ceiling((thingOrderRequest.amount / ((float)recipe.timeCost / recipe.resourceTick)));
+
+                                    int amount = Math.Min(resourceTickAmount, item.stackCount);
+                                    Thing takenItem = ingredients.Take(item, amount);
+
+                                    takenItem.Destroy();
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                //Are we done yet?
+                if (craftingTicksLeft > 0)
+                    craftingTicksLeft--;
+                else
+                    crafterStatus = CrafterStatus.Finished;
+            }
+        }
+
+        public virtual void FinishedTick()
+        {
+            if (pawnBeingCrafted != null)
+            {
+                ExtraCrafterTickAction();
+
+                //Clear remaining materials.
+                ingredients.ClearAndDestroyContents();
+
+                //Spawn
+                GenSpawn.Spawn(pawnBeingCrafted, InteractionCell, Map);
+                //Make and send letter.
+                ChoiceLetter letter = LetterMaker.MakeLetter(pawnCraftedLetterLabel.Translate(pawnBeingCrafted.Name.ToStringShort), pawnCraftedLetterText.Translate(pawnBeingCrafted.Name.ToStringFull), LetterDefOf.PositiveEvent, pawnBeingCrafted);
+                Find.LetterStack.ReceiveLetter(letter);
+
+                //Reset
+                pawnBeingCrafted = null;
+                crafterStatus = CrafterStatus.Idle;
+
+                FinishAction();
             }
         }
 

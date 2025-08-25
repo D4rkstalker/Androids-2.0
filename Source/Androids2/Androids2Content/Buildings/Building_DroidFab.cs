@@ -92,7 +92,6 @@ namespace Androids2
                 orderProcessor.requestedItems.Add(costCopy);
             }
 
-            craftingTime = (int)def.timeCost;
             if(def == null)
             {
                 Log.Error("No recipedef for droid crafting!");

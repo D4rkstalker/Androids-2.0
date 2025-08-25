@@ -10,18 +10,6 @@ using Verse.AI;
 
 namespace Androids2
 {
-    public class PawnCrafterWorkgiverProperties : DefModExtension
-    {
-        /// <summary>
-        /// ThingDef to scan for.
-        /// </summary>
-        public ThingDef defToScan;
-
-        /// <summary>
-        /// Fill Job to give.
-        /// </summary>
-        public JobDef fillJob;
-    }
     /// <summary>
     /// Generic variant of the Android Printer WorkGiver which make pawns attempt to fill up the crafter.
     /// </summary>

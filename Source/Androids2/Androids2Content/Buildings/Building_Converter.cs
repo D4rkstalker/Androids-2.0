@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,30 +9,25 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.Sound;
+using VREAndroids;
 
 namespace Androids2
 {
-    public class Building_ConversionChamber : Building_PawnCrafter
+    public class Building_Converter : Building_PawnCrafter
     {
-
-        public Building_ConversionChamber()
-        {
-            innerContainer = new ThingOwner<Thing>(this, false, LookMode.Deep);
-            ingredients = new ThingOwner<Thing>();
-            _power = GetComp<CompPowerTrader>();
-        }
+        public float requestedNutrition = 0f;
 
         public bool HasAnyContents
         {
             get
             {
-                return innerContainer.Count > 0;
+                return ingredients.Count > 0;
             }
         }
 
         public void EjectContents()
         {
-            innerContainer.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near, null, null, true);
+            ingredients.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near, null, null, true);
             contentsKnown = true;
             Notify_PawnEntered();
         }
@@ -54,13 +50,13 @@ namespace Androids2
                 return;
             }
             EjectContents();
-            tickToMod = 0;
+            recipe.timeCost = 0;
         }
 
         // Token: 0x0600003D RID: 61 RVA: 0x000039DF File Offset: 0x00001BDF
         public virtual bool Accepts(Thing thing)
         {
-            return innerContainer.CanAcceptAnyOf(thing, true);
+            return ingredients.CanAcceptAnyOf(thing, true);
         }
 
         // Token: 0x0600003E RID: 62 RVA: 0x000039F0 File Offset: 0x00001BF0
@@ -80,7 +76,7 @@ namespace Androids2
                 }));
                 return false;
             }
-            if (innerContainer.TryAdd(thing, true))
+            if (ingredients.TryAdd(thing, true))
             {
                 if (thing.Faction != null && thing.Faction.IsPlayer)
                 {
@@ -97,9 +93,9 @@ namespace Androids2
         {
             get
             {
-                if (innerContainer.Count != 0)
+                if (ingredients.Count != 0)
                 {
-                    return innerContainer[0];
+                    return ingredients[0];
                 }
                 return null;
             }
@@ -109,32 +105,17 @@ namespace Androids2
             base.Map.mapDrawer.MapMeshDirty(base.Position, 0);//TODO
         }
 
-        private CompPowerTrader PowerCompTrader
-        {
-            get
-            {
-                return _power;
-            }
-        }
-
         // Token: 0x06000047 RID: 71 RVA: 0x00003BC7 File Offset: 0x00001DC7
         private void ResetProcess()
         {
-            crafterStatus = CrafterStatus.WaitingForPawn;
+            crafterStatus = CrafterStatus.Idle;
             orderProcessor.requestedItems.Clear();
         }
 
-        // Token: 0x06000048 RID: 72 RVA: 0x00003BE0 File Offset: 0x00001DE0
-        public bool IsPawnAndroid()
-        {
-            return RaceUtility.IsAndroid(currentPawn);
-        }
-
-        // Token: 0x06000049 RID: 73 RVA: 0x00003BED File Offset: 0x00001DED
         public void InitiatePawnModing()
         {
             newPawn = (Pawn)currentPawn.CloneObjectShallowly();
-            Find.WindowStack.Add(new AndroidConversionWindow(this));
+            Find.WindowStack.Add(new Window_Convert(this,null));
         }
 
         // Token: 0x0600004A RID: 74 RVA: 0x00003BFF File Offset: 0x00001DFF
@@ -186,40 +167,9 @@ namespace Androids2
 
             }
 
-            if (!IsPawnAndroid())
+            if (!currentPawn.IsAndroid())
             {
 
-                AndroidUtility.Androidify(currentPawn);
-                //LifeStageAge lifeStageAge = currentPawn.RaceProps.lifeStageAges[currentPawn.ageTracker.CurLifeStageIndex];
-                //if (lifeStageAge != null)
-                //{
-                //	long num = (long)Math.Ceiling((double)lifeStageAge.minAge) * 3600000L;
-                //	currentPawn.ageTracker.AgeBiologicalTicks = num;
-                //	currentPawn.ageTracker.AgeChronologicalTicks = num;
-                //}
-                //else
-                //{
-                //	long num2 = (long)(currentPawn.RaceProps.lifeExpectancy * 3600000f * 0.2f);
-                //	currentPawn.ageTracker.AgeBiologicalTicks = num2;
-                //	currentPawn.ageTracker.AgeChronologicalTicks = num2;
-                //}
-            }
-            //foreach (ModCommand modCommand in savedChanges)
-            //{
-            //    if (modCommand.isActive)
-            //    {
-            //        if (modCommand.removing)
-            //        {
-            //            modCommand.Remove(currentPawn);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        modCommand.Apply(currentPawn);
-            //    }
-            //}
-            if (!IsPawnAndroid())
-            {
                 foreach (Hediff hediff in currentPawn.health.hediffSet.hediffs)
                 {
                     if (hediff.def.isBad)
@@ -238,14 +188,14 @@ namespace Androids2
             List<Gizmo> list = new List<Gizmo>(base.GetGizmos());
             if (crafterStatus == CrafterStatus.Idle)
             {
-                list.Insert(0, new Gizmo_StartMod(this));
-                list.Insert(0, new Gizmo_AbortMod(this));
+                list.Insert(0, new Gizmo_StartConvert(this));
+                list.Insert(0, new Gizmo_CancelConvert(this));
             }
             else if (crafterStatus == CrafterStatus.Filling)
             {
-                list.Insert(0, new Gizmo_AbortMod(this));
+                list.Insert(0, new Gizmo_CancelConvert(this));
             }
-            if (DebugSettings.godMode && (crafterStatus == CrafterStatus.Filling || crafterStatus == CrafterStatus.Modding))
+            if (DebugSettings.godMode && (crafterStatus == CrafterStatus.Filling || crafterStatus == CrafterStatus.Crafting))
             {
                 list.Insert(0, new Command_Action
                 {
@@ -260,12 +210,6 @@ namespace Androids2
             return list;
         }
 
-        // Token: 0x0600004D RID: 77 RVA: 0x00003E14 File Offset: 0x00002014
-        public bool CanEnter(Pawn testPawn)
-        {
-            string pawnRaceName = testPawn.kindDef.race.defName;
-            return (!(pawnRaceName != "Human") || RaceUtility.AlienRaceKinds.Any((PawnKindDef kind) => kind.race.defName == pawnRaceName)) && Accepts(testPawn);
-        }
 
         // Token: 0x0600004E RID: 78 RVA: 0x00003E75 File Offset: 0x00002075
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn myPawn)
@@ -280,21 +224,21 @@ namespace Androids2
             {
                 yield return floatMenuOption2;
             }
-            if (innerContainer.Count == 0)
+            if (ingredients.Count == 0)
             {
                 if (!ReachabilityUtility.CanReach(myPawn, this, PathEndMode.InteractionCell, Danger.Deadly, false, false, 0))
                 {
                     FloatMenuOption floatMenuOption3 = new FloatMenuOption(Translator.Translate("CannotUseNoPath"), null, MenuOptionPriority.Default, null, null, 0f, null, null, true, 0);
                     yield return floatMenuOption3;
                 }
-                else if (!CanEnter(myPawn))
-                {
-                    FloatMenuOption floatMenuOption4 = new FloatMenuOption(Translator.Translate("CannotBeConverted"), null, MenuOptionPriority.Default, null, null, 0f, null, null, true, 0);
-                    yield return floatMenuOption4;
-                }
+                //else if (!CanEnter(myPawn))
+                //{
+                //    FloatMenuOption floatMenuOption4 = new FloatMenuOption(Translator.Translate("CannotBeConverted"), null, MenuOptionPriority.Default, null, null, 0f, null, null, true, 0);
+                //    yield return floatMenuOption4;
+                //}
                 else
                 {
-                    JobDef jobDef = JobDefOf.DekEnterConversionChamber;
+                    JobDef jobDef = A2_Defof.A2_EnterConverter;
                     string text = Translator.Translate("EnterConversionChamber");
                     Action action = delegate ()
                     {
@@ -339,28 +283,6 @@ namespace Androids2
             }
         }
 
-        // Token: 0x06000051 RID: 81 RVA: 0x00003F94 File Offset: 0x00002194
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_Deep.Look<ThingOwner<Thing>>(ref ingredients, "ingredients", Array.Empty<object>());
-            Scribe_Values.Look<CrafterStatus>(ref crafterStatus, "printerStatus", CrafterStatus.Idle, false);
-            Scribe_Values.Look<int>(ref remainingTickTracker, "printingTicksLeft", 0, false);
-            Scribe_Values.Look<int>(ref nextResourceTick, "nextResourceTick", 0, false);
-            Scribe_Deep.Look<StorageSettings>(ref inputSettings, "inputSettings", Array.Empty<object>());
-            Scribe_Deep.Look<ThingOrderProcessor>(ref orderProcessor, "orderProcessor", new object[]
-            {
-                ingredients,
-                inputSettings
-            });
-            Scribe_Values.Look<int>(ref tickToMod, "totaltimeCost", 0, false);
-            Scribe_Deep.Look<ThingOwner>(ref innerContainer, "innerContainer", new object[]
-            {
-                this
-            });
-            Scribe_Values.Look<bool>(ref contentsKnown, "contentsKnown", false, false);
-            Scribe_Collections.Look<ModCommand>(ref savedChanges, "savedChanges", LookMode.Deep, Array.Empty<object>());
-        }
 
         // Token: 0x06000052 RID: 82 RVA: 0x00004083 File Offset: 0x00002283
         public override void Destroy(DestroyMode mode = 0)
@@ -388,9 +310,9 @@ namespace Androids2
                 string text = "AndroidCrafterStatus";
                 string str = "AndroidCrafterStatusEnum";
                 stringBuilder2.AppendLine(TranslatorFormattedStringExtensions.Translate(text, Translator.Translate(str + crafterStatus.ToString())));
-                if (crafterStatus == CrafterStatus.Modding)
+                if (crafterStatus == CrafterStatus.Crafting)
                 {
-                    stringBuilder.AppendLine(TranslatorFormattedStringExtensions.Translate("AndroidModdingProgress", GenText.ToStringPercent(((float)tickToMod - (float)remainingTickTracker) / (float)tickToMod)));
+                    stringBuilder.AppendLine(TranslatorFormattedStringExtensions.Translate("AndroidModdingProgress", GenText.ToStringPercent(((float)recipe.timeCost - (float)craftingTicksLeft) / (float)recipe.timeCost)));
                 }
                 if (crafterStatus == CrafterStatus.Filling)
                 {
@@ -414,167 +336,12 @@ namespace Androids2
             return result;
         }
 
-        // Token: 0x06000054 RID: 84 RVA: 0x00004234 File Offset: 0x00002434
-        public override void Tick()
-        {
-            base.Tick();
-
-            AdjustPowerNeed();
-            if (!powerComp.PowerOn && soundSustainer != null && !soundSustainer.Ended)
-            {
-                soundSustainer.End();
-            }
-            if (flickableComp == null || (flickableComp != null && flickableComp.SwitchIsOn))
-            {
-                switch (crafterStatus)
-                {
-                    case CrafterStatus.Filling:
-                        handleFillingTick();
-                        return;
-                    case CrafterStatus.Crafting:
-                        handleModdingTick();
-                        return;
-                    case CrafterStatus.Finished:
-                        handleFinalTick();
-                        return;
-                    default:
-                        if (soundSustainer != null && !soundSustainer.Ended)
-                        {
-                            soundSustainer.End();
-                        }
-                        break;
-                }
-            }
-        }
-
-        // Token: 0x06000055 RID: 85 RVA: 0x000042EC File Offset: 0x000024EC
-        public void handleFillingTick()
-        {
-            if (powerComp.PowerOn && Current.Game.tickManager.TicksGame % 300 == 0)
-            {
-                FleckMaker.ThrowSmoke(base.Position.ToVector3(), base.Map, 1f);
-            }
-            IEnumerable<ThingOrderRequest> enumerable = orderProcessor.PendingRequests();
-            bool flag = enumerable == null;
-            if (!flag && enumerable.Count<ThingOrderRequest>() == 0)
-            {
-                flag = true;
-            }
-            if (flag)
-            {
-                crafterStatus = CrafterStatus.Modding;
-            }
-        }
-
-        // Token: 0x06000056 RID: 86 RVA: 0x00004364 File Offset: 0x00002564
-        public void handleModdingTick()
-        {
-            if (powerComp.PowerOn)
-            {
-                if (Current.Game.tickManager.TicksGame % 100 == 0)
-                {
-                    FleckMaker.ThrowSmoke(base.Position.ToVector3(), base.Map, 1.33f);
-                }
-                if (Current.Game.tickManager.TicksGame % 250 == 0)
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        FleckMaker.ThrowMicroSparks(base.Position.ToVector3() + new Vector3((float)Rand.Range(-1, 1), 0f, (float)Rand.Range(-1, 1)), base.Map);
-                    }
-                }
-                if (soundSustainer == null || soundSustainer.Ended)
-                {
-                    SoundDef craftingSound = conversionProperties.craftingSound;
-                    if (craftingSound != null && craftingSound.sustain)
-                    {
-                        SoundInfo soundInfo = SoundInfo.InMap(this, MaintenanceType.PerTick);
-                        soundSustainer = SoundStarter.TrySpawnSustainer(craftingSound, soundInfo);
-                    }
-                }
-                if (soundSustainer != null && !soundSustainer.Ended)
-                {
-                    soundSustainer.Maintain();
-                }
-                nextResourceTick--;
-                if (nextResourceTick <= 0)
-                {
-                    nextResourceTick = conversionProperties.resourceTick;
-                    using (List<ThingOrderRequest>.Enumerator enumerator = orderProcessor.requestedItems.GetEnumerator())
-                    {
-                        while (enumerator.MoveNext())
-                        {
-                            ThingOrderRequest thingOrderRequest = enumerator.Current;
-                            if (thingOrderRequest.nutrition)
-                            {
-                                if (CountNutrition() > 0f)
-                                {
-                                    Thing thing4 = ingredients.First((Thing thing) => thing.def.IsIngestible);
-                                    if (thing4 != null)
-                                    {
-                                        int num = Math.Min((int)Math.Ceiling((double)thingOrderRequest.amount / ((double)tickToMod / (double)conversionProperties.resourceTick)), thing4.stackCount);
-                                        Thing thing2 = null;
-                                        Corpse corpse = thing4 as Corpse;
-                                        if (corpse != null)
-                                        {
-                                            if (RottableUtility.IsDessicated(corpse))
-                                            {
-                                                ingredients.TryDrop(corpse, InteractionCell, base.Map, ThingPlaceMode.Near, 1, out thing2, null, null);
-                                            }
-                                            else
-                                            {
-                                                ingredients.TryDrop(corpse, InteractionCell, base.Map, ThingPlaceMode.Near, 1, out thing2, null, null);
-                                                Pawn innerPawn = corpse.InnerPawn;
-                                                if (innerPawn != null)
-                                                {
-                                                    Pawn_EquipmentTracker equipment = innerPawn.equipment;
-                                                    if (equipment != null)
-                                                    {
-                                                        equipment.DropAllEquipment(InteractionCell, false);
-                                                    }
-                                                    Pawn_ApparelTracker apparel = innerPawn.apparel;
-                                                    if (apparel != null)
-                                                    {
-                                                        apparel.DropAll(InteractionCell, false, true);
-                                                    }
-                                                }
-                                                thing4.Destroy(0);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            ingredients.Take(thing4, num).Destroy(0);
-                                        }
-                                    }
-                                }
-                            }
-                            else if (ingredients.Any((Thing thing) => thing.def == thingOrderRequest.thingDef))
-                            {
-                                Thing thing3 = ingredients.First((Thing thing) => thing.def == thingOrderRequest.thingDef);
-                                if (thing3 != null)
-                                {
-                                    int num2 = Math.Min((int)Math.Ceiling((double)(thingOrderRequest.amount / ((float)tickToMod / (float)conversionProperties.resourceTick))), thing3.stackCount);
-                                    ingredients.Take(thing3, num2).Destroy(0);
-                                }
-                            }
-                        }
-                    }
-                }
-                if (remainingTickTracker > 0)
-                {
-                    remainingTickTracker--;
-                    return;
-                }
-                crafterStatus = CrafterStatus.Finished;
-            }
-        }
-
-        // Token: 0x06000057 RID: 87 RVA: 0x00004700 File Offset: 0x00002900
-        public void handleFinalTick()
+        public override void FinishedTick()
         {
             ingredients.ClearAndDestroyContents(0);
             FilthMaker.TryMakeFilth(InteractionCell, base.Map, RimWorld.ThingDefOf.Filth_Slime, 5, 0);
             ChoiceLetter choiceLetter;
-            if (IsPawnAndroid())
+            if (currentPawn.IsAndroid())
             {
                 choiceLetter = LetterMaker.MakeLetter(TranslatorFormattedStringExtensions.Translate("AndroidConvertLetterLabel", currentPawn.Name.ToStringShort), TranslatorFormattedStringExtensions.Translate("AndroidConvertLetterDescription", currentPawn.Name.ToStringFull), LetterDefOf.PositiveEvent, currentPawn, null, null, null);
             }
@@ -636,23 +403,12 @@ namespace Androids2
         {
             get
             {
-                return innerContainer.First<Thing>() as Pawn;
+                return ingredients.First<Thing>() as Pawn;
             }
         }
         // Token: 0x04000042 RID: 66
         protected bool contentsKnown;
 
-        // Token: 0x04000043 RID: 67
-        private CompPowerTrader _power;
-
-        // Token: 0x04000049 RID: 73
-        protected ThingOwner innerContainer;
-
-        // Token: 0x0400004C RID: 76
-        public int tickToMod;
-
-        // Token: 0x0400004D RID: 77
-        public int remainingTickTracker;
 
         // Token: 0x04000051 RID: 81
         private Graphic cachedGraphicFull;
