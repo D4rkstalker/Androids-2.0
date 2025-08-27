@@ -102,7 +102,7 @@ namespace Androids2
             {
                 collapsedCategories.Add(allDef, value: false);
             }
-            selectedGenes = VREAndroids.Utils.AndroidGenesGenesInOrder.Where(x => x.CanBeRemovedFromAndroid() is false).ToList();
+            selectedGenes = A2_Defof.A2_Synth.xenotypeDef.genes;
             newAndroid = GetNewPawn();
             OnGenesChanged();
         }
@@ -1154,10 +1154,11 @@ namespace Androids2
             }
             station.orderProcessor.requestedItems = requestedItems;
             station.crafterStatus = CrafterStatus.Filling;
-            station.recipe = new AndroidRecipe();
+            station.recipe = A2_Defof.A2_Synth;
             station.recipe.customXenotype = customXenotype;
-            station.recipe.costList = requestedItems;
-            station.recipe.timeCost = finalExtraPrintingTimeCost;
+            station.recipe.costList = A2_Defof.A2_Synth.costList;
+            station.recipe.costList.AddRange(requestedItems);
+            station.recipe.timeCost += finalExtraPrintingTimeCost;
         }
 
         public override void UpdateSearchResults()

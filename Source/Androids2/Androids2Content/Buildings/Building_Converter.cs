@@ -13,21 +13,28 @@ using VREAndroids;
 
 namespace Androids2
 {
+    public enum ConversionMode
+    {
+        Convert,
+        Modify,
+        Repair
+    }
     public class Building_Converter : Building_PawnCrafter
     {
         public float requestedNutrition = 0f;
-
+        public ThingOwner innerContainer;
+        public ConversionMode mode = ConversionMode.Convert;
         public bool HasAnyContents
         {
             get
             {
-                return ingredients.Count > 0;
+                return innerContainer.Count > 0;
             }
         }
 
         public void EjectContents()
         {
-            ingredients.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near, null, null, true);
+            innerContainer.TryDropAll(InteractionCell, Map, ThingPlaceMode.Near, null, null, true);
             contentsKnown = true;
             Notify_PawnEntered();
         }
@@ -56,7 +63,7 @@ namespace Androids2
         // Token: 0x0600003D RID: 61 RVA: 0x000039DF File Offset: 0x00001BDF
         public virtual bool Accepts(Thing thing)
         {
-            return ingredients.CanAcceptAnyOf(thing, true);
+            return innerContainer.CanAcceptAnyOf(thing, true);
         }
 
         // Token: 0x0600003E RID: 62 RVA: 0x000039F0 File Offset: 0x00001BF0
@@ -76,7 +83,7 @@ namespace Androids2
                 }));
                 return false;
             }
-            if (ingredients.TryAdd(thing, true))
+            if (innerContainer.TryAdd(thing, true))
             {
                 if (thing.Faction != null && thing.Faction.IsPlayer)
                 {
@@ -93,9 +100,9 @@ namespace Androids2
         {
             get
             {
-                if (ingredients.Count != 0)
+                if (innerContainer.Count != 0)
                 {
-                    return ingredients[0];
+                    return innerContainer[0];
                 }
                 return null;
             }
@@ -108,14 +115,22 @@ namespace Androids2
         // Token: 0x06000047 RID: 71 RVA: 0x00003BC7 File Offset: 0x00001DC7
         private void ResetProcess()
         {
-            crafterStatus = CrafterStatus.Idle;
+            crafterStatus = CrafterStatus.WaitingForPawn;
             orderProcessor.requestedItems.Clear();
         }
 
         public void InitiatePawnModing()
         {
             newPawn = (Pawn)currentPawn.CloneObjectShallowly();
-            Find.WindowStack.Add(new Window_Convert(this,null));
+            if(currentPawn.IsAndroid())
+            {
+                mode = ConversionMode.Modify;
+            }
+            else
+            {
+                mode = ConversionMode.Convert;
+            }
+            Find.WindowStack.Add(new Window_Convert(this, null));
         }
 
         // Token: 0x0600004A RID: 74 RVA: 0x00003BFF File Offset: 0x00001DFF
@@ -178,6 +193,8 @@ namespace Androids2
                     }
                 }
             }
+            ingredients.ClearAndDestroyContents(0);
+
             Open();
             ResetProcess();
         }
@@ -224,7 +241,7 @@ namespace Androids2
             {
                 yield return floatMenuOption2;
             }
-            if (ingredients.Count == 0)
+            if (innerContainer.Count == 0)
             {
                 if (!ReachabilityUtility.CanReach(myPawn, this, PathEndMode.InteractionCell, Danger.Deadly, false, false, 0))
                 {
@@ -255,6 +272,7 @@ namespace Androids2
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            crafterStatus = CrafterStatus.WaitingForPawn;
             powerComp = base.GetComp<CompPowerTrader>();
             flickableComp = base.GetComp<CompFlickable>();
             if (inputSettings == null)
@@ -269,6 +287,8 @@ namespace Androids2
             {
                 orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
             }
+            innerContainer = new ThingOwner<Thing>(this, false, LookMode.Deep);
+
             AdjustPowerNeed();
         }
 
@@ -282,7 +302,11 @@ namespace Androids2
                 inputSettings.CopyFrom(def.building.defaultStorageSettings);
             }
         }
-
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Deep.Look<ThingOwner>(ref innerContainer, "innerContainer", new object[] { this });
+        }
 
         // Token: 0x06000052 RID: 82 RVA: 0x00004083 File Offset: 0x00002283
         public override void Destroy(DestroyMode mode = 0)
@@ -338,7 +362,6 @@ namespace Androids2
 
         public override void FinishedTick()
         {
-            ingredients.ClearAndDestroyContents(0);
             FilthMaker.TryMakeFilth(InteractionCell, base.Map, RimWorld.ThingDefOf.Filth_Slime, 5, 0);
             ChoiceLetter choiceLetter;
             if (currentPawn.IsAndroid())
@@ -350,6 +373,7 @@ namespace Androids2
                 choiceLetter = LetterMaker.MakeLetter(TranslatorFormattedStringExtensions.Translate("AndroidModLetterLabel", currentPawn.Name.ToStringShort), TranslatorFormattedStringExtensions.Translate("AndroidModLetterDescription", currentPawn.Name.ToStringFull), LetterDefOf.PositiveEvent, currentPawn, null, null, null);
             }
             Find.LetterStack.ReceiveLetter(choiceLetter, null);
+
             CompleteConversion();
         }
 
@@ -403,12 +427,15 @@ namespace Androids2
         {
             get
             {
-                return ingredients.First<Thing>() as Pawn;
+                if(innerContainer.Count == 0)
+                {
+                    return null;
+                }
+                return innerContainer.First<Thing>() as Pawn;
             }
         }
         // Token: 0x04000042 RID: 66
         protected bool contentsKnown;
-
 
         // Token: 0x04000051 RID: 81
         private Graphic cachedGraphicFull;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+    <defName>A2_AndroidCharge</defName>
+    <driverClass>Androids2.JobDriver_A2AndroidCharge</driverClass>
+    <reportString>charging.</reportString>
+  </JobDef>
+
+  <JobDef>
+    <defName>A2_HaulAndroidToCharger</defName>
+    <driverClass>Androids2.JobDriver_HaulAndroidToCharger</driverClass>
+    <reportString>hauling TargetA to charger.</reportString>
+  </JobDef>
+
+</Defs>

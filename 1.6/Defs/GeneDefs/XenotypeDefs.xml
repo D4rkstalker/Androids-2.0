@@ -5,7 +5,7 @@
 		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
 		<genes>
 			<li>VREA_MemoryProcessing</li>
-			<li>A2_BatteryPower</li>
+			<li>VREA_Power</li>
 			<li>VREA_JoyDisabled</li>
 			<li>VREA_BeautyDisabled</li>
 			<li>VREA_ComfortDisabled</li>
@@ -28,6 +28,8 @@
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>A2_SkillFloor_8</li>
 			<li>A2_WorkSpeed_6</li>
+			<li>A2_BatteryPower</li>
+			<li>A2_BasicDroid</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -36,7 +38,7 @@
 		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
 		<genes>
 			<li>VREA_MemoryProcessing</li>
-			<li>A2_BatteryPower</li>
+			<li>VREA_Power</li>
 			<li>VREA_JoyDisabled</li>
 			<li>VREA_BeautyDisabled</li>
 			<li>VREA_ComfortDisabled</li>
@@ -59,6 +61,7 @@
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>A2_SkillFloor_10</li>
 			<li>A2_WorkSpeed_8</li>
+			<li>A2_BatteryPower</li>
 		</genes>
 	</XenotypeDef>
 

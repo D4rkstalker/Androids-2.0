@@ -14,8 +14,8 @@
 		<prioritizeSustains>true</prioritizeSustains>
 		<modExtensions>
 			<li Class="Androids2.PawnCrafterWorkgiverProperties">
-				<defToScan>A2_SynthPrinter</defToScan>
-				<fillJob>A2_FillSynthPrinter</fillJob>
+				<defToScan>A2_Converter</defToScan>
+				<fillJob>A2_FillConverter</fillJob>
 			</li>
 		</modExtensions>
 	</WorkGiverDef>

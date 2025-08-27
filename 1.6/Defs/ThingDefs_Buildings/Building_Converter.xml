@@ -101,7 +101,7 @@
 		</building>
 		<constructionSkillPrerequisite>14</constructionSkillPrerequisite>
 		<inspectorTabs>
-			<li>Androids2.ITab_ContentsConversionChamber</li>
+			<li>Androids2.ITab_ContentsConverter</li>
 			<li>Androids2.ITab_SynthPrinter</li>
 		</inspectorTabs>
 		<researchPrerequisites>

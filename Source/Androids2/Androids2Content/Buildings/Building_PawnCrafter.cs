@@ -29,7 +29,9 @@ namespace Androids2
         /// <summary>
         /// Finished state where it resets itself to Idle.
         /// </summary>
-        Finished
+        Finished,
+
+        WaitingForPawn
     }
 
     /// <summary>

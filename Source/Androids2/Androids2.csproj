@@ -77,13 +77,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Androids2Content\AI\JobDriver.cs" />
+    <Compile Include="Androids2Content\AI\JobDriver_EnterConverter.cs" />
+    <Compile Include="Androids2Content\AI\JobDriver_AndroidCharge.cs" />
+    <Compile Include="Androids2Content\AI\JobDriver_HaulAndroidToCharger.cs" />
+    <Compile Include="Androids2Content\AI\JobGiver_GetAndroidEnergy_Charger.cs" />
     <Compile Include="Androids2Content\AI\PawnCrafterWorkgiverProperties.cs" />
+    <Compile Include="Androids2Content\AI\WorkGiver_HaulAndroidToCharger.cs" />
     <Compile Include="Androids2Content\AI\WorkGIver_PawnCrafter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_Converter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_DroidFab.cs" />
     <Compile Include="Androids2Content\Buildings\Building_PawnCrafter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_SynthPrinter.cs" />
+    <Compile Include="Androids2Content\Buildings\Building_AndroidCharger.cs" />
     <Compile Include="Androids2Content\Buildings\IPawnCrafter.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
@@ -91,8 +96,8 @@
     <Compile Include="Androids2Content\UI\Gizmo_PrinterPawnInfo.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_StartConvert.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_TogglePrinting.cs" />
-    <Compile Include="Androids2Content\UI\ISynthPrinter.cs" />
-    <Compile Include="Androids2Content\UI\ITab_ContentsConversionChamber.cs" />
+    <Compile Include="Androids2Content\UI\ITab_SynthPrinter.cs" />
+    <Compile Include="Androids2Content\UI\ITab_ContentsConverter.cs" />
     <Compile Include="Androids2Content\UI\Window_Convert.cs" />
     <Compile Include="Androids2Content\UI\Window_CreateSynth.cs" />
     <Compile Include="Androids2Content\UI\Window_CustomizeAndroid.cs" />

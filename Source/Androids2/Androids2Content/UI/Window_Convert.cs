@@ -102,8 +102,16 @@ namespace Androids2
             {
                 collapsedCategories.Add(allDef, value: false);
             }
-            selectedGenes = VREAndroids.Utils.AndroidGenesGenesInOrder.Where(x => x.CanBeRemovedFromAndroid() is false).ToList();
-            newAndroid = GetNewPawn();
+            if (station.mode == ConversionMode.Convert)
+            {
+                selectedGenes = A2_Defof.A2_Synth.xenotypeDef.genes;
+
+            }
+            else if (station.mode == ConversionMode.Modify)
+            {
+                selectedGenes = station.currentPawn.genes.GenesListForReading.Where(g => g.def.CanBeRemovedFromAndroid()).Select(g => g.def).ToList();
+            }
+            newAndroid = GetNewPawn(station.currentPawn.gender);
             OnGenesChanged();
         }
 
@@ -268,7 +276,6 @@ namespace Androids2
                 Rect local = new Rect(0f, 0f, rightBottom.width, rightBottom.height);
                 // Traits and Backstories were previously passed rect12; they ignored yMin, so grouping fixes overlap.
                 DrawTraits(local);
-                DrawBackstories(local);
             }
             GUI.EndGroup();
 
@@ -472,9 +479,13 @@ namespace Androids2
                             currentPawnKindDef = raceKind;
 
                             //Figure out default gender.
-                            Gender defaultGender = Gender.Female;
 
-                            newAndroid = GetNewPawn(defaultGender);
+                            newAndroid = GetNewPawn(station.currentPawn.gender);
+                            newAndroid.Drawer.renderer.SetAllGraphicsDirty();
+                            //PortraitsCache.SetDirty(newAndroid);
+                            //PortraitsCache.PortraitsCacheUpdate();
+
+
                         });
                     }
 
@@ -607,62 +618,6 @@ namespace Androids2
 
         }
 
-        public void DrawBackstories(Rect rect)
-        {
-
-            Rect rowRect = new Rect(32f, 64, 256f - 16f, 24f);
-
-            Widgets.DrawBox(rowRect);
-            Widgets.DrawHighlightIfMouseover(rowRect);
-
-            string label = "";
-
-            if (newAndroid.story.Childhood != null)
-                label = "AndroidCustomizationFirstIdentity".Translate() + " " + newAndroid.story.Childhood.TitleCapFor(newAndroid.gender);
-            else
-                label = "AndroidCustomizationFirstIdentity".Translate() + " " + "AndroidNone".Translate();
-
-            if (Widgets.ButtonText(rowRect, label))
-            {
-                IEnumerable<BackstoryDef> backstories = from backstory in (from backstoryDef in DefDatabase<BackstoryDef>.AllDefs.ToList() select backstoryDef)
-                                                        where (backstory.spawnCategories.Any(category => (currentPawnKindDef.backstoryCategories != null && currentPawnKindDef.backstoryCategories.Any(subCategory => subCategory == category))) || backstory.spawnCategories.Contains("ChjAndroid") || backstory.spawnCategories.Contains("ATR_Inorganic") || backstory.spawnCategories.Contains("ATR_Drone") || backstory.spawnCategories.Contains("ATR_GeneralAndroids") || backstory.spawnCategories.Contains("ATR_ViolentAndroids")) && backstory.slot == BackstorySlot.Childhood
-                                                        select backstory;
-                FloatMenuUtility.MakeMenu<BackstoryDef>(backstories, backstory => backstory.TitleCapFor(newAndroid.gender), (BackstoryDef backstory) => delegate
-                {
-                    newChildhoodBackstory = backstory;
-                });
-            }
-
-            if (newAndroid.story.Childhood != null)
-                TooltipHandler.TipRegion(rowRect, newAndroid.story.Childhood.FullDescriptionFor(newAndroid));
-            rowRect = new Rect(32 + 16f + 256f, 32, 256f - 16f, 24f);
-
-            Widgets.DrawBox(rowRect);
-            Widgets.DrawHighlightIfMouseover(rowRect);
-
-            label = "";
-
-            if (newAndroid.story.Adulthood != null)
-                label = "AndroidCustomizationSecondIdentity".Translate() + " " + newAndroid.story.Adulthood.TitleCapFor(newAndroid.gender);
-            else
-                label = "AndroidCustomizationSecondIdentity".Translate() + " " + "AndroidNone".Translate();
-
-            if (Widgets.ButtonText(rowRect, label))
-            {
-                IEnumerable<BackstoryDef> backstories = from backstory in (from backstoryDef in DefDatabase<BackstoryDef>.AllDefs.ToList()
-                                                                           select backstoryDef)
-                                                        where (backstory.spawnCategories.Any(category => currentPawnKindDef.backstoryCategories != null && currentPawnKindDef.backstoryCategories.Any(subCategory => subCategory == category)) || backstory.spawnCategories.Contains("ChjAndroid")) && backstory.slot == BackstorySlot.Adulthood
-                                                        select backstory;
-                FloatMenuUtility.MakeMenu<BackstoryDef>(backstories, backstory => backstory.TitleCapFor(newAndroid.gender), (BackstoryDef backstory) => delegate
-                {
-                    newAdulthoodBackstory = backstory;
-                });
-            }
-
-            if (newAndroid.story.Adulthood != null)
-                TooltipHandler.TipRegion(rowRect, newAndroid.story.Adulthood.FullDescriptionFor(newAndroid));
-
-        }
 
 
 
@@ -1154,10 +1109,11 @@ namespace Androids2
             }
             station.orderProcessor.requestedItems = requestedItems;
             station.crafterStatus = CrafterStatus.Filling;
-            station.recipe = new AndroidRecipe();
+            station.recipe = A2_Defof.A2_Synth;
             station.recipe.customXenotype = customXenotype;
-            station.recipe.costList = requestedItems;
-            station.recipe.timeCost = finalExtraPrintingTimeCost;
+            station.recipe.costList = A2_Defof.A2_Synth.costList;
+            station.recipe.costList.AddRange(requestedItems);
+            station.recipe.timeCost += finalExtraPrintingTimeCost;
         }
 
         public override void UpdateSearchResults()
@@ -1252,6 +1208,10 @@ namespace Androids2
             {
                 pawn.needs?.mood?.thoughts?.situational?.Notify_SituationalThoughtsDirty();
             }
+            pawn.skills.skills = station.currentPawn.skills.skills;
+            pawn.story.traits.allTraits = station.currentPawn.story.traits.allTraits;
+            pawn.story.hairDef = station.currentPawn.story.hairDef;
+            pawn.health.hediffSet.hediffs = station.currentPawn.health.hediffSet.hediffs;
 
             return pawn;
         }

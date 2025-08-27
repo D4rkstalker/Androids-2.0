@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<Androids2.AndroidRecipe>
+		<defName>A2_Synth</defName>
+		<label>Synth</label>
+		<timeCost>1600</timeCost>
+		<xenotypeDef>A2_Synth</xenotypeDef>
+		<nutrition>0</nutrition>
+		<costList>
+			<Steel>225</Steel>
+		</costList>
+	</Androids2.AndroidRecipe>
+
+
+</Defs>

@@ -10,5 +10,13 @@ namespace Androids2
         public static JobDef A2_FillSynthPrinter;
         public static JobDef A2_EnterConverter;
         public static JobDef A2_FillConverter;
+        public static JobDef A2_AndroidCharge;
+        public static JobDef A2_HaulAndroidToCharger;
+
+        public static GeneDef A2_BatteryPower;
+
+        public static ThingDef A2_AndroidRecharger;
+
+        public static AndroidRecipe A2_Synth;
     }
 }
