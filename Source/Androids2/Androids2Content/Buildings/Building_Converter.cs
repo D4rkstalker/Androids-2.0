@@ -1,4 +1,5 @@
 ﻿
+using AlienRace;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -121,7 +122,7 @@ namespace Androids2
 
         public void InitiatePawnModing()
         {
-            newPawn = (Pawn)currentPawn.CloneObjectShallowly();
+            //pawnBeingCrafted = (Pawn)currentPawn.CloneObjectShallowly();
             if(currentPawn.IsAndroid())
             {
                 mode = ConversionMode.Modify;
@@ -146,55 +147,9 @@ namespace Androids2
         // Token: 0x0600004B RID: 75 RVA: 0x00003C2C File Offset: 0x00001E2C
         public void CompleteConversion()
         {
-            if (newPawn != null)
-            {
-                //Log.Warning(currentPawn.story.headType.graphicPath);
-                //Log.Warning(newPawn.story.headType.graphicPath);
-                currentPawn.gender = newPawn.gender;
-                //if (newPawn.def is AlienRace.ThingDef_AlienRace ndef && currentPawn.def is AlienRace.ThingDef_AlienRace cdef)
-                //{
-                //	cdef.alienRace.graphicPaths = ndef.alienRace.graphicPaths;
 
-                //}
-                currentPawn.def = newPawn.def;
-                currentPawn.ChangeKind(newPawn.kindDef);
-                currentPawn.story.headType = newPawn.story.headType;
-                currentPawn.story.bodyType = newPawn.story.bodyType;
-                currentPawn.style = newPawn.style;
-                currentPawn.story.hairDef = newPawn.story.hairDef;
-                currentPawn.story.SkinColorBase = newPawn.story.SkinColor;
-                //currentPawn.health.hediffSet.hediffs = newPawn.health.hediffSet.hediffs;
-                //currentPawn.skills.skills = newPawn.skills.skills;
-                //currentPawn.story.traits.allTraits = newPawn.story.traits.allTraits;
-
-
-
-                //currentPawn.ageTracker = newPawn.ageTracker;
-                //long ageInTicks = 18 * (long)GenDate.TicksPerYear;
-
-                //currentPawn.ageTracker.AgeBiologicalTicks = ageInTicks;
-                //currentPawn.ageTracker.AgeChronologicalTicks = ageInTicks;
-
-
-                currentPawn.Drawer.renderer.SetAllGraphicsDirty();
-                //PortraitsCache.SetDirty(currentPawn);
-                //PortraitsCache.PortraitsCacheUpdate();
-
-            }
-
-            if (!currentPawn.IsAndroid())
-            {
-
-                foreach (Hediff hediff in currentPawn.health.hediffSet.hediffs)
-                {
-                    if (hediff.def.isBad)
-                    {
-                        currentPawn.health.RemoveHediff(hediff);
-                    }
-                }
-            }
             ingredients.ClearAndDestroyContents(0);
-
+            
             Open();
             ResetProcess();
         }
@@ -425,6 +380,17 @@ namespace Androids2
         // (get) Token: 0x0600005A RID: 90 RVA: 0x00004A68 File Offset: 0x00002C68
         public Pawn currentPawn
         {
+            set
+            {
+                if (value != null)
+                {
+                    innerContainer.ClearAndDestroyContents(0);
+
+                    innerContainer.TryAdd(value, true);
+                    contentsKnown = true;
+                    Notify_PawnEntered();
+                }
+            }
             get
             {
                 if(innerContainer.Count == 0)
@@ -440,7 +406,6 @@ namespace Androids2
         // Token: 0x04000051 RID: 81
         private Graphic cachedGraphicFull;
 
-        public Pawn newPawn;
     }
 
 }

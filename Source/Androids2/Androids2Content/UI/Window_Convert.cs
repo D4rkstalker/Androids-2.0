@@ -1090,30 +1090,71 @@ namespace Androids2
         }
         public void AcceptInner()
         {
-            CustomXenotype customXenotype = new CustomXenotype();
-            customXenotype.name = xenotypeName?.Trim();
-            customXenotype.inheritable = false;
-            customXenotype.iconDef = iconDef;
-            AndroidMakerPatch.ApplyXenotype(newAndroid, selectedGenes, false);
-            station.pawnBeingCrafted = newAndroid;
-            foreach (GeneDef gene in selectedGenes)
+            if (station.currentPawn != null)
             {
-                station.pawnBeingCrafted.genes.AddGene(gene, false);
-                customXenotype.genes.Add(gene);
-                if (gene is A2GeneDef geneAndroid)
+
+                CustomXenotype customXenotype = new CustomXenotype();
+                customXenotype.name = xenotypeName?.Trim();
+                customXenotype.inheritable = false;
+                customXenotype.iconDef = iconDef;
+                station.orderProcessor.requestedItems = requestedItems;
+                station.crafterStatus = CrafterStatus.Filling;
+                station.recipe = A2_Defof.A2_Synth;
+                station.recipe.customXenotype = customXenotype;
+                station.recipe.costList = A2_Defof.A2_Synth.costList;
+                station.recipe.costList.AddRange(requestedItems);
+                station.recipe.timeCost += finalExtraPrintingTimeCost;
+                if (station.currentPawn == null)
                 {
-                    finalExtraPrintingTimeCost += geneAndroid.timeCost;
-                    station.requestedNutrition += geneAndroid.nutrition;
-                    requestedItems.AddRange(geneAndroid.costList);
+                    Log.Error("No pawn to convert!");
+                    return;
                 }
+                if (!station.currentPawn.IsAndroid())
+                {
+
+                    for (int i = station.currentPawn.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
+                    {
+                        Hediff hediff = station.currentPawn.health.hediffSet.hediffs[i];
+                        if (hediff.def.isBad)
+                        {
+                            station.currentPawn.health.hediffSet.hediffs.RemoveAt(i);
+                        }
+                    }
+                }
+
+                station.currentPawn.gender = newAndroid.gender;
+                station.currentPawn.def = newAndroid.def;
+                station.currentPawn.ChangeKind(newAndroid.kindDef);
+                station.currentPawn.story.headType = newAndroid.story.headType;
+                station.currentPawn.story.bodyType = newAndroid.story.bodyType;
+                station.currentPawn.style = newAndroid.style;
+                station.currentPawn.story.hairDef = newAndroid.story.hairDef;
+                station.currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
+                station.currentPawn.RaceProps.body = newAndroid.RaceProps.body;
+
+                AndroidMakerPatch.ApplyXenotype(station.currentPawn, selectedGenes, false);
+                foreach (GeneDef gene in selectedGenes)
+                {
+                    station.currentPawn.genes.AddGene(gene, false);
+                    customXenotype.genes.Add(gene);
+                    if (gene is A2GeneDef geneAndroid)
+                    {
+                        finalExtraPrintingTimeCost += geneAndroid.timeCost;
+                        station.requestedNutrition += geneAndroid.nutrition;
+                        requestedItems.AddRange(geneAndroid.costList);
+                    }
+                }
+
+                station.currentPawn.Drawer.renderer.SetAllGraphicsDirty();
+                Log.Warning("newPawn: " + station.currentPawn.kindDef.ToString());
+
             }
-            station.orderProcessor.requestedItems = requestedItems;
-            station.crafterStatus = CrafterStatus.Filling;
-            station.recipe = A2_Defof.A2_Synth;
-            station.recipe.customXenotype = customXenotype;
-            station.recipe.costList = A2_Defof.A2_Synth.costList;
-            station.recipe.costList.AddRange(requestedItems);
-            station.recipe.timeCost += finalExtraPrintingTimeCost;
+            else
+            {
+                Log.Warning("No new pawn data to convert to!");
+            }
+
+
         }
 
         public override void UpdateSearchResults()
