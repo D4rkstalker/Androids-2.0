@@ -1128,10 +1128,19 @@ namespace Androids2
                 station.currentPawn.story.headType = newAndroid.story.headType;
                 station.currentPawn.story.bodyType = newAndroid.story.bodyType;
                 station.currentPawn.style = newAndroid.style;
-                station.currentPawn.story.hairDef = newAndroid.story.hairDef;
+                station.currentPawn.story.hairDef = null;
+                //station.currentPawn.story.hairDef = newAndroid.story.hairDef;
                 station.currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
                 station.currentPawn.RaceProps.body = newAndroid.RaceProps.body;
-
+                if(station.currentPawn.def is ThingDef_AlienRace alien && newAndroid.def is ThingDef_AlienRace src_alien)
+                {
+                    AlienPartGenerator.AlienComp alienComp = station.currentPawn.GetComp<AlienPartGenerator.AlienComp>();
+                    if (alienComp != null)
+                    {
+                        alienComp.UpdateColors();
+                        alienComp.RegenerateAddonsForced();
+                    }
+                }
                 AndroidMakerPatch.ApplyXenotype(station.currentPawn, selectedGenes, false);
                 foreach (GeneDef gene in selectedGenes)
                 {
@@ -1145,7 +1154,6 @@ namespace Androids2
                     }
                 }
 
-                station.currentPawn.Drawer.renderer.SetAllGraphicsDirty();
                 Log.Warning("newPawn: " + station.currentPawn.kindDef.ToString());
 
             }

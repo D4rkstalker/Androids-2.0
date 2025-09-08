@@ -68,7 +68,7 @@
 		</building>
 		<constructionSkillPrerequisite>8</constructionSkillPrerequisite>
 		<researchPrerequisites>
-			<li>ChJDroidPrinter</li>
+			<li>A2_BasicDroid</li>
 		</researchPrerequisites>
 	</ThingDef>
 </Defs>

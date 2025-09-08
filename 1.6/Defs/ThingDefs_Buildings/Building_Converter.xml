@@ -105,7 +105,7 @@
 			<li>Androids2.ITab_SynthPrinter</li>
 		</inspectorTabs>
 		<researchPrerequisites>
-			<li>DekAndroidConversion</li>
+			<li>BasicMechtech</li>
 		</researchPrerequisites>
 		<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
 	</ThingDef>

@@ -14,6 +14,8 @@ namespace Androids2
         public static JobDef A2_HaulAndroidToCharger;
 
         public static GeneDef A2_BatteryPower;
+        public static GeneDef A2_BasicDroid;
+        public static GeneDef A2_AdvancedDroid;
 
         public static ThingDef A2_AndroidRecharger;
 

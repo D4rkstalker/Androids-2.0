@@ -30,6 +30,9 @@
 			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_BasicDroid</li>
+			<li>ATK_AnthrowolfFur</li>
+			<li>ATK_AnthrowolfEars</li>
+			<li>ATK_AnthrowolfTail</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -62,6 +65,10 @@
 			<li>A2_SkillFloor_10</li>
 			<li>A2_WorkSpeed_8</li>
 			<li>A2_BatteryPower</li>
+			<li>ATK_AnthrofoxFur</li>
+			<li>ATK_AnthrofoxEars</li>
+			<li>ATK_AnthrofoxTail</li>
+			<li>ATK_AnthrofoxFacialStripes</li>
 		</genes>
 	</XenotypeDef>
 
@@ -79,6 +86,7 @@
 			<li>VREA_ColdTolerant</li>
 			<li>VREA_HeatTolerant</li>
 			<li>VREA_PsychicallyDeaf</li>
+			<li>A2_BatteryPower</li>
 		</genes>
 	</XenotypeDef>
 	

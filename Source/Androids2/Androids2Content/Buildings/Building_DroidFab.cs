@@ -123,6 +123,8 @@ namespace Androids2
             pawnBeingCrafted.apparel?.wornApparel?.Clear();
             pawnBeingCrafted.equipment?.equipment?.Clear();
             pawnBeingCrafted.inventory?.innerContainer?.Clear();
+            pawnBeingCrafted.story.traits.allTraits.Clear();
+            pawnBeingCrafted.story.adulthood = null;
             crafterStatus = CrafterStatus.Filling;
         }
 

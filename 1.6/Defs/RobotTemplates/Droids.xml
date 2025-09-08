@@ -7,7 +7,8 @@
 		<xenotypeDef>A2_BasicDroid</xenotypeDef>
 		<nutrition>0</nutrition>
 		<costList>
-			<Steel>225</Steel>
+			<Steel>150</Steel>
+			<ComponentIndustrial>15</ComponentIndustrial>
 		</costList>
 	</Androids2.AndroidRecipe>
 
@@ -18,7 +19,10 @@
 		<xenotypeDef>A2_AdvancedDroid</xenotypeDef>
 		<nutrition>0</nutrition>
 		<costList>
-			<Steel>225</Steel>
+			<Plasteel>200</Plasteel>
+			<Gold>10</Gold>
+			<ComponentIndustrial>10</ComponentIndustrial>
+			<ComponentSpacer>15</ComponentSpacer>
 		</costList>
 	</Androids2.AndroidRecipe>
 

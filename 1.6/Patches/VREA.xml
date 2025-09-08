@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<operations>
+
+			
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/prerequisites</xpath>
+				<value>
+					<prerequisites>
+						<li>MicroelectronicsBasics</li>
+					</prerequisites>
+				</value>
+			</li>
+
+		</operations>
+	</Operation>
+</Patch>
