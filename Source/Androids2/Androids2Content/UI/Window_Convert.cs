@@ -1104,48 +1104,14 @@ namespace Androids2
                 station.recipe.costList = A2_Defof.A2_Synth.costList;
                 station.recipe.costList.AddRange(requestedItems);
                 station.recipe.timeCost += finalExtraPrintingTimeCost;
+                station.newAndroid = newAndroid;
                 if (station.currentPawn == null)
                 {
                     Log.Error("No pawn to convert!");
                     return;
                 }
-                if (!station.currentPawn.IsAndroid())
-                {
-
-                    for (int i = station.currentPawn.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
-                    {
-                        Hediff hediff = station.currentPawn.health.hediffSet.hediffs[i];
-                        if (hediff.def.isBad)
-                        {
-                            station.currentPawn.health.hediffSet.hediffs.RemoveAt(i);
-                        }
-                    }
-                }
-
-                station.currentPawn.gender = newAndroid.gender;
-                station.currentPawn.def = newAndroid.def;
-                station.currentPawn.ChangeKind(newAndroid.kindDef);
-                station.currentPawn.story.headType = newAndroid.story.headType;
-                station.currentPawn.story.bodyType = newAndroid.story.bodyType;
-                station.currentPawn.style = newAndroid.style;
-                station.currentPawn.story.hairDef = null;
-                //station.currentPawn.story.hairDef = newAndroid.story.hairDef;
-                station.currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
-                station.currentPawn.RaceProps.body = newAndroid.RaceProps.body;
-                if(station.currentPawn.def is ThingDef_AlienRace alien && newAndroid.def is ThingDef_AlienRace src_alien)
-                {
-                    AlienPartGenerator.AlienComp alienComp = station.currentPawn.GetComp<AlienPartGenerator.AlienComp>();
-                    if (alienComp != null)
-                    {
-                        alienComp.UpdateColors();
-                        alienComp.RegenerateAddonsForced();
-                    }
-                }
-                AndroidMakerPatch.ApplyXenotype(station.currentPawn, selectedGenes, false);
                 foreach (GeneDef gene in selectedGenes)
                 {
-                    station.currentPawn.genes.AddGene(gene, false);
-                    customXenotype.genes.Add(gene);
                     if (gene is A2GeneDef geneAndroid)
                     {
                         finalExtraPrintingTimeCost += geneAndroid.timeCost;
@@ -1154,7 +1120,6 @@ namespace Androids2
                     }
                 }
 
-                Log.Warning("newPawn: " + station.currentPawn.kindDef.ToString());
 
             }
             else

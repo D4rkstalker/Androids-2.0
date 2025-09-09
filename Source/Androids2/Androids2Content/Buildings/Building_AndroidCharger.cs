@@ -13,259 +13,142 @@ namespace Androids2
 {
 
     // Token: 0x02002A35 RID: 10805
-    [StaticConstructorOnStartup]
-    public class Building_AndroidCharger : Building
+    [HotSwappable]
+    public class Building_AndroidCharger : Building_Bed
     {
-        // Token: 0x17002539 RID: 9529
-        // (get) Token: 0x0600EF81 RID: 61313 RVA: 0x00458548 File Offset: 0x00456748
-        public CompPowerTrader Power
-        {
-            get
-            {
-                return this.TryGetComp<CompPowerTrader>();
-            }
-        }
+        public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
 
-        // Token: 0x1700253A RID: 9530
-        // (get) Token: 0x0600EF82 RID: 61314 RVA: 0x00458550 File Offset: 0x00456750
-        public bool IsPowered
+        public CompPowerTrader compPower;
+        public float chargeRate = 0.001f; 
+        public Pawn CurOccupant
         {
             get
             {
-                return Power.PowerOn;
-            }
-        }
-
-        // Token: 0x1700253D RID: 9533
-        // (get) Token: 0x0600EF85 RID: 61317 RVA: 0x0045859C File Offset: 0x0045679C
-        public CompThingContainer Container
-        {
-            get
-            {
-                if (container == null)
+                List<Thing> list = Map.thingGrid.ThingsListAt(this.Position);
+                for (int i = 0; i < list.Count; i++)
                 {
-                    container = base.GetComp<CompThingContainer>();
+                    Pawn pawn = list[i] as Pawn;
+                    if (pawn != null && pawn.IsAndroid() && pawn.pather.moving is false)
+                    {
+                        return pawn;
+                    }
                 }
-                return container;
+                return null;
             }
         }
-
-        // Token: 0x1700253E RID: 9534
-        // (get) Token: 0x0600EF86 RID: 61318 RVA: 0x004585B8 File Offset: 0x004567B8
-        public GenDraw.FillableBarRequest BarDrawData
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            get
-            {
-                return def.building.BarDrawDataFor(base.Rotation);
-            }
+            base.SpawnSetup(map, respawningAfterLoad);
+            chargers.Add(this);
+            compPower = this.TryGetComp<CompPowerTrader>();
+            this.Medical = true;
         }
 
-        // Token: 0x1700253F RID: 9535
-        // (get) Token: 0x0600EF87 RID: 61319 RVA: 0x004585D0 File Offset: 0x004567D0
-        private Material WireMaterial
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            get
-            {
-                if (wireMaterial == null)
-                {
-                    wireMaterial = MaterialPool.MatFrom("Other/BundledWires", ShaderDatabase.Transparent, Color.white);
-                }
-                return wireMaterial;
-            }
+            base.DeSpawn(mode);
+            chargers.Remove(this);
         }
-
-        // Token: 0x17002540 RID: 9536
-        // (get) Token: 0x0600EF88 RID: 61320 RVA: 0x00458600 File Offset: 0x00456800
-        private bool IsAttachedToMech
+        public override string GetInspectString()
         {
-            get
-            {
-                return currentlyChargingMech != null && wireExtensionTicks >= 70;
-            }
+            this.Medical = false;
+            this.def.building.bed_humanlike = false;
+            var sb = new StringBuilder(base.GetInspectString() + "\n");
+            this.Medical = true;
+            this.def.building.bed_humanlike = true;
+            return sb.ToString().TrimEndNewlines();
         }
 
-        // Token: 0x17002544 RID: 9540
-        // (get) Token: 0x0600EF8C RID: 61324 RVA: 0x0045866B File Offset: 0x0045686B
-        public Pawn CurrentlyChargingMech
-        {
-            get
-            {
-                return currentlyChargingMech;
-            }
-        }
-
-        // Token: 0x0600EF8D RID: 61325 RVA: 0x00458673 File Offset: 0x00456873
-        public override void PostPostMake()
-        {
-            if (!ModLister.CheckBiotech("Mech recharger"))
-            {
-                Destroy(DestroyMode.Vanish);
-                return;
-            }
-            base.PostPostMake();
-        }
-
-        // Token: 0x0600EF8E RID: 61326 RVA: 0x00458690 File Offset: 0x00456890
-        public bool CanPawnChargeCurrently(Pawn pawn)
-        {
-            if (Power.PowerNet == null)
-            {
-                return false;
-            }
-            if (IsPowered)
-            {
-                if (!pawn.IsAndroid() || !pawn.HasActiveGene(A2_Defof.A2_BatteryPower))
-                {
-                    return false;
-                }
-
-                if (currentlyChargingMech == null)
-                {
-                    return true;
-                }
-                if (currentlyChargingMech == pawn)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        // Token: 0x0600EF92 RID: 61330 RVA: 0x0045874C File Offset: 0x0045694C
         public override void Tick()
         {
             base.Tick();
-            if (currentlyChargingMech != null && (currentlyChargingMech.CurJobDef != A2_Defof.A2_AndroidCharge || currentlyChargingMech.CurJob.targetA.Thing != this))
+            var occupant = CurOccupant;
+            if (occupant != null)
             {
-                Log.Warning("Mech did not clean up his charging job properly");
-                StopCharging();
-            }
-            if (currentlyChargingMech != null && Power.PowerOn)
-            {
-                var hediff = currentlyChargingMech.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
-                if (hediff != null)
+                occupant.Rotation = Rot4.South;
+                if (occupant.jobs.curDriver is JobDriver_LayDown)
                 {
-                    hediff.Energy += 0.001f;
+                    occupant.jobs.curDriver.rotateToFace = TargetIndex.C;
                 }
-
-                if (moteCablePulse == null || moteCablePulse.Destroyed)
-                {
-                    moteCablePulse = MoteMaker.MakeInteractionOverlay(ThingDefOf.Mote_ChargingCablesPulse, this, new TargetInfo(InteractionCell, base.Map, false));
-                }
-                Mote mote = moteCablePulse;
-                if (mote != null)
-                {
-                    mote.Maintain();
-                }
-            }
-            if (currentlyChargingMech != null && Power.PowerOn && IsAttachedToMech)
-            {
-                if (sustainerCharging == null)
-                {
-                    sustainerCharging = SoundDefOf.MechChargerCharging.TrySpawnSustainer(SoundInfo.InMap(this, MaintenanceType.None));
-                }
-                sustainerCharging.Maintain();
-                if (moteCharging == null || moteCharging.Destroyed)
-                {
-                    moteCharging = MoteMaker.MakeAttachedOverlay(currentlyChargingMech, ThingDefOf.Mote_MechCharging, Vector3.zero, 1f, -1f);
-                }
-                Mote mote2 = moteCharging;
-                if (mote2 != null)
-                {
-                    mote2.Maintain();
-                }
-            }
-            else if (sustainerCharging != null && (currentlyChargingMech == null || !Power.PowerOn))
-            {
-                sustainerCharging.End();
-                sustainerCharging = null;
-            }
-            if (wireExtensionTicks < 70)
-            {
-                wireExtensionTicks++;
             }
         }
-        // Token: 0x0600EF95 RID: 61333 RVA: 0x004589B8 File Offset: 0x00456BB8
-        public void StartCharging(Pawn mech)
+        public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
-            if (!ModLister.CheckBiotech("Mech charging"))
+            foreach (var opt in base.GetFloatMenuOptions(selPawn))
             {
-                return;
+                yield return opt;
             }
-            if (currentlyChargingMech != null)
+            if (this.Faction == Faction.OfPlayer && selPawn.HasActiveGene(A2_Defof.A2_BatteryPower))
             {
-                Log.Error("Tried charging on already charging mech charger!");
-                return;
+                var cannotUseReason = CannotUseNowReason(selPawn);
+                if (cannotUseReason.NullOrEmpty())
+                {
+                    yield return new FloatMenuOption("Androids2.Recharge".Translate(), delegate
+                    {
+                        if (CompAssignableToPawn.AssignedPawns.Contains(selPawn) is false)
+                        {
+                            CompAssignableToPawn.TryAssignPawn(selPawn);
+                        }
+                        selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(A2_Defof.A2_AndroidCharge, this));
+                    });
+                }
+                else
+                {
+                    yield return new FloatMenuOption("Androids2.Recharge".Translate() + ": " + cannotUseReason, null);
+                }
             }
-            if (!mech.IsColonyMech)
-            {
-                mech.jobs.EndCurrentJob(JobCondition.Incompletable, true, true);
-                return;
-            }
-            currentlyChargingMech = mech;
-
-            wireExtensionTicks = 0;
-            SoundDefOf.MechChargerStart.PlayOneShot(this);
         }
-
-        // Token: 0x0600EF96 RID: 61334 RVA: 0x00458A2C File Offset: 0x00456C2C
-        public void StopCharging()
+        public override IEnumerable<Gizmo> GetGizmos()
         {
-            if (currentlyChargingMech == null)
+            foreach (Gizmo gizmo in base.GetGizmos())
             {
-                Log.Error("Tried stopping charging on currently not charging mech charger!");
-                return;
+                if (gizmo is Command_Toggle toggle)
+                {
+                    if (toggle.defaultLabel == "CommandBedSetAsMedicalLabel".Translate())
+                    {
+                        continue;
+                    }
+                }
+                yield return gizmo;
             }
-            currentlyChargingMech = null;
-            wireExtensionTicks = 0;
         }
 
-        // Token: 0x0600EF97 RID: 61335 RVA: 0x00458A84 File Offset: 0x00456C84
-        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        public string CannotUseNowReason(Pawn selPawn)
         {
-            if (base.BeingTransportedOnGravship)
+            if (compPower != null && !compPower.PowerOn)
             {
-                base.DeSpawn(mode);
-                return;
+                return "NoPower".Translate().CapitalizeFirst();
             }
-            if (currentlyChargingMech != null && mode != DestroyMode.WillReplace)
+            if (!selPawn.CanReach(this, PathEndMode.OnCell, Danger.Deadly))
             {
-                Messages.Message("MessageMechChargerDestroyedMechGoesBerserk".Translate(currentlyChargingMech.Named("PAWN")), new LookTargets(currentlyChargingMech), MessageTypeDefOf.NegativeEvent, true);
-                currentlyChargingMech.mindState.mentalStateHandler.TryStartMentalState(MentalStateDefOf.BerserkMechanoid, null, false, false, false, null, false, false, false);
+                return "NoPath".Translate().CapitalizeFirst();
             }
-            base.DeSpawn(mode);
+            if (!selPawn.CanReserve(this))
+            {
+                Pawn pawn = selPawn.Map.reservationManager.FirstRespectedReserver(this, selPawn);
+                if (pawn == null)
+                {
+                    pawn = selPawn.Map.physicalInteractionReservationManager.FirstReserverOf(selPawn);
+                }
+                if (pawn != null)
+                {
+                    return "ReservedBy".Translate(pawn.LabelShort, pawn);
+                }
+                else
+                {
+                    return "Reserved".Translate();
+                }
+            }
+            if (CurOccupant != null)
+            {
+                return "VREA.AndroidStandIsOccupied".Translate();
+            }
+            if (!RestUtility.CanUseBedNow(this, selPawn, checkSocialProperness: false))
+            {
+                return "VREA.CannotUse".Translate();
+            }
+            return null;
         }
-        // Token: 0x0600EF9C RID: 61340 RVA: 0x00458CBC File Offset: 0x00456EBC
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_References.Look<Pawn>(ref currentlyChargingMech, "currentlyChargingMech", false);
-            Scribe_Values.Look<int>(ref wireExtensionTicks, "wireExtensionTicks", 0, false);
-        }
 
-        // Token: 0x04009E3A RID: 40506
-        private Pawn currentlyChargingMech;
-
-        // Token: 0x04009E3C RID: 40508
-        private int wireExtensionTicks = 70;
-
-        // Token: 0x04009E3E RID: 40510
-        private CompThingContainer container;
-
-        // Token: 0x04009E3F RID: 40511
-        private Sustainer sustainerCharging;
-
-        // Token: 0x04009E40 RID: 40512
-        private Mote moteCharging;
-
-        // Token: 0x04009E41 RID: 40513
-        private Mote moteCablePulse;
-
-        // Token: 0x04009E42 RID: 40514
-        public const float ChargePerDay = 50f;
-
-        // Token: 0x04009E48 RID: 40520
-        private Material wireMaterial;
     }
-
 }

@@ -5,36 +5,36 @@ using RimWorld;
 
 public class JobGiver_GetAndroid_Charger : ThinkNode_JobGiver
 {
-    public static Building_AndroidCharger GetClosestCharger(Pawn mech, Pawn carrier, bool forced)
+    public static Building_AndroidCharger GetClosestCharger(Pawn android, Pawn carrier, bool forced)
     {
-        if (!mech.Spawned || !carrier.Spawned)
+        if (!android.Spawned || !carrier.Spawned)
         {
             return null;
         }
 
         Danger danger = (forced ? Danger.Deadly : Danger.Some);
-        return (Building_AndroidCharger)GenClosest.ClosestThingReachable(mech.Position, mech.Map, ThingRequest.ForDef(A2_Defof.A2_AndroidRecharger), PathEndMode.InteractionCell, TraverseParms.For(carrier, danger), 9999f, delegate (Thing t)
+        return (Building_AndroidCharger)GenClosest.ClosestThingReachable(android.Position, android.Map, ThingRequest.ForDef(A2_Defof.A2_AndroidCharger), PathEndMode.InteractionCell, TraverseParms.For(carrier, danger), 9999f, delegate (Thing t)
         {
-            Building_AndroidCharger building_MechCharger = (Building_AndroidCharger)t;
+            Building_AndroidCharger building_androidCharger = (Building_AndroidCharger)t;
             if (!carrier.CanReach(t, PathEndMode.InteractionCell, danger))
             {
                 return false;
             }
 
-            if (carrier != mech)
+            if (carrier != android)
             {
-                if (!forced && building_MechCharger.Map.reservationManager.ReservedBy(building_MechCharger, carrier))
+                if (!forced && building_androidCharger.Map.reservationManager.ReservedBy(building_androidCharger, carrier))
                 {
                     return false;
                 }
 
-                if (forced && KeyBindingDefOf.QueueOrder.IsDownEvent && building_MechCharger.Map.reservationManager.ReservedBy(building_MechCharger, carrier))
+                if (forced && KeyBindingDefOf.QueueOrder.IsDownEvent && building_androidCharger.Map.reservationManager.ReservedBy(building_androidCharger, carrier))
                 {
                     return false;
                 }
             }
 
-            return !t.IsForbidden(carrier) && carrier.CanReserve(t, 1, -1, null, forced) && building_MechCharger.CanPawnChargeCurrently(mech);
+            return !t.IsForbidden(carrier) && carrier.CanReserve(t, 1, -1, null, forced) && building_androidCharger.CannotUseNowReason(android) == null;
         });
     }
 

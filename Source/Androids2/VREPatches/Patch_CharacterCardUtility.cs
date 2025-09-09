@@ -88,7 +88,7 @@ namespace Androids2
                     {
                         Rect rect7 = new Rect(sectionRect.x, num8, ___leftRect.width, 22f);
                         Text.Anchor = TextAnchor.MiddleLeft;
-                        Widgets.Label(rect7, (value6 == BackstorySlot.Adulthood) ? "Adulthood".Translate() : "Childhood".Translate());
+                        Widgets.Label(rect7, (value6 == BackstorySlot.Adulthood) ? "Baseline".Translate() : "Model".Translate());
                         Text.Anchor = TextAnchor.UpperLeft;
                         string text = backstory.TitleCapFor(___pawn.gender);
                         Rect rect8 = new Rect(rect7);

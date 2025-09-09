@@ -13,13 +13,89 @@
 		<tab>Androids2</tab>
 		<label>Basic Droids</label>
 		<description>Allows colonists to manufacture basic droids. Less efficient than dedicated mechanoids, but have higher base skill levels</description>
-		<baseCost>200</baseCost>
+		<baseCost>1000</baseCost>
 		<techLevel>Industrial</techLevel>
 		<prerequisites>
-			<li>Machining</li>
+			<li>MicroelectronicsBasics</li>
+			<li>BasicMechtech</li>
 		</prerequisites>
 		<researchViewX>0</researchViewX>
 		<researchViewY>1</researchViewY>
+	</ResearchProjectDef>
+	
+	<ResearchProjectDef>
+		<defName>A2_AdvanceDroid</defName>
+		<tab>Androids2</tab>
+		<label>Advance Droids</label>
+		<description>Allows colonists to manufacture advance droids. A overall upgrade to the basic droid, with a higher power draw</description>
+		<baseCost>1500</baseCost>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<requiredResearchFacilities>
+			<li>MultiAnalyzer</li>
+		</requiredResearchFacilities>
+		<techLevel>Spacer</techLevel>
+		<prerequisites>
+			<li>MultiAnalyzer</li>
+			<li>StandardMechtech</li>
+			<li>A2_BasicDroid</li>
+		</prerequisites>
+		<researchViewX>1</researchViewX>
+		<researchViewY>1</researchViewY>
+	</ResearchProjectDef>
+
+	<ResearchProjectDef>
+		<defName>A2_BattleDroids</defName>
+		<tab>Androids2</tab>
+		<label>Battle Droids</label>
+		<description>Allows colonists to manufacture specialized battle droids.</description>
+		<baseCost>1500</baseCost>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<requiredResearchFacilities>
+			<li>MultiAnalyzer</li>
+		</requiredResearchFacilities>
+		<techLevel>Spacer</techLevel>
+		<prerequisites>
+			<li>A2_AdvanceDroid</li>
+		</prerequisites>
+		<researchViewX>1</researchViewX>
+		<researchViewY>2</researchViewY>
+	</ResearchProjectDef>
+
+	<ResearchProjectDef>
+		<defName>A2_Synthetics</defName>
+		<tab>Androids2</tab>
+		<label>Synthetics</label>
+		<description>Synthetics are an upgrade to androids, featuring full customizability with added compatibility for special hardware upgrades.</description>
+		<baseCost>2500</baseCost>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<requiredResearchFacilities>
+			<li>MultiAnalyzer</li>
+		</requiredResearchFacilities>
+		<techLevel>Spacer</techLevel>
+		<prerequisites>
+			<li>VREA_AndroidTech</li>
+			<li>UltraMechtech</li>
+		</prerequisites>
+		<researchViewX>1</researchViewX>
+		<researchViewY>2</researchViewY>
+	</ResearchProjectDef>
+
+	<ResearchProjectDef>
+		<defName>A2_Converter</defName>
+		<tab>Androids2</tab>
+		<label>Synthetic Converter</label>
+		<description>Convert organic pawns to synths.</description>
+		<baseCost>2500</baseCost>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<requiredResearchFacilities>
+			<li>MultiAnalyzer</li>
+		</requiredResearchFacilities>
+		<techLevel>Spacer</techLevel>
+		<prerequisites>
+			<li>A2_Synthetics</li>
+		</prerequisites>
+		<researchViewX>1</researchViewX>
+		<researchViewY>3</researchViewY>
 	</ResearchProjectDef>
 
 

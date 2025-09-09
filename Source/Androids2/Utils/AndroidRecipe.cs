@@ -21,7 +21,8 @@ namespace Androids2
         public int nutrition = 0;
         public int timeCost = 0;
         public int progress = 0;
-
+        public bool hidden = false;
+        public BackstoryDef backstory;
         public override void ResolveReferences()
         {
             base.ResolveReferences();

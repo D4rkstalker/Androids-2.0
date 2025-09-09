@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!--============================== childhood ============================-->
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Civ</defName>
+		<title>civilian</title>
+		<titleShort>civilian</titleShort>
+		<titleFemale>civilian</titleFemale>
+		<titleShortFemale>civilian</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>[PAWN_nameDef] is a mass produced android, [PAWN_pronoun] is designed to perform a wide variety of tasks, as long as it isn't too physically demanding.</baseDesc>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Artistic>1</Artistic>
+			<Crafting>1</Crafting>
+			<Cooking>1</Cooking>
+			<Medicine>1</Medicine>
+			<Intellectual>1</Intellectual>
+			<Social>1</Social>
+		</skillGains>
+
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Ind</defName>
+		<title>industrial</title>
+		<titleShort>industrial</titleShort>
+		<titleFemale>industrial</titleFemale>
+		<titleShortFemale>industrial</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>[PAWN_nameDef] is a specialized industrial android, [PAWN_pronoun] is designed to be used in heavy industries and other physically demanding fields.</baseDesc>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Animals>1</Animals>
+			<Construction>2</Construction>
+			<Mining>2</Mining>
+			<Plants>1</Plants>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Mil</defName>
+		<title>military</title>
+		<titleShort>military</titleShort>
+		<titleFemale>military</titleFemale>
+		<titleShortFemale>military</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>[PAWN_nameDef] is a specialized military android, [PAWN_pronoun] is designed to be used in a variety of combat roles.</baseDesc>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Shooting>2</Shooting>
+			<Melee>2</Melee>
+			<Medicine>1</Medicine>
+			<Construction>1</Construction>
+		</skillGains>
+	</BackstoryDef>
+	
+	
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Brawler</defName>
+		<title>Brawler</title>
+		<titleShort>Brawler</titleShort>
+		<titleFemale>Brawler</titleFemale>
+		<titleShortFemale>Brawler</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to fight up close and personal, though [PAWN_pronoun] is still capable with a gun.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Shooting>1</Shooting>
+			<Melee>2</Melee>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Ranger</defName>
+		<title>Ranger</title>
+		<titleShort>Ranger</titleShort>
+		<titleFemale>Ranger</titleFemale>
+		<titleShortFemale>Ranger</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to be a good shot, though [PAWN_pronoun] is still capable of stabbing anyone who comes too close.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Shooting>2</Shooting>
+			<Melee>1</Melee>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Builder</defName>
+		<title>Builder</title>
+		<titleShort>Builder</titleShort>
+		<titleFemale>Builder</titleFemale>
+		<titleShortFemale>Builder</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] the builder has been programmed to assist in construction projects.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>2</Construction>
+			<Mining>1</Mining>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Chef</defName>
+		<title>Chef</title>
+		<titleShort>Chef</titleShort>
+		<titleFemale>Chef</titleFemale>
+		<titleShortFemale>Chef</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to try not to give everyone food poisioning.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Cooking>2</Cooking>
+			<Plants>1</Plants>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Researcher</defName>
+		<title>Researcher</title>
+		<titleShort>Researcher</titleShort>
+		<titleFemale>Researcher</titleFemale>
+		<titleShortFemale>Researcher</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to push the boundaries of science.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Intellectual>2</Intellectual>
+			<Crafting>1</Crafting>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Medic</defName>
+		<title>Medic</title>
+		<titleShort>Medic</titleShort>
+		<titleFemale>Medic</titleFemale>
+		<titleShortFemale>Medic</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to keep people alive.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Medicine>2</Medicine>
+			<Social>1</Social>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Architect</defName>
+		<title>Architect</title>
+		<titleShort>Architect</titleShort>
+		<titleFemale>Architect</titleFemale>
+		<titleShortFemale>Architect</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to design nightmares for engineers.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Artistic>2</Artistic>
+			<Crafting>1</Crafting>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Handler</defName>
+		<title>Handler</title>
+		<titleShort>Handler</titleShort>
+		<titleFemale>Handler</titleFemale>
+		<titleShortFemale>Handler</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed with an understanding of animal husbandry.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Animals>2</Animals>
+			<Social>1</Social>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Engineer</defName>
+		<title>Engineer</title>
+		<titleShort>Engineer</titleShort>
+		<titleFemale>Engineer</titleFemale>
+		<titleShortFemale>Engineer</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to create, no matter how outrageous the design.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Crafting>2</Crafting>
+			<Intellectual>1</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Prospector</defName>
+		<title>Prospector</title>
+		<titleShort>Prospector</titleShort>
+		<titleFemale>Prospector</titleFemale>
+		<titleShortFemale>Prospector</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to yearn for the mines.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Mining>2</Mining>
+			<Construction>1</Construction>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Servitor</defName>
+		<title>Servitor</title>
+		<titleShort>Servitor</titleShort>
+		<titleFemale>Servitor</titleFemale>
+		<titleShortFemale>Servitor</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to take care of people who are unabel to take care of themselves.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Cooking>1</Cooking>
+			<Crafting>1</Crafting>
+			<Social>1</Social>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_Gardener</defName>
+		<title>Gardener</title>
+		<titleShort>Gardener</titleShort>
+		<titleFemale>Gardener</titleFemale>
+		<titleShortFemale>Gardener</titleShortFemale>
+		<slot>Adulthood</slot>
+		<baseDesc>[PAWN_nameDef] has been programmed to take care of plants and the occasional animal.</baseDesc>
+		<spawnCategories>
+			<li>A2_Specialization</li>
+		</spawnCategories>
+		<skillGains>
+			<Plants>1</Plants>
+			<Animals>1</Animals>
+		</skillGains>
+	</BackstoryDef>
+
+</Defs>

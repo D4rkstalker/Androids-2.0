@@ -1,5 +1,6 @@
 ﻿
 using AlienRace;
+using Androids2.Utils;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace Androids2
         public float requestedNutrition = 0f;
         public ThingOwner innerContainer;
         public ConversionMode mode = ConversionMode.Convert;
+        public List<GeneDef> selectedGenes = new List<GeneDef>();
+        public Pawn newAndroid;
         public bool HasAnyContents
         {
             get
@@ -149,7 +152,46 @@ namespace Androids2
         {
 
             ingredients.ClearAndDestroyContents(0);
-            
+            if (!currentPawn.IsAndroid())
+            {
+
+                for (int i = currentPawn.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
+                {
+                    Hediff hediff = currentPawn.health.hediffSet.hediffs[i];
+                    if (hediff.def.isBad)
+                    {
+                        currentPawn.health.hediffSet.hediffs.RemoveAt(i);
+                    }
+                }
+            }
+
+            currentPawn.gender = newAndroid.gender;
+            currentPawn.def = newAndroid.def;
+            currentPawn.ChangeKind(newAndroid.kindDef);
+            currentPawn.story.headType = newAndroid.story.headType;
+            currentPawn.story.bodyType = newAndroid.story.bodyType;
+            currentPawn.style = newAndroid.style;
+            currentPawn.story.hairDef = null;
+            //currentPawn.story.hairDef = newAndroid.story.hairDef;
+            currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
+            currentPawn.RaceProps.body = newAndroid.RaceProps.body;
+            if (currentPawn.def is ThingDef_AlienRace alien && newAndroid.def is ThingDef_AlienRace src_alien)
+            {
+                AlienPartGenerator.AlienComp alienComp = currentPawn.GetComp<AlienPartGenerator.AlienComp>();
+                if (alienComp != null)
+                {
+                    alienComp.UpdateColors();
+                    alienComp.RegenerateAddonsForced();
+                }
+            }
+            AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false);
+            foreach (GeneDef gene in selectedGenes)
+            {
+                currentPawn.genes.AddGene(gene, false);
+                recipe.customXenotype.genes.Add(gene);
+            }
+
+            Log.Warning("newPawn: " + currentPawn.kindDef.ToString());
             Open();
             ResetProcess();
         }

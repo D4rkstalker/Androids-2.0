@@ -8,8 +8,16 @@
 				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/prerequisites</xpath>
 				<value>
 					<prerequisites>
-						<li>MicroelectronicsBasics</li>
+						<li>AdvancedFabrication</li>
+						<li>HighMechtech</li>
+						<li>A2_AdvanceDroid</li>
 					</prerequisites>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/tab</xpath>
+				<value>
+					<tab>Androids2</tab>
 				</value>
 			</li>
 

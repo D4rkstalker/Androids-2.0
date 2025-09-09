@@ -2,69 +2,60 @@
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 using VREAndroids;
 
 namespace Androids2
 {
-    // Token: 0x020013A1 RID: 5025
+
     public class JobDriver_A2AndroidCharge : JobDriver
     {
-        // Token: 0x17001365 RID: 4965
-        // (get) Token: 0x06007B06 RID: 31494 RVA: 0x00250AD3 File Offset: 0x0024ECD3
-        public Building_AndroidCharger Charger
-        {
-            get
-            {
-                return (Building_AndroidCharger)this.job.targetA.Thing;
-            }
-        }
-
-        // Token: 0x06007B07 RID: 31495 RVA: 0x00250AEA File Offset: 0x0024ECEA
+        public Building_AndroidCharger AndroidCharger => job.targetA.Thing as Building_AndroidCharger;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            return this.pawn.Reserve(this.Charger, this.job, 1, -1, null, errorOnFailed, false);
+            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
         }
 
-        // Token: 0x06007B08 RID: 31496 RVA: 0x00250B12 File Offset: 0x0024ED12
+        private Mote moteCharging;
+
         public override IEnumerable<Toil> MakeNewToils()
         {
-            this.FailOnDespawnedOrNull(TargetIndex.A);
-            this.FailOn(() => !this.Charger.CanPawnChargeCurrently(this.pawn));
-            yield return Toils_Goto.Goto(TargetIndex.A, PathEndMode.InteractionCell).FailOnForbidden(TargetIndex.A);
-            Toil toil = ToilMaker.MakeToil("MakeNewToils");
-            toil.defaultCompleteMode = ToilCompleteMode.Never;
-            toil.initAction = delegate ()
+            this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            this.FailOnBurningImmobile(TargetIndex.A);
+            this.FailOn(() => AndroidCharger.compPower != null && AndroidCharger.compPower.PowerOn is false);
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.OnCell);
+            Toil toil = new Toil();
+            toil.initAction = delegate
             {
-                this.Charger.StartCharging(this.pawn);
+                toil.actor.pather.StopDead();
             };
-            toil.AddFinishAction(delegate
-            {
-                if (this.Charger.CurrentlyChargingMech == this.pawn)
-                {
-                    this.Charger.StopCharging();
-                }
-            });
+            toil.defaultCompleteMode = ToilCompleteMode.Never;
             toil.handlingFacing = true;
-            Toil toil2 = toil;
-            toil2.tickIntervalAction = (Action<int>)Delegate.Combine(toil2.tickIntervalAction, new Action<int>(delegate (int delta)
+            toil.tickAction = delegate
             {
-                this.pawn.rotationTracker.FaceTarget(this.Charger.Position);
-                var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
-                if (hediff != null)
+                toil.actor.Rotation = Rot4.South;
+                var memorySpace = this.pawn.needs.TryGetNeed<Need_MemorySpace>();
+                var memorySpaceGain = memorySpace.curLevelInt + (1f /
+                    (float)MentalState_Reformatting.TicksToRecoverFromReformatting(pawn, null) * 0.2f);
+                memorySpace.curLevelInt = Mathf.Min(1f, memorySpaceGain);
+                var power = this.pawn.needs.TryGetNeed<Need_ReactorPower>();
+                var powerGain = power.curLevelInt + AndroidCharger.chargeRate;
+                power.curLevelInt = Mathf.Min(1f, powerGain);
+                if (memorySpace.curLevelInt == 1f && power.curLevelInt == 1f)
                 {
-                    if (hediff.Energy >= 0.99f)
-                    {
-                        base.ReadyForNextToil();
-                    }
+                    this.EndJobWith(JobCondition.Succeeded);
                 }
-            }));
+
+                if (moteCharging == null || moteCharging.Destroyed)
+                {
+                    moteCharging = MoteMaker.MakeAttachedOverlay(pawn, VREA_DefOf.VREA_Mote_AndroidReformatting, Vector3.zero);
+                }
+                moteCharging?.Maintain();
+            };
             yield return toil;
-            yield break;
         }
 
-        // Token: 0x0400532D RID: 21293
-        private const TargetIndex ChargerInd = TargetIndex.A;
     }
 }

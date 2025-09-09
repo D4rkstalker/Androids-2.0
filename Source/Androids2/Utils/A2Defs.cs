@@ -17,7 +17,7 @@ namespace Androids2
         public static GeneDef A2_BasicDroid;
         public static GeneDef A2_AdvancedDroid;
 
-        public static ThingDef A2_AndroidRecharger;
+        public static ThingDef A2_AndroidCharger;
 
         public static AndroidRecipe A2_Synth;
     }

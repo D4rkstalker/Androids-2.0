@@ -27,9 +27,13 @@ namespace Androids2
             List<FloatMenuOption> floatMenuOptions = new List<FloatMenuOption>();
             foreach (AndroidRecipe def in DefDatabase<AndroidRecipe>.AllDefs.OrderBy(def => def.orderID))
             {
+                if(def.hidden)
+                {
+                    continue;
+                }
                 bool disabled = false;
                 string labelText = "";
-                if (def.requiredResearch != null && !def.requiredResearch.IsFinished)
+                if (def.requiredResearch != null && !def.requiredResearch.IsFinished )
                 {
                     disabled = true;
                 }
@@ -114,6 +118,12 @@ namespace Androids2
                     pawnBeingCrafted.genes.RemoveGene(existingGene);
                 }
             }
+            for (int i = pawnBeingCrafted.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
+            {
+                Hediff hediff = pawnBeingCrafted.health.hediffSet.hediffs[i];
+                pawnBeingCrafted.health.hediffSet.hediffs.RemoveAt(i);
+                
+            }
 
             foreach (GeneDef gene in recipe.customXenotype.genes.OrderByDescending(x => x.CanBeRemovedFromAndroid() is false).ToList())
             {
@@ -125,7 +135,11 @@ namespace Androids2
             pawnBeingCrafted.inventory?.innerContainer?.Clear();
             pawnBeingCrafted.story.traits.allTraits.Clear();
             pawnBeingCrafted.story.adulthood = null;
+            if(recipe.backstory != null)
+                pawnBeingCrafted.story.childhood = recipe.backstory;
             crafterStatus = CrafterStatus.Filling;
+            pawnBeingCrafted.Drawer.renderer.EnsureGraphicsInitialized();
+
         }
 
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Child_Advanced</defName>
+		<title>Advanced model</title>
+		<titleShort>Advanced</titleShort>
+		<baseDesc>[PAWN_nameDef] was a high-end mass-produced Android model; [PAWN_pronoun] AI imprint uses a higher-order sentience emulation technologies than are available on most Urbworlds. It is highly stable and with sufficient life experience is able to fool Voight-Kampff exams not administered by Rick Deckard.</baseDesc>
+		<slot>Childhood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>4</Social>
+			<Cooking>1</Cooking>
+			<Medicine>1</Medicine>
+			<Crafting>2</Crafting>
+			<Construction>2</Construction>
+			<Plants>2</Plants>
+			<Animals>4</Animals>
+			<Intellectual>2</Intellectual>
+			<Shooting>1</Shooting>
+			<Melee>1</Melee>
+			<Artistic>3</Artistic>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Child_Replicant</defName>
+		<title>Artifical Child model</title>
+		<titleShort>Deckard</titleShort>
+		<baseDesc>[PAWN_nameDef] was designed to replace a human being in every way; [PAWN_pronoun] AI imprint uses sentience emulation technologies that are illegal throughout all civilized worlds as it designed to make humans irrelevant.</baseDesc>
+		<slot>Childhood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>3</Social>
+			<Cooking>2</Cooking>
+			<Medicine>3</Medicine>
+			<Crafting>4</Crafting>
+			<Construction>4</Construction>
+			<Plants>3</Plants>
+			<Animals>1</Animals>
+			<Intellectual>5</Intellectual>
+			<Shooting>2</Shooting>
+			<Melee>1</Melee>
+			<Artistic>1</Artistic>
+		</skillGains>
+	</BackstoryDef>
+	
+</Defs>

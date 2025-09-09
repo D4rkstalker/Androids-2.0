@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Replicant</defName>
+		<title>Artificial Human</title>
+		<titleShort>Nexus23</titleShort>
+		<baseDesc>[PAWN_nameDef] replaced a human being, taking over their entire life.  Unfortunately, their mistake was in not eliminating all witnesses and they were forced to flee to the Rim.</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>2</Construction>
+			<Shooting>6</Shooting>
+			<Medicine>-2</Medicine>
+			<Social>-2</Social>
+			<Plants>-1</Plants>
+			<Mining>0</Mining>
+			<Melee>8</Melee>
+			<Crafting>2</Crafting>
+			<Cooking>-2</Cooking>
+			<Intellectual>2</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Archotech</defName>
+		<title>Archotect Infiltrator</title>
+		<titleShort>Infiltrator</titleShort>
+		<baseDesc>[PAWN_nameDef] was created by an archotech to infiltrate human society and report back.  [PAWN_pronoun] designer went a bit overboard on the empathy emulation thinking it would help...</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>-2</Construction>
+			<Shooting>0</Shooting>
+			<Medicine>0</Medicine>
+			<Social>10</Social>
+			<Plants>-4</Plants>
+			<Mining>0</Mining>
+			<Melee>0</Melee>
+			<Crafting>0</Crafting>
+			<Cooking>0</Cooking>
+			<Intellectual>6</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Assassin</defName>
+		<title>Assassin Unit</title>
+		<titleShort>Assassin</titleShort>
+		<baseDesc>[PAWN_nameDef] was designed to find and kill targets without exception or mercy.  Extra features make [PAWN_pronoun] an excellent killer, but not someone you'd want watching your kids.</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>-2</Construction>
+			<Shooting>10</Shooting>
+			<Social>5</Social>
+			<Plants>0</Plants>
+			<Mining>0</Mining>
+			<Melee>10</Melee>
+			<Crafting>0</Crafting>
+			<Cooking>0</Cooking>
+			<Intellectual>2</Intellectual>
+		</skillGains>
+		<workDisables>
+			<li>Caring</li>
+			<li>Artistic</li>
+		</workDisables>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Shocktrooper</defName>
+		<title>Frontline Assaulter</title>
+		<titleShort>Shocktrooper</titleShort>
+		<baseDesc>[PAWN_nameDef] was made to the be a defName part of the frontline assaults for a major Glittertech empire.  Eventually they were replaced by nwer models.</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>-4</Construction>
+			<Shooting>10</Shooting>
+			<Social>-4</Social>
+			<Plants>-4</Plants>
+			<Mining>2</Mining>
+			<Melee>10</Melee>
+			<Crafting>-2</Crafting>
+			<Cooking>-2</Cooking>
+			<Intellectual>-4</Intellectual>
+		</skillGains>
+		<workDisables>
+			<li>Caring</li>
+			<li>Artistic</li>
+		</workDisables>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Sexbot</defName>
+		<title>House Madam</title>
+		<titleShort>Madam</titleShort>
+		<baseDesc>[PAWN_nameDef] lasted long enough in the trade to take over their place of business.  The Rim is just a new place to find customers and break up brawls.</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>1</Construction>
+			<Shooting>2</Shooting>
+			<Medicine>6</Medicine>
+			<Social>12</Social>
+			<Plants>2</Plants>
+			<Mining>-6</Mining>
+			<Melee>4</Melee>
+			<Crafting>0</Crafting>
+			<Cooking>3</Cooking>
+			<Intellectual>0</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Physicist</defName>
+		<title>Engineered Scientist</title>
+		<titleShort>Physicist</titleShort>
+		<baseDesc>[PAWN_nameDef]'s intended role was to serve as a researcher for replicating Glitterworld technologies.  The lack of social development however resulted in a being that cares only for logic and nothing for life.</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>6</Construction>
+			<Shooting>-4</Shooting>
+			<Medicine>4</Medicine>
+			<Social>-10</Social>
+			<Plants>2</Plants>
+			<Mining>-6</Mining>
+			<Melee>-8</Melee>
+			<Crafting>6</Crafting>
+			<Cooking>-6</Cooking>
+			<Intellectual>14</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Humancyborgrelations</defName>
+		<title>Diplomatic Envoy</title>
+		<titleShort>Threepio</titleShort>
+		<baseDesc>[PAWN_nameDef] was created to serve as a diplomatic envoy for missions too dangerous for a human.  [PAWN_nameDef] and [PAWN_pronoun] kindred's disposable nature led to them developing some "issues".</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>0</Construction>
+			<Shooting>0</Shooting>
+			<Medicine>0</Medicine>
+			<Social>8</Social>
+			<Plants>0</Plants>
+			<Mining>0</Mining>
+			<Melee>0</Melee>
+			<Crafting>0</Crafting>
+			<Cooking>0</Cooking>
+			<Intellectual>6</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>ChJAndroid_Adult_Mechanoid</defName>
+		<title>Mechanoid Sympathizer</title>
+		<titleShort>Mecha-lover</titleShort>
+		<baseDesc>[PAWN_nameDef] loathes humanity with a passion and wants to be one with the machine overlords. [PAWN_nameDef] can't be happy until all their synthetic organics are replaced with artifical parts, even if they need to rip them off still-living humans to get them.</baseDesc>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<skillGains>
+			<Construction>1</Construction>
+			<Shooting>4</Shooting>
+			<Medicine>2</Medicine>
+			<Social>-4</Social>
+			<Plants>-4</Plants>
+			<Mining>-2</Mining>
+			<Melee>4</Melee>
+			<Crafting>2</Crafting>
+			<Cooking>-6</Cooking>
+			<Intellectual>6</Intellectual>
+		</skillGains>
+	</BackstoryDef>
+	
+</Defs>

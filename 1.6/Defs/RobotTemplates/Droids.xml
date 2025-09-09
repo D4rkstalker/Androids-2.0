@@ -3,19 +3,20 @@
 	<Androids2.AndroidRecipe>
 		<defName>A2_BasicDroid</defName>
 		<label>Basic Droid</label>
-		<timeCost>1600</timeCost>
+		<timeCost>2000</timeCost>
 		<xenotypeDef>A2_BasicDroid</xenotypeDef>
 		<nutrition>0</nutrition>
 		<costList>
 			<Steel>150</Steel>
 			<ComponentIndustrial>15</ComponentIndustrial>
 		</costList>
+		<backstory>A2_BasicDroid</backstory>
 	</Androids2.AndroidRecipe>
 
 	<Androids2.AndroidRecipe>
 		<defName>A2_AdvancedDroid</defName>
 		<label>Advanced Droid</label>
-		<timeCost>1600</timeCost>
+		<timeCost>5000</timeCost>
 		<xenotypeDef>A2_AdvancedDroid</xenotypeDef>
 		<nutrition>0</nutrition>
 		<costList>
@@ -24,6 +25,50 @@
 			<ComponentIndustrial>10</ComponentIndustrial>
 			<ComponentSpacer>15</ComponentSpacer>
 		</costList>
+		<backstory>A2_AdvancedDroid</backstory>
+		<requiredResearch>A2_AdvanceDroid</requiredResearch>
+	</Androids2.AndroidRecipe>
+
+	<Androids2.AndroidRecipe>
+		<defName>A2_SkirmishDroid</defName>
+		<label>Battle Droid (Skirmisher)</label>
+		<timeCost>2000</timeCost>
+		<xenotypeDef>A2_SkirmisherDroid</xenotypeDef>
+		<nutrition>0</nutrition>
+		<costList>
+			<Steel>100</Steel>
+			<ComponentIndustrial>10</ComponentIndustrial>
+		</costList>
+		<backstory>A2_SkirmishDroid</backstory>
+		<requiredResearch>A2_BattleDroids</requiredResearch>
+	</Androids2.AndroidRecipe>
+
+	<Androids2.AndroidRecipe>
+		<defName>A2_LineDroid</defName>
+		<label>Battle Droid (Line)</label>
+		<timeCost>1000</timeCost>
+		<xenotypeDef>A2_LineDroid</xenotypeDef>
+		<nutrition>0</nutrition>
+		<costList>
+			<Steel>50</Steel>
+			<ComponentIndustrial>8</ComponentIndustrial>
+		</costList>
+		<backstory>A2_LineDroid</backstory>
+		<requiredResearch>A2_BattleDroids</requiredResearch>
+	</Androids2.AndroidRecipe>
+
+	<Androids2.AndroidRecipe>
+		<defName>A2_JuggernautDroid</defName>
+		<label>Battle Droid (Juggernaut)</label>
+		<timeCost>2000</timeCost>
+		<xenotypeDef>A2_JuggernautDroid</xenotypeDef>
+		<nutrition>0</nutrition>
+		<costList>
+			<Steel>100</Steel>
+			<ComponentIndustrial>10</ComponentIndustrial>
+		</costList>
+		<backstory>A2_JuggernautDroid</backstory>
+		<requiredResearch>A2_BattleDroids</requiredResearch>
 	</Androids2.AndroidRecipe>
 
 </Defs>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<XenotypeDef>
-		<defName>A2_BasicDroid</defName>
+		<defName>A2_LineDroid</defName>
 		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
 		<genes>
 			<li>VREA_MemoryProcessing</li>
@@ -27,18 +27,17 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
-			<li>A2_SkillFloor_8</li>
 			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_BasicDroid</li>
-			<li>ATK_AnthrowolfFur</li>
-			<li>ATK_AnthrowolfEars</li>
-			<li>ATK_AnthrowolfTail</li>
+			<li>ATK_AnthrohyenaFur</li>
+			<li>ATK_AnthrohyenaEars</li>
+			<li>ATK_AnthrohyenaTail</li>
 		</genes>
 	</XenotypeDef>
 	
 	<XenotypeDef>
-		<defName>A2_AdvancedDroid</defName>
+		<defName>A2_SkirmisherDroid</defName>
 		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
 		<genes>
 			<li>VREA_MemoryProcessing</li>
@@ -64,24 +63,29 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
-			<li>A2_SkillFloor_10</li>
-			<li>A2_WorkSpeed_8</li>
+			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
-			<li>A2_AdvancedDroid</li>
-			<li>ATK_AnthrodrakeSkin</li>
-			<li>ATK_AnthrodrakeHeadbone</li>
-			<li>ATK_AnthrodrakeHeadbone_Spiraled</li>
-			<li>ATK_AnthrodrakeEars</li>
-			<li>ATK_AnthrodrakeTail</li>
+			<li>A2_BasicDroid</li>
+			<li>ATK_AnthrocatFur</li>
+			<li>ATK_AnthrocatEars</li>
+			<li>ATK_AnthrocatTail</li>
 		</genes>
 	</XenotypeDef>
-
+	
+	
 	<XenotypeDef>
-		<defName>A2_Synth</defName>
+		<defName>A2_JuggernautDroid</defName>
 		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
 		<genes>
 			<li>VREA_MemoryProcessing</li>
 			<li>VREA_Power</li>
+			<li>VREA_JoyDisabled</li>
+			<li>VREA_BeautyDisabled</li>
+			<li>VREA_ComfortDisabled</li>
+			<li>VREA_OutdoorsDisabled</li>
+			<li>VREA_DrugDesireDisabled</li>
+			<li>VREA_RoomSizeDisabled</li>
+			<li>VREA_PainDisabled</li>
 			<li>VREA_SyntheticBody</li>
 			<li>VREA_NeutroCirculation</li>
 			<li>VREA_SyntheticImmunity</li>
@@ -89,8 +93,20 @@
 			<li>VREA_ComponentOverheating</li>
 			<li>VREA_ColdTolerant</li>
 			<li>VREA_HeatTolerant</li>
+			<li>VREA_NoSkillGain</li>
+			<li>VREA_Uninspired</li>
 			<li>VREA_PsychicallyDeaf</li>
+			<li>VREA_MentalBreaksDisabled</li>
+			<li>VREA_PsychologyDisabled</li>
+			<li>VREA_AntiAwakeningProtocols</li>
+			<li>VREA_SelfDestructProtocols</li>
+			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
+			<li>A2_BasicDroid</li>
+			<li>ATK_AnthrogriffFur</li>
+			<li>ATK_AnthrogriffEars</li>
+			<li>ATK_AnthrogriffTail</li>
+			<li>ATK_AnthrogriffBackbone</li>
 		</genes>
 	</XenotypeDef>
 	

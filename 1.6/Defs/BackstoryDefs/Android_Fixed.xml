@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!--============================== Colony android ============================-->
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_BasicDroid</defName>
+		<title>basic droid</title>
+		<titleShort>basic droid</titleShort>
+		<titleFemale>basic droid</titleFemale>
+		<titleShortFemale>basic droid</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>A simple minded robot that does what you tell it to do.</baseDesc>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<workDisables>
+		  <li>Intellectual</li>
+		  <li>Caring</li>
+		  <li>Social</li>
+		</workDisables>
+	</BackstoryDef>
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_AdvancedDroid</defName>
+		<title>droid</title>
+		<titleShort>advanced droid</titleShort>
+		<titleFemale>advanced droid</titleFemale>
+		<titleShortFemale>advanced droid</titleShortFemale>
+		<slot>Childhood</slot>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<baseDesc>A more advanced robot that does what you tell it to do.</baseDesc>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_LineDroid</defName>
+		<title>line droid</title>
+		<titleShort>line droid</titleShort>
+		<titleFemale>line droid</titleFemale>
+		<titleShortFemale>line droid</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>A battle droid used as cheap front line fighters.</baseDesc>
+		<skillGains>
+			<Shooting>10</Shooting>
+			<Melee>10</Melee>
+		</skillGains>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<workDisables>
+		  <li>Intellectual</li>
+		  <li>ManualDumb</li>
+		  <li>ManualSkilled</li>
+		  <li>Social</li>
+		  <li>Caring</li>
+		</workDisables>
+
+	</BackstoryDef>
+	
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_SkirmishDroid</defName>
+		<title>skirmisher droid</title>
+		<titleShort>skirmisher droid</titleShort>
+		<titleFemale>skirmisher droid</titleFemale>
+		<titleShortFemale>skirmisher droid</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>A battle droid speicalized in hit and run tactics.</baseDesc>
+		<skillGains>
+			<Shooting>15</Shooting>
+			<Melee>15</Melee>
+		</skillGains>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<workDisables>
+		  <li>Intellectual</li>
+		  <li>ManualDumb</li>
+		  <li>ManualSkilled</li>
+		  <li>Social</li>
+		  <li>Caring</li>
+		</workDisables>
+	</BackstoryDef>
+
+	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
+		<defName>A2_JuggernautDroid</defName>
+		<title>juggernaut droid</title>
+		<titleShort>juggernaut droid</titleShort>
+		<titleFemale>juggernaut droid</titleFemale>
+		<titleShortFemale>juggernaut droid</titleShortFemale>
+		<slot>Childhood</slot>
+		<baseDesc>A heavily armored battle droid designed to smash through enemy lines.</baseDesc>
+		<skillGains>
+			<Melee>20</Melee>
+			<Shooting>10</Shooting>
+		</skillGains>
+		<spawnCategories>
+			<li>A2_Model</li>
+		</spawnCategories>
+		<workDisables>
+		  <li>Intellectual</li>
+		  <li>ManualDumb</li>
+		  <li>ManualSkilled</li>
+		  <li>Social</li>
+		  <li>Caring</li>
+		</workDisables>
+	</BackstoryDef>
+
+</Defs>

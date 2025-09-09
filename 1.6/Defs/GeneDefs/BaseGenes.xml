@@ -14,7 +14,7 @@
 		<costList>
 			<ComponentIndustrial>8</ComponentIndustrial>
 		</costList>
-		
+		<moddable>false</moddable>
 		<modExtensions>
 			<li Class="Androids2.SkillFloor">
 				<floor>8</floor>
@@ -36,6 +36,7 @@
 		<costList>
 			<ComponentIndustrial>8</ComponentIndustrial>
 		</costList>
+		<moddable>false</moddable>
 		
 		<modExtensions>
 			<li Class="Androids2.SkillFloor">
@@ -44,7 +45,7 @@
 		</modExtensions>	
 	</Androids2.A2GeneDef>
 
-	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_WorkSpeed_6</defName>
 		<label>Work Speed: 60%</label>
 		<description>Basic droids are built to be cheap and flexible, at the expense of efficiency and speed.</description>
@@ -57,9 +58,10 @@
 		<statFactors>
 			<WorkSpeedGlobal>0.6</WorkSpeedGlobal>
 		</statFactors>
-	</VREAndroids.AndroidGeneDef>
+		<moddable>false</moddable>
+	</Androids2.A2GeneDef>
 
-	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_WorkSpeed_8</defName>
 		<label>Work Speed: 80%</label>
 		<description>Advanced droids are packed with more sophisticated hardware, allowing them to be more efficient and faster at work compared to basic droids.</description>
@@ -72,9 +74,10 @@
 		<statFactors>
 			<WorkSpeedGlobal>0.8</WorkSpeedGlobal>
 		</statFactors>
-	</VREAndroids.AndroidGeneDef>
+		<moddable>false</moddable>
+	</Androids2.A2GeneDef>
 
-	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_BatteryPower</defName>
 		<label>battery power</label>
 		<description>The robot's reactor has been swapped to a rechargable battery, needs to be recharged at an android charging station</description>
@@ -85,9 +88,9 @@
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
 		<isCoreComponent>true</isCoreComponent>
 		<biostatMet>-2</biostatMet>
-	</VREAndroids.AndroidGeneDef>
+	</Androids2.A2GeneDef>
 
-	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_BasicDroid</defName>
 		<label>Configuration: Basic Droid</label>
 		<description>Beep Boop I'm a droid</description>
@@ -98,9 +101,9 @@
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
 		<isCoreComponent>true</isCoreComponent>
 		<biostatMet>2</biostatMet>
-	</VREAndroids.AndroidGeneDef>
+	</Androids2.A2GeneDef>
 	
-	<VREAndroids.AndroidGeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_AdvancedDroid</defName>
 		<label>Configuration: Advanced Droid</label>
 		<description>Beep Boop I'm an advanced droid</description>
@@ -111,6 +114,6 @@
 		<canGenerateInGeneSet>false</canGenerateInGeneSet>
 		<isCoreComponent>true</isCoreComponent>
 		<biostatMet>1</biostatMet>
-	</VREAndroids.AndroidGeneDef>
+	</Androids2.A2GeneDef>
 	
 </Defs>
