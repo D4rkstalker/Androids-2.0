@@ -50,7 +50,10 @@ namespace Androids2
             float width = GetWidth(maxWidth);
             Rect pawnRect = new Rect(topLeft.x + 10f, topLeft.y, width - 40f, width - 20f);
             Vector2 PawnPortraitSize = new Vector2(width - 20f, width);
-
+            if(printer.PawnBeingCrafted() != null)
+            {
+                return result;
+            }
             GUI.DrawTexture(new Rect(pawnRect.x, pawnRect.y, PawnPortraitSize.x, PawnPortraitSize.y), PortraitsCache.Get(printer.PawnBeingCrafted(), PawnPortraitSize, Rot4.South, default(Vector3), 1f));
             return result;
         }

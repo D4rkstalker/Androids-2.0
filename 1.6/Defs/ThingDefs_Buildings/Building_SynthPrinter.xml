@@ -112,7 +112,7 @@
 			<li>Androids2.ITab_SynthPrinter</li>
 		</inspectorTabs>
 		<researchPrerequisites>
-			<li>BasicMechtech</li>
+			<li>A2_Synthetics</li>
 		</researchPrerequisites>
 	</ThingDef>
 </Defs>
