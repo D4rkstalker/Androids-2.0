@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<Androids2.A2GeneDef Name="A2_JobUpgrades" ParentName="A2_ModdableHardware" Abstract="True">
+		<timeCost>500</timeCost>
+		<costList>
+			<Plasteel>10</Plasteel>
+			<ComponentIndustrial>10</ComponentIndustrial>
+			<ComponentSpacer>1</ComponentSpacer>
+		</costList>
+
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Melee</defName>
+		<label>hardware specialization: melee</label>
+		<description>Additional hardware has been installed to boost melee performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statFactors>
+			<MeleeCooldownFactor>0.5</MeleeCooldownFactor>
+		</statFactors>
+		<statOffsets>
+			<MeleeDodgeChance>15</MeleeDodgeChance>
+			<MeleeHitChance>15</MeleeHitChance>
+			<MeleeArmorPenetration>15</MeleeArmorPenetration>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Range</defName>
+		<label>hardware specialization: ranged</label>
+		<description>Additional hardware has been installed to boost ranged performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statFactors>
+			<RangedCooldownFactor>0.25</RangedCooldownFactor>
+			<AimingDelayFactor>0.25</AimingDelayFactor>
+		</statFactors>
+		<statOffsets>
+			<ShootingAccuracyPawn>15</ShootingAccuracyPawn>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Con</defName>
+		<label>hardware specialization: construction</label>
+		<description>Additional hardware has been installed to boost construction performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<ConstructionSpeed>0.5</ConstructionSpeed>
+			<ConstructSuccessChance>0.5</ConstructSuccessChance>
+			<FixBrokenDownBuildingSuccessChance>0.5</FixBrokenDownBuildingSuccessChance>
+			<SmoothingSpeed>0.5</SmoothingSpeed>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Mining</defName>
+		<label>hardware specialization: mining</label>
+		<description>Additional hardware has been installed to boost mining performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<MiningSpeed>0.5</MiningSpeed>
+			<DeepDrillingSpeed>0.5</DeepDrillingSpeed>
+			<MiningYield>0.5</MiningYield>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Crafting</defName>
+		<label>hardware specialization: crafting</label>
+		<description>Additional hardware has been installed to boost general labor performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<GeneralLaborSpeed>0.5</GeneralLaborSpeed>
+			<CleaningSpeed>0.5</CleaningSpeed>
+			<ButcheryMechanoidEfficiency>0.5</ButcheryMechanoidEfficiency>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Cooking</defName>
+		<label>hardware specialization: cooking</label>
+		<description>Additional hardware has been installed to boost cooking performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<CookSpeed>0.5</CookSpeed>
+			<DrugSynthesisSpeed>0.5</DrugSynthesisSpeed>
+			<DrugCookingSpeed>0.5</DrugCookingSpeed>
+			<FoodPoisonChance>-0.5</FoodPoisonChance>
+			<ButcheryFleshEfficiency>0.5</ButcheryFleshEfficiency>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Plants</defName>
+		<label>hardware specialization: plants</label>
+		<description>Additional hardware has been installed to boost plants performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<PlantWorkSpeed>0.5</PlantWorkSpeed>
+			<PlantHarvestYield>0.5</PlantHarvestYield>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Animals</defName>
+		<label>hardware specialization: animals</label>
+		<description>Additional hardware has been installed to boost animals performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<AnimalGatherSpeed>0.5</AnimalGatherSpeed>
+			<AnimalGatherYield>0.5</AnimalGatherYield>
+			<TameAnimalChance>0.5</TameAnimalChance>
+			<TrainAnimalChance>0.5</TrainAnimalChance>
+			<HuntingStealth>0.5</HuntingStealth>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Intelligence</defName>
+		<label>hardware specialization: intelligence</label>
+		<description>Additional hardware has been installed to boost intelligence performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<ResearchSpeed>0.5</ResearchSpeed>
+			<HackingSpeed>0.5</HackingSpeed>
+			<HackingStealth>0.5</HackingStealth>
+			<GlobalLearningFactor>0.5</GlobalLearningFactor>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Medical</defName>
+		<label>hardware specialization: medical</label>
+		<description>Additional hardware has been installed to boost medical performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<MedicalTendSpeed>0.5</MedicalTendSpeed>
+			<MedicalOperationSpeed>0.5</MedicalOperationSpeed>
+			<MedicalTendQuality>0.5</MedicalTendQuality>
+			<MedicalSurgerySuccessChance>0.5</MedicalSurgerySuccessChance>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_JobUpgrades">
+		<defName>A2_Job_Social</defName>
+		<label>hardware specialization: social</label>
+		<description>Additional hardware has been installed to boost social performance.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		
+		<statOffsets>
+			<NegotiationAbility>0.8</NegotiationAbility>
+			<SocialImpact>0.8</SocialImpact>
+			<TradePriceImprovement>0.5</TradePriceImprovement>
+			<ArrestSuccessChance>0.5</ArrestSuccessChance>
+		</statOffsets>
+	</Androids2.A2GeneDef>
+</Defs>

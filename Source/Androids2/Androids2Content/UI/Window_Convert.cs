@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using VEF;
 using Verse;
 using Verse.Grammar;
 using Verse.Sound;
@@ -54,6 +55,7 @@ namespace Androids2
         public Trait replacedTrait;
         public Trait newTrait;
         public List<ThingOrderRequest> requestedItems = new List<ThingOrderRequest>();
+        float metMod = 1f;
 
 
         //Static Values
@@ -119,6 +121,19 @@ namespace Androids2
 
         public override void DoWindowContents(Rect rect)
         {
+
+            if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_I))
+            {
+                metMod = A2_Defof.A2_Hardware_Integration_I.GetModExtension<HardwareIntegration>().complexityMult;
+            }
+            else if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_II))
+            {
+                metMod = A2_Defof.A2_Hardware_Integration_II.GetModExtension<HardwareIntegration>().complexityMult;
+            }
+            else if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_III))
+            {
+                metMod = A2_Defof.A2_Hardware_Integration_III.GetModExtension<HardwareIntegration>().complexityMult;
+            }
             // Reserve bottom strip for buttons (unchanged)
             Rect content = rect;
             content.yMax -= ButSize.y + 4f;
@@ -166,7 +181,7 @@ namespace Androids2
                 num3
             );
             statsRect.yMax = genesRect.yMax + num3 + 4f;
-            AndroidStatsTable.Draw(statsRect, gcx, met, requiredItems);
+                AndroidStatsTable.Draw(statsRect, gcx, (int)(met * metMod), requiredItems);
 
             // Name line + text field and buttons
             string label = AndroidName().CapitalizeFirst() + ":";
@@ -1035,7 +1050,7 @@ namespace Androids2
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = Color.white;
             }
-            else if (met < -20)
+            else if (met* metMod< -20)
             {
                 string text = "VREA.TooLowEfficiency".Translate();
                 float x2 = Text.CalcSize(text).x;

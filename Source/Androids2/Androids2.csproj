@@ -91,6 +91,7 @@
     <Compile Include="Androids2Content\Buildings\Building_AndroidCharger.cs" />
     <Compile Include="Androids2Content\Buildings\IPawnCrafter.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
+    <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
     <Compile Include="Androids2Content\UI\FloatMenuOptionProvider_CarryAndroidToCharger.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_CancelConvert.cs" />

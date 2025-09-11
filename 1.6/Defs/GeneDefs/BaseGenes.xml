@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
+	<Androids2.A2GeneDef Name="A2_ModdableHardware" ParentName="VREA_HardwareBase" Abstract="True">
+	</Androids2.A2GeneDef>
+
 	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_SkillFloor_8</defName>
 		<label>Skill Floor: 8</label>
@@ -7,9 +10,6 @@
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
 		<displayOrderInCategory>1</displayOrderInCategory>
 		
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>1600</timeCost>
 		<costList>
 			<ComponentIndustrial>8</ComponentIndustrial>
@@ -29,9 +29,6 @@
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
 		<displayOrderInCategory>1</displayOrderInCategory>
 		
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>1600</timeCost>
 		<costList>
 			<ComponentIndustrial>8</ComponentIndustrial>
@@ -52,9 +49,6 @@
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
 		<displayOrderInCategory>1</displayOrderInCategory>
 		
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<statFactors>
 			<WorkSpeedGlobal>0.6</WorkSpeedGlobal>
 		</statFactors>
@@ -67,10 +61,6 @@
 		<description>Advanced droids are packed with more sophisticated hardware, allowing them to be more efficient and faster at work compared to basic droids.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
 		<displayOrderInCategory>1</displayOrderInCategory>
-		
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<statFactors>
 			<WorkSpeedGlobal>0.8</WorkSpeedGlobal>
 		</statFactors>
@@ -85,9 +75,6 @@
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>true</isCoreComponent>
 		<biostatMet>2</biostatMet>
 	</Androids2.A2GeneDef>
 	
@@ -98,9 +85,6 @@
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>true</isCoreComponent>
 		<biostatMet>1</biostatMet>
 	</Androids2.A2GeneDef>
 	

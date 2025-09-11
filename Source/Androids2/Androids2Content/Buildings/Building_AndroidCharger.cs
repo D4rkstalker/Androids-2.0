@@ -19,7 +19,7 @@ namespace Androids2
         public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
 
         public CompPowerTrader compPower;
-        public float chargeRate = 0.001f; 
+        public float chargeRate = 0.001f;
         public Pawn CurOccupant
         {
             get
@@ -73,9 +73,23 @@ namespace Androids2
                 if (compPower != null && compPower.PowerOn && occupant.HasActiveGene(A2_Defof.A2_BatteryPower))
                 {
                     Need_ReactorPower pwr = occupant.needs.TryGetNeed<Need_ReactorPower>();
-                    if(pwr != null && pwr.CurLevelPercentage < 1f)
+                    if (pwr != null && pwr.CurLevelPercentage < 1f)
                     {
-                        if(occupant.HasActiveGene(A2_Defof.A2_AuxBattery))
+                        if (occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor))
+                        {
+                            
+                            if (compPower.transNet.CurrentEnergyGainRate() >= 5000f)
+                            {
+                                chargeRate = 0.1f;
+                                compPower.PowerOutput = -5000f;
+                            }
+                            else
+                            {
+                                chargeRate = 0.1f * (compPower.transNet.CurrentEnergyGainRate() / 5000f);
+                                compPower.PowerOutput = -compPower.transNet.CurrentEnergyGainRate();
+                            }
+                        }
+                        else if (occupant.HasActiveGene(A2_Defof.A2_AuxBattery))
                         {
                             chargeRate = 0.001f;
                         }
@@ -160,7 +174,7 @@ namespace Androids2
             {
                 return "VREA.AndroidStandIsOccupied".Translate();
             }
-            if(selPawn.HasActiveGene(A2_Defof.A2_BatteryPower) is false)
+            if (selPawn.HasActiveGene(A2_Defof.A2_BatteryPower) is false)
             {
                 return "VREA.NotRechargable".Translate();
             }

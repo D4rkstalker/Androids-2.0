@@ -158,11 +158,11 @@ namespace Androids2.Utils
 
             }
 
-            if (pawn.genes.HasActiveGene(A2_Defof.A2_BatteryPower))
-            {
-                pawn.health.AddHediff(A2_Defof.A2_HediffBattery, pawn.health.hediffSet.GetBodyPartRecord(A2_Defof.Stomach));
-                pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor));
-            }
+            //if (pawn.genes.HasActiveGene(A2_Defof.A2_BatteryPower))
+            //{
+            //    pawn.health.AddHediff(A2_Defof.A2_HediffBattery, pawn.health.hediffSet.GetBodyPartRecord(A2_Defof.Stomach));
+            //    //pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor));
+            //}
 
 
         }

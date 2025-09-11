@@ -54,6 +54,7 @@ namespace Androids2
         public Trait replacedTrait;
         public Trait newTrait;
         public List<ThingOrderRequest> requestedItems = new List<ThingOrderRequest>();
+        float metMod = 1f;
 
 
         //Static Values
@@ -111,6 +112,18 @@ namespace Androids2
 
         public override void DoWindowContents(Rect rect)
         {
+            if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_I))
+            {
+                metMod = A2_Defof.A2_Hardware_Integration_I.GetModExtension<HardwareIntegration>().complexityMult;
+            }
+            else if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_II))
+            {
+                metMod = A2_Defof.A2_Hardware_Integration_II.GetModExtension<HardwareIntegration>().complexityMult;
+            }
+            else if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_III))
+            {
+                metMod = A2_Defof.A2_Hardware_Integration_III.GetModExtension<HardwareIntegration>().complexityMult;
+            }
             // Reserve bottom strip for buttons (unchanged)
             Rect content = rect;
             content.yMax -= ButSize.y + 4f;
@@ -158,7 +171,7 @@ namespace Androids2
                 num3
             );
             statsRect.yMax = genesRect.yMax + num3 + 4f;
-            AndroidStatsTable.Draw(statsRect, gcx, met, requiredItems);
+            AndroidStatsTable.Draw(statsRect, gcx, (int)(met * metMod), requiredItems);
 
             // Name line + text field and buttons
             string label = AndroidName().CapitalizeFirst() + ":";
@@ -825,9 +838,9 @@ namespace Androids2
                 for (int i = 0; i < genes.Count; i++)
                 {
                     GeneDef geneDef = genes[i];
-                    if(geneDef is A2GeneDef a2GeneDef )
+                    if (geneDef is A2GeneDef a2GeneDef)
                     {
-                        if(a2GeneDef.requiredResearch != null && !a2GeneDef.requiredResearch.IsFinished)
+                        if (a2GeneDef.requiredResearch != null && !a2GeneDef.requiredResearch.IsFinished)
                         {
                             continue;
                         }
@@ -1146,8 +1159,9 @@ namespace Androids2
             customXenotype.name = xenotypeName?.Trim();
             customXenotype.inheritable = false;
             customXenotype.iconDef = iconDef;
-            AndroidMakerPatch.ApplyXenotype(newAndroid, selectedGenes,false);
+            AndroidMakerPatch.ApplyXenotype(newAndroid, selectedGenes, false);
             station.pawnBeingCrafted = newAndroid;
+            HardwareIntegration hi = null;
             foreach (GeneDef gene in selectedGenes)
             {
                 station.pawnBeingCrafted.genes.AddGene(gene, false);
@@ -1157,6 +1171,10 @@ namespace Androids2
                     finalExtraPrintingTimeCost += geneAndroid.timeCost;
                     station.requestedNutrition += geneAndroid.nutrition;
                     requestedItems.AddRange(geneAndroid.costList);
+                    if (geneAndroid.GetModExtension<HardwareIntegration>() is HardwareIntegration extension)
+                    {
+                        hi = extension;
+                    }
                 }
             }
             station.orderProcessor.requestedItems = requestedItems;
@@ -1166,6 +1184,15 @@ namespace Androids2
             station.recipe.costList = A2_Defof.A2_Synth.costList;
             station.recipe.costList.AddRange(requestedItems);
             station.recipe.timeCost += finalExtraPrintingTimeCost;
+            if (hi! == null)
+            {
+                station.recipe.timeCost = (int)(station.recipe.timeCost * hi.timeMult);
+                station.requestedNutrition = (int)(station.requestedNutrition * hi.costMult);
+                foreach (var item in station.recipe.costList)
+                {
+                    item.amount = (int)(item.amount * hi.costMult);
+                }
+            }
         }
 
         public override void UpdateSearchResults()

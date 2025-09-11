@@ -1,47 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_BatteryPower</defName>
 		<label>battery power</label>
 		<description>The robot's reactor has been swapped to a rechargable battery, needs to be recharged at an android charging station. Halves max energy capacity</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>500</timeCost>
+		<exclusionTags>
+			<li>A2_Battery</li>
+		</exclusionTags>
+
 		<costList>
 			<ComponentIndustrial>4</ComponentIndustrial>
 		</costList>
 	</Androids2.A2GeneDef>
 	
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_AuxBattery</defName>
 		<label>auxillary battery</label>
 		<description>Doubles the battery capacity of the android</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>500</timeCost>
 		<costList>
 			<ComponentIndustrial>4</ComponentIndustrial>
 		</costList>
 	</Androids2.A2GeneDef>
 	
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_SuperCapacitor</defName>
+		<label>super capacitor</label>
+		<description>The robot's reactor has been swapped to a super capacitor, allowing the robot to be recharged instantly at a super charger. Quaters max energy capacity</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>500</timeCost>
+		<exclusionTags>
+			<li>A2_Battery</li>
+		</exclusionTags>
+		<costList>
+			<ComponentSpacer>4</ComponentSpacer>
+			<Plasteel>10</Plasteel>
+			<Hyperweave>10</Hyperweave>
+			<Gold>10</Gold>
+		</costList>
+	</Androids2.A2GeneDef>
+	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_MechFlesh</defName>
 		<label>mechanical body</label>
 		<description>A robot made of inorganic components. Sturdier than organic components, but lacks the self regenerative properties. Adding the Synthetic Body hardware component overrides the effects of this component</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<statOffsets>
 			<ArmorRating_Sharp>0.2</ArmorRating_Sharp>
 			<ArmorRating_Blunt>0.1</ArmorRating_Blunt>
@@ -49,16 +63,13 @@
 
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SynthFlesh</defName>
 		<label>synthetic body</label>
 		<description>A robot made of synthetic organic components, with the ability to regenerate, but trades it for the ability to be actively repaired</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>500</timeCost>
 		<nutrition>100</nutrition>
 		<costList>
@@ -66,16 +77,13 @@
 		</costList>
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SynthWeave</defName>
 		<label>synthweave composite</label>
-		<description>A layer of hyperweave composite is placed under it's exterior skin, giving it a minor increase in survivability</description>
+		<description>A layer of hyperweave composite is placed under the robot's exterior skin, giving it a minor increase in survivability</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>1200</timeCost>
 		<statFactors>
 			<IncomingDamageFactor>0.9</IncomingDamageFactor>
@@ -85,16 +93,13 @@
 		</costList>
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_HeavyArmor</defName>
 		<label>heavy armor</label>
-		<description>The robot's normally decorative exterior panels are replaced with a plasteel armor plates, light and thin enough to not affect the robot's movement</description>
+		<description>The robot's normally decorative exterior panels are replaced with plasteel armor plates, light and thin enough to not affect the robot's movement</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>800</timeCost>
 		<statOffsets>
 			<ArmorRating_Sharp>0.50</ArmorRating_Sharp>
@@ -109,16 +114,13 @@
 		</costList>
 	</Androids2.A2GeneDef>
 	
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_FortressArmor</defName>
 		<label>heavy armor</label>
-		<description>The robot's normally decorative exterior panels are replaced with a heavy steel armor plates, allowing it to survive anything smaller than a dedicated anti armor weapon. It does make the robot bulkier and slower</description>
+		<description>The robot's normally decorative exterior panels are replaced with a heavy steel armor plates, allowing it to survive anything smaller than a dedicated anti armor weapon. However it does make the robot bulkier and slower</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>800</timeCost>
 		<statOffsets>
 			<ArmorRating_Sharp>1.50</ArmorRating_Sharp>
@@ -139,26 +141,23 @@
 		</costList>
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_AdvancedServos</defName>
 		<label>advanced servos</label>
-		<description>The robot's servos are upgraded with higher speed and precision</description>
+		<description>The robot's standard servos are upgraded with higher speed and precision</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>1200</timeCost>
 		<statFactors>
 		  <ShootingAccuracyFactor_Long>1.25</ShootingAccuracyFactor_Long>
 		  <ShootingAccuracyFactor_Medium>1.25</ShootingAccuracyFactor_Medium>
 		  <ShootingAccuracyFactor_Short>1.25</ShootingAccuracyFactor_Short>
 		  <AimingDelayFactor>0.9</AimingDelayFactor>
+		<MeleeDamageFactor>1.5</MeleeDamageFactor>
+		<MeleeCooldownFactor>0.5</MeleeCooldownFactor>
 		</statFactors>
 		<statOffsets>
-			<MeleeDamageFactor>0.5</MeleeDamageFactor>
-			<MeleeCooldownFactor>-0.5</MeleeCooldownFactor>
 			<MeleeDodgeChance>15</MeleeDodgeChance>
 			<MoveSpeed>0.25</MoveSpeed>
 		</statOffsets>
@@ -169,16 +168,13 @@
 		</costList>
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_HeavyHydraulics</defName>
 		<label>heavy hydraulics</label>
 		<description>The robot's pistons are upgraded with stronger hydraulics, making it significantly stronger</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>false</isCoreComponent>
 		<timeCost>1200</timeCost>
 		<statFactors>
 		  <MeleeArmorPenetration>2</MeleeArmorPenetration>

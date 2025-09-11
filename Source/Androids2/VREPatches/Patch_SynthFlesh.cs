@@ -30,43 +30,46 @@ namespace Androids2.VREPatches
 
         }
         [HarmonyPatch(typeof(HediffUtility), nameof(HediffUtility.CanHealNaturally))]
-        [HarmonyPriority(Priority.Last)] 
         public static class HediffUtility_CanHealNaturally_A2Patch
         {
-            public static void Postfix(Hediff_Injury hd, ref bool __result)
+            public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                // Your logic here; example keeps the original behavior you showed:
                 if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.A2_SynthFlesh))
                 {
                     __result = false;
+                    return false;
                 }
+                return true;
             }
         }
         [HarmonyPatch(typeof(HediffUtility), "CanHealFromTending")]
         public static class HediffUtility_CanHealFromTending_A2Patch
         {
             [HarmonyPriority(int.MinValue)]
-            public static void Postfix(Hediff_Injury hd, ref bool __result)
+            public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
                 if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.A2_SynthFlesh))
                 {
                     __result = false;
+                    return false;
                 }
+                return true;
             }
         }
         // Target: public static bool JobDriver_RepairAndroid.CanRepairAndroid(Pawn android)
         [HarmonyPatch(typeof(JobDriver_RepairAndroid), nameof(JobDriver_RepairAndroid.CanRepairAndroid))]
-        public static class Patch_CanRepairAndroid_Postfix
+        public static class Patch_CanRepairAndroid_Prefix
         {
-            // Run late so our decision wins over other postfixes
-            [HarmonyPostfix]
+
             [HarmonyPriority(Priority.Last)]
-            public static void Postfix(Pawn android, ref bool __result)
+            public static bool Prefix(Pawn android, ref bool __result)
             {
                 if(android.HasActiveGene(A2_Defof.A2_SynthFlesh))
                 {
                     __result = false;
+                    return false;
                 }
+                return true;
             }
         }
     }

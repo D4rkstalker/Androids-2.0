@@ -18,6 +18,10 @@ namespace Androids2
         public static GeneDef A2_BasicDroid;
         public static GeneDef A2_AdvancedDroid;
         public static GeneDef A2_SynthFlesh;
+        public static GeneDef A2_SuperCapacitor;
+        public static GeneDef A2_Hardware_Integration_I;
+        public static GeneDef A2_Hardware_Integration_II;
+        public static GeneDef A2_Hardware_Integration_III;
 
         public static HediffDef A2_HediffBattery;
 
