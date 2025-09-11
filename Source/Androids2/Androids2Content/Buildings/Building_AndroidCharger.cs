@@ -70,6 +70,23 @@ namespace Androids2
                 {
                     occupant.jobs.curDriver.rotateToFace = TargetIndex.C;
                 }
+                if (compPower != null && compPower.PowerOn && occupant.HasActiveGene(A2_Defof.A2_BatteryPower))
+                {
+                    Need_ReactorPower pwr = occupant.needs.TryGetNeed<Need_ReactorPower>();
+                    if(pwr != null && pwr.CurLevelPercentage < 1f)
+                    {
+                        if(occupant.HasActiveGene(A2_Defof.A2_AuxBattery))
+                        {
+                            chargeRate = 0.001f;
+                        }
+                        else
+                        {
+                            chargeRate = 0.002f;
+                        }
+                        var powerGain = pwr.curLevelInt + chargeRate;
+                        pwr.curLevelInt = Mathf.Min(1f, powerGain);
+                    }
+                }
             }
         }
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
@@ -143,12 +160,88 @@ namespace Androids2
             {
                 return "VREA.AndroidStandIsOccupied".Translate();
             }
-            if (!RestUtility.CanUseBedNow(this, selPawn, checkSocialProperness: false))
+            if(selPawn.HasActiveGene(A2_Defof.A2_BatteryPower) is false)
+            {
+                return "VREA.NotRechargable".Translate();
+            }
+            if (!CanUseBedNow(this, selPawn, checkSocialProperness: false))
             {
                 return "VREA.CannotUse".Translate();
             }
             return null;
         }
+        public static bool CanUseBedNow(Thing bedThing, Pawn sleeper, bool checkSocialProperness, bool allowMedBedEvenIfSetToNoCare = false, GuestStatus? guestStatusOverride = null)
+        {
+            if (!(bedThing is Building_Bed building_Bed))
+            {
+                return false;
+            }
+
+            if (!building_Bed.Spawned)
+            {
+                return false;
+            }
+
+            if (building_Bed.Map != sleeper.MapHeld)
+            {
+                return false;
+            }
+
+            if (building_Bed.IsBurning())
+            {
+                return false;
+            }
+
+            if (sleeper.HarmedByVacuum && building_Bed.Position.GetVacuum(bedThing.Map) >= 0.5f)
+            {
+                return false;
+            }
+
+
+            int? assignedSleepingSlot;
+            bool flag = building_Bed.IsOwner(sleeper, out assignedSleepingSlot);
+            int? sleepingSlot;
+            bool flag2 = sleeper.CurrentBed(out sleepingSlot) == building_Bed;
+            if (!building_Bed.AnyUnoccupiedSleepingSlot && !flag && !flag2)
+            {
+                return false;
+            }
+
+            GuestStatus? obj = guestStatusOverride ?? sleeper.GuestStatus;
+            bool flag3 = obj == GuestStatus.Prisoner;
+            bool flag4 = obj == GuestStatus.Slave;
+            if (checkSocialProperness && !building_Bed.IsSociallyProper(sleeper, flag3))
+            {
+                return false;
+            }
+
+            if (building_Bed.ForPrisoners != flag3)
+            {
+                return false;
+            }
+
+            if (building_Bed.ForSlaves != flag4)
+            {
+                return false;
+            }
+
+            if (building_Bed.ForPrisoners && !building_Bed.Position.IsInPrisonCell(building_Bed.Map))
+            {
+                return false;
+            }
+
+
+            if (sleeper.IsColonist && !flag3)
+            {
+                if (building_Bed.IsForbidden(sleeper))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
     }
+
 }

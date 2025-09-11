@@ -118,6 +118,8 @@
     <Compile Include="VREPatches\Patch_AndroidCreationStation.cs" />
     <Compile Include="VREPatches\Patch_AdvancedAndroidCreation.cs" />
     <Compile Include="VREPatches\Patch_CharacterCardUtility.cs" />
+    <Compile Include="VREPatches\Patch_EnergyDrain.cs" />
+    <Compile Include="VREPatches\Patch_SynthFlesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="VanillaPatches\" />

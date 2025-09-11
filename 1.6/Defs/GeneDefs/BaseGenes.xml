@@ -77,18 +77,6 @@
 		<moddable>false</moddable>
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
-		<defName>A2_BatteryPower</defName>
-		<label>battery power</label>
-		<description>The robot's reactor has been swapped to a rechargable battery, needs to be recharged at an android charging station</description>
-		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
-		<displayOrderInCategory>2</displayOrderInCategory>
-		<biostatCpx>3</biostatCpx>
-		<displayCategory>VREA_Hardware</displayCategory>
-		<canGenerateInGeneSet>false</canGenerateInGeneSet>
-		<isCoreComponent>true</isCoreComponent>
-		<biostatMet>-2</biostatMet>
-	</Androids2.A2GeneDef>
 
 	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
 		<defName>A2_BasicDroid</defName>

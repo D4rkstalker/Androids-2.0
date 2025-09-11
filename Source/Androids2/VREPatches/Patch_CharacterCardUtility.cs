@@ -77,7 +77,7 @@ namespace Androids2
         [HarmonyPriority(int.MaxValue)]
         public static bool Prefix(Pawn ___pawn, Rect ___leftRect, Rect sectionRect)
         {
-            if (___pawn.IsAndroid() && !___pawn.IsDroid())
+            if (___pawn.IsAndroid() && !___pawn.IsDroid() && ___pawn.story.adulthood != null)
             {
                 float num8 = sectionRect.y;
                 Text.Font = GameFont.Small;

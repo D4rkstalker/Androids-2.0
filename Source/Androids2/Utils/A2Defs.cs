@@ -14,11 +14,17 @@ namespace Androids2
         public static JobDef A2_HaulAndroidToCharger;
 
         public static GeneDef A2_BatteryPower;
+        public static GeneDef A2_AuxBattery;
         public static GeneDef A2_BasicDroid;
         public static GeneDef A2_AdvancedDroid;
+        public static GeneDef A2_SynthFlesh;
+
+        public static HediffDef A2_HediffBattery;
 
         public static ThingDef A2_AndroidCharger;
 
         public static AndroidRecipe A2_Synth;
+
+        public static BodyPartDef Stomach;
     }
 }

@@ -15,7 +15,7 @@
 				</value>
 			</li>
 			<li Class="PatchOperationReplace">
-				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/tab</xpath>
+				<xpath>/Defs/ResearchProjectDef[@Name="VREA_ResearchBase"]/tab</xpath>
 				<value>
 					<tab>Androids2</tab>
 				</value>

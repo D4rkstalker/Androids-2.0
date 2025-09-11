@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+ <!-- Co-Processors -->
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_CoProcessor_basic</defName>
+		<label>basic co-processor</label>
+		<description>A simple secondary processor is installed in the robot's motherboard that allows the main intelligence offload lesser tasks to it</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>1500</timeCost>
+		<statFactors>
+			<WorkSpeedGlobal>1.1</WorkSpeedGlobal>
+		</statFactors>
+		<exclusionTags>
+			<li>A2_CoProcessor</li>
+		</exclusionTags>
+
+		<costList>
+			<ComponentSpacer>1</ComponentSpacer>
+			<SubcoreBasic>1</SubcoreBasic>
+			<Gold>10</Gold>
+		</costList>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_CoProcessor_Advanced</defName>
+		<label>advanced co-processor</label>
+		<description>A secondary processor is installed in the robot's motherboard that allows the main intelligence offload most tasks</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>2000</timeCost>
+		<statFactors>
+			<WorkSpeedGlobal>1.2</WorkSpeedGlobal>
+		</statFactors>
+		<exclusionTags>
+			<li>A2_CoProcessor</li>
+		</exclusionTags>
+		<costList>
+			<ComponentSpacer>2</ComponentSpacer>
+			<SubcoreRegular>1</SubcoreRegular>
+			<Gold>10</Gold>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_CoProcessor_High</defName>
+		<label>high co-processor</label>
+		<description>A secondary processor is installed in the robot's motherboard that allows the main intelligence to effectively multitask</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>2500</timeCost>
+		<statFactors>
+			<WorkSpeedGlobal>1.3</WorkSpeedGlobal>
+		</statFactors>
+		<exclusionTags>
+			<li>A2_CoProcessor</li>
+		</exclusionTags>
+		<costList>
+			<ComponentSpacer>5</ComponentSpacer>
+			<SubcoreHigh>1</SubcoreHigh>
+			<Gold>25</Gold>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_CoProcessor_Arc</defName>
+		<label>archotech co-processor</label>
+		<description>The robot's CPU is reconfigured to serve as a secondary processor while the installed persona core takes over the body</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>5000</timeCost>
+		<statFactors>
+			<WorkSpeedGlobal>1.5</WorkSpeedGlobal>
+		</statFactors>
+		<exclusionTags>
+			<li>A2_CoProcessor</li>
+		</exclusionTags>
+		<costList>
+			<ComponentSpacer>8</ComponentSpacer>
+			<AIPersonaCore>1</AIPersonaCore>
+			<Gold>25</Gold>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_Hardware_Integration_I</defName>
+		<label>hardware integration I</label>
+		<description>The robot's normally modular components are integrated, reducing the form factor and allowing the robot's systems to operate more efficiently, at a cost to it's assembly costs</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>5000</timeCost>
+		<exclusionTags>
+			<li>A2_HardwareIntegration</li>
+		</exclusionTags>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_Hardware_Integration_II</defName>
+		<label>hardware integration II</label>
+		<description>The robot's normally modular components are integrated, reducing the form factor and allowing the robot's systems to operate more efficiently, at a cost to it's assembly costs</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>7000</timeCost>
+		<exclusionTags>
+			<li>A2_HardwareIntegration</li>
+		</exclusionTags>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+		<defName>A2_Hardware_Integration_III</defName>
+		<label>hardware integration III</label>
+		<description>The robot's normally modular components are integrated, reducing the form factor and allowing the robot's systems to operate more efficiently, at a cost to it's assembly costs</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<displayCategory>VREA_Hardware</displayCategory>
+		<canGenerateInGeneSet>false</canGenerateInGeneSet>
+		<isCoreComponent>false</isCoreComponent>
+		<timeCost>10000</timeCost>
+		<exclusionTags>
+			<li>A2_HardwareIntegration</li>
+		</exclusionTags>
+	</Androids2.A2GeneDef>
+
+</Defs>

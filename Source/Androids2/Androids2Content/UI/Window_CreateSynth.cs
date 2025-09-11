@@ -625,7 +625,7 @@ namespace Androids2
             if (Widgets.ButtonText(rowRect, label))
             {
                 IEnumerable<BackstoryDef> backstories = from backstory in (from backstoryDef in DefDatabase<BackstoryDef>.AllDefs.ToList() select backstoryDef)
-                                                        where (backstory.spawnCategories.Any(category => (currentPawnKindDef.backstoryCategories != null && currentPawnKindDef.backstoryCategories.Any(subCategory => subCategory == category))) || backstory.spawnCategories.Contains("ChjAndroid") || backstory.spawnCategories.Contains("ATR_Inorganic") || backstory.spawnCategories.Contains("ATR_Drone") || backstory.spawnCategories.Contains("ATR_GeneralAndroids") || backstory.spawnCategories.Contains("ATR_ViolentAndroids")) && backstory.slot == BackstorySlot.Childhood
+                                                        where (backstory.spawnCategories.Any(category => (currentPawnKindDef.backstoryCategories != null && currentPawnKindDef.backstoryCategories.Any(subCategory => subCategory == category))) || backstory.spawnCategories.Contains("A2_Model")) && backstory.slot == BackstorySlot.Childhood
                                                         select backstory;
                 FloatMenuUtility.MakeMenu<BackstoryDef>(backstories, backstory => backstory.TitleCapFor(newAndroid.gender), (BackstoryDef backstory) => delegate
                 {
@@ -651,7 +651,7 @@ namespace Androids2
             {
                 IEnumerable<BackstoryDef> backstories = from backstory in (from backstoryDef in DefDatabase<BackstoryDef>.AllDefs.ToList()
                                                                            select backstoryDef)
-                                                        where (backstory.spawnCategories.Any(category => currentPawnKindDef.backstoryCategories != null && currentPawnKindDef.backstoryCategories.Any(subCategory => subCategory == category)) || backstory.spawnCategories.Contains("ChjAndroid")) && backstory.slot == BackstorySlot.Adulthood
+                                                        where (backstory.spawnCategories.Any(category => currentPawnKindDef.backstoryCategories != null && currentPawnKindDef.backstoryCategories.Any(subCategory => subCategory == category)) || backstory.spawnCategories.Contains("A2_Specialization")) && backstory.slot == BackstorySlot.Adulthood
                                                         select backstory;
                 FloatMenuUtility.MakeMenu<BackstoryDef>(backstories, backstory => backstory.TitleCapFor(newAndroid.gender), (BackstoryDef backstory) => delegate
                 {
@@ -825,6 +825,13 @@ namespace Androids2
                 for (int i = 0; i < genes.Count; i++)
                 {
                     GeneDef geneDef = genes[i];
+                    if(geneDef is A2GeneDef a2GeneDef )
+                    {
+                        if(a2GeneDef.requiredResearch != null && !a2GeneDef.requiredResearch.IsFinished)
+                        {
+                            continue;
+                        }
+                    }
                     if ((adding && quickSearchWidget.filter.Active && (!matchingGenes.Contains(geneDef) || selectedGenes.Contains(geneDef)) && !matchingCategories.Contains(geneDef.displayCategory)))
                     {
                         continue;
