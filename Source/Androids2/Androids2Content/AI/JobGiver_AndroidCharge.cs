@@ -14,8 +14,9 @@ namespace Androids2
         public const float RechargeThreshold = 0.2f;
         public override float GetPriority(Pawn pawn)
         {
-            var power = pawn.needs.TryGetNeed<Need_ReactorPower>();
-            if (power == null || power.CurLevelPercentage > RechargeThreshold)
+            var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
+            Log.Error(" Checking power for " + pawn.LabelShort + ": " + (power == null ? "no power" : power.Energy.ToString()));
+            if (power == null || power.Energy > RechargeThreshold)
             {
                 return 0f;
             }
@@ -24,7 +25,9 @@ namespace Androids2
 
         public override Job TryGiveJob(Pawn pawn)
         {
-            var power = pawn.needs.TryGetNeed<Need_ReactorPower>();
+            var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
+            Log.Error(" Checking power for " + pawn.LabelShort + ": " + (power == null ? "no power" : power.Energy.ToString()));
+
             if (power == null)
             {
                 return null;

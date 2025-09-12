@@ -31,6 +31,8 @@
 			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_BasicDroid</li>
+			<li>A2_MechFlesh</li>
+			<li>A2_DroidDiscount</li>
 			<li>ATK_AnthrowolfFur</li>
 			<li>ATK_AnthrowolfEars</li>
 			<li>ATK_AnthrowolfTail</li>
@@ -68,6 +70,8 @@
 			<li>A2_WorkSpeed_8</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_AdvancedDroid</li>
+			<li>A2_MechFlesh</li>
+			<li>A2_DroidDiscount</li>
 			<li>ATK_AnthrodrakeSkin</li>
 			<li>ATK_AnthrodrakeHeadbone</li>
 			<li>ATK_AnthrodrakeHeadbone_Spiraled</li>
@@ -91,6 +95,8 @@
 			<li>VREA_HeatTolerant</li>
 			<li>VREA_PsychicallyDeaf</li>
 			<li>A2_BatteryPower</li>
+			<li>A2_MechFlesh</li>
+			<li>A2_Synth</li>
 		</genes>
 	</XenotypeDef>
 	

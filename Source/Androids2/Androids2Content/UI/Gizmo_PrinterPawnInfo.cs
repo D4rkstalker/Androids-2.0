@@ -50,7 +50,7 @@ namespace Androids2
             float width = GetWidth(maxWidth);
             Rect pawnRect = new Rect(topLeft.x + 10f, topLeft.y, width - 40f, width - 20f);
             Vector2 PawnPortraitSize = new Vector2(width - 20f, width);
-            if(printer.PawnBeingCrafted() != null)
+            if(printer.PawnBeingCrafted() == null)
             {
                 return result;
             }

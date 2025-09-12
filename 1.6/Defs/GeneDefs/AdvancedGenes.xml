@@ -129,7 +129,6 @@
 			<MeleeDamageFactor>0.1</MeleeDamageFactor>
 			<MeleeCooldownFactor>0.5</MeleeCooldownFactor>
 			<MeleeDodgeChance>-15</MeleeDodgeChance>
-			<CarryingCapacity>-10</CarryingCapacity>
 			<MoveSpeed>-0.1</MoveSpeed>
 		</statOffsets>
 		<exclusionTags>

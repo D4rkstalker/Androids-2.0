@@ -40,10 +40,12 @@ namespace Androids2
                 var memorySpaceGain = memorySpace.curLevelInt + (1f /
                     (float)MentalState_Reformatting.TicksToRecoverFromReformatting(pawn, null) * 0.2f);
                 memorySpace.curLevelInt = Mathf.Min(1f, memorySpaceGain);
-                var power = this.pawn.needs.TryGetNeed<Need_ReactorPower>();
-                var powerGain = power.curLevelInt + AndroidCharger.chargeRate;
-                power.curLevelInt = Mathf.Min(1f, powerGain);
-                if (memorySpace.curLevelInt == 1f && power.curLevelInt == 1f)
+                var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
+
+                //var powerGain = power.curLevelInt + AndroidCharger.chargeRate;
+                //power.curLevelInt = Mathf.Min(1f, powerGain);
+                Debug.LogWarning("power gain rate: " + AndroidCharger.chargeRate);
+                if (memorySpace.curLevelInt == 1f && power.Energy == 1f)
                 {
                     this.EndJobWith(JobCondition.Succeeded);
                 }

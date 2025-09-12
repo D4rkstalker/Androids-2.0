@@ -75,14 +75,6 @@ namespace Androids2.Androids2Content
 
         public override void DoWindowContents(Rect inRect)
         {
-            //Detect changes
-            if (refreshAndroidPortrait)
-            {
-                newAndroid.Drawer.renderer.SetAllGraphicsDirty();
-
-                refreshAndroidPortrait = false;
-            }
-
             if (newChildhoodBackstory != null)
             {
                 newAndroid.story.Childhood = newChildhoodBackstory;

@@ -30,6 +30,8 @@
 			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_BasicDroid</li>
+			<li>A2_MechFlesh</li>
+			<li>A2_DroidDiscount</li>
 			<li>ATK_AnthrohyenaFur</li>
 			<li>ATK_AnthrohyenaEars</li>
 			<li>ATK_AnthrohyenaTail</li>
@@ -66,6 +68,10 @@
 			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_BasicDroid</li>
+			<li>A2_AdvancedServos</li>
+			<li>A2_SynthWeave</li>
+			<li>A2_MechFlesh</li>
+			<li>A2_DroidDiscount</li>
 			<li>ATK_AnthrocatFur</li>
 			<li>ATK_AnthrocatEars</li>
 			<li>ATK_AnthrocatTail</li>
@@ -103,6 +109,11 @@
 			<li>A2_WorkSpeed_6</li>
 			<li>A2_BatteryPower</li>
 			<li>A2_BasicDroid</li>
+			<li>A2_HeavyHydraulics</li>
+			<li>A2_FortressArmor</li>
+			<li>A2_SynthWeave</li>
+			<li>A2_MechFlesh</li>
+			<li>A2_DroidDiscount</li>
 			<li>ATK_AnthrogriffFur</li>
 			<li>ATK_AnthrogriffEars</li>
 			<li>ATK_AnthrogriffTail</li>

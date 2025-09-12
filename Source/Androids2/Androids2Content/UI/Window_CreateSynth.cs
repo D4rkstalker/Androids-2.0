@@ -43,7 +43,6 @@ namespace Androids2
 
         public Pawn newAndroid;
         public int finalExtraPrintingTimeCost = 0;
-        public bool refreshAndroidPortrait = false;
         public Vector2 traitsScrollPosition = new Vector2();
         List<Trait> allTraits = new List<Trait>();
 
@@ -295,13 +294,6 @@ namespace Androids2
 
         public void DrawExtraCustomizations(Rect rect)
         {
-            if (refreshAndroidPortrait)
-            {
-                newAndroid.Drawer.renderer.SetAllGraphicsDirty();
-
-                refreshAndroidPortrait = false;
-            }
-
             if (newChildhoodBackstory != null)
             {
                 newAndroid.story.Childhood = newChildhoodBackstory;

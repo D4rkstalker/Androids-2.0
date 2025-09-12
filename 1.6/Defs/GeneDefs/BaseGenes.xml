@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<Androids2.A2GeneDef Name="A2_ModdableHardware" ParentName="VREA_HardwareBase" Abstract="True">
+		<isCoreComponent>false</isCoreComponent>
+
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SkillFloor_8</defName>
 		<label>Skill Floor: 8</label>
 		<description>A baseline package of skills.</description>
@@ -22,7 +24,7 @@
 		</modExtensions>	
 	</Androids2.A2GeneDef>
 	
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SkillFloor_10</defName>
 		<label>Skill Floor: 10</label>
 		<description>An advanced package of skills.</description>
@@ -42,7 +44,7 @@
 		</modExtensions>	
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_WorkSpeed_6</defName>
 		<label>Work Speed: 60%</label>
 		<description>Basic droids are built to be cheap and flexible, at the expense of efficiency and speed.</description>
@@ -55,7 +57,7 @@
 		<moddable>false</moddable>
 	</Androids2.A2GeneDef>
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_WorkSpeed_8</defName>
 		<label>Work Speed: 80%</label>
 		<description>Advanced droids are packed with more sophisticated hardware, allowing them to be more efficient and faster at work compared to basic droids.</description>
@@ -68,7 +70,7 @@
 	</Androids2.A2GeneDef>
 
 
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_BasicDroid</defName>
 		<label>Configuration: Basic Droid</label>
 		<description>Beep Boop I'm a droid</description>
@@ -76,9 +78,10 @@
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
 		<biostatMet>2</biostatMet>
+		<moddable>false</moddable>
 	</Androids2.A2GeneDef>
 	
-	<Androids2.A2GeneDef ParentName="VREA_HardwareBase">
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_AdvancedDroid</defName>
 		<label>Configuration: Advanced Droid</label>
 		<description>Beep Boop I'm an advanced droid</description>
@@ -86,6 +89,39 @@
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
 		<biostatMet>1</biostatMet>
+		<moddable>false</moddable>
 	</Androids2.A2GeneDef>
 	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_Synth</defName>
+		<label>Configuration: Synthetic</label>
+		<description>Beep Boop I'm a synth</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<biostatMet>0</biostatMet>
+		<moddable>false</moddable>
+	</Androids2.A2GeneDef>
+	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_DroidDiscount</defName>
+		<label>mass produced</label>
+		<description>The robot's design is standardized, reducing the build costs involved in making this unit</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>0</timeCost>
+		<exclusionTags>
+			<li>A2_HardwareIntegration</li>
+		</exclusionTags>
+		<modExtensions>
+			<li Class="Androids2.HardwareIntegration">
+				<complexityMult>0.9</complexityMult>
+				<timeMult>0.8</timeMult>
+				<costMult>0.8</costMult>
+			</li>
+		</modExtensions>	
+
+	</Androids2.A2GeneDef>
+
 </Defs>

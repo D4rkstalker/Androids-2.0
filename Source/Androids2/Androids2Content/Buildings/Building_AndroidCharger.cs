@@ -19,7 +19,7 @@ namespace Androids2
         public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
 
         public CompPowerTrader compPower;
-        public float chargeRate = 0.001f;
+        public float chargeRate = 0.0001f;
         public Pawn CurOccupant
         {
             get
@@ -70,35 +70,37 @@ namespace Androids2
                 {
                     occupant.jobs.curDriver.rotateToFace = TargetIndex.C;
                 }
-                if (compPower != null && compPower.PowerOn && occupant.HasActiveGene(A2_Defof.A2_BatteryPower))
+                if (compPower != null && compPower.PowerOn && (occupant.HasActiveGene(A2_Defof.A2_BatteryPower) || occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor)))
                 {
-                    Need_ReactorPower pwr = occupant.needs.TryGetNeed<Need_ReactorPower>();
-                    if (pwr != null && pwr.CurLevelPercentage < 1f)
+                    var pwr = occupant.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
+
+
+                    if (pwr != null && pwr.Energy < 1f)
                     {
-                        if (occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor))
+                        var powerGain = pwr.Energy;
+                        if (compPower.transNet != null && occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor) )
                         {
-                            
+                            Log.Error("TransNet found, super charging!");
                             if (compPower.transNet.CurrentEnergyGainRate() >= 5000f)
                             {
-                                chargeRate = 0.1f;
+                                powerGain += chargeRate * 100;
                                 compPower.PowerOutput = -5000f;
                             }
                             else
                             {
-                                chargeRate = 0.1f * (compPower.transNet.CurrentEnergyGainRate() / 5000f);
+                                powerGain += chargeRate * 100 * (compPower.transNet.CurrentEnergyGainRate() / 5000f);
                                 compPower.PowerOutput = -compPower.transNet.CurrentEnergyGainRate();
                             }
                         }
                         else if (occupant.HasActiveGene(A2_Defof.A2_AuxBattery))
                         {
-                            chargeRate = 0.001f;
+                            powerGain += chargeRate;
                         }
                         else
                         {
-                            chargeRate = 0.002f;
+                            powerGain += chargeRate * 2;
                         }
-                        var powerGain = pwr.curLevelInt + chargeRate;
-                        pwr.curLevelInt = Mathf.Min(1f, powerGain);
+                        pwr.Energy = Mathf.Min(1f, powerGain);
                     }
                 }
             }
@@ -109,7 +111,7 @@ namespace Androids2
             {
                 yield return opt;
             }
-            if (this.Faction == Faction.OfPlayer && selPawn.HasActiveGene(A2_Defof.A2_BatteryPower))
+            if (this.Faction == Faction.OfPlayer && (selPawn.HasActiveGene(A2_Defof.A2_SuperCapacitor)|| selPawn.HasActiveGene(A2_Defof.A2_BatteryPower)))
             {
                 var cannotUseReason = CannotUseNowReason(selPawn);
                 if (cannotUseReason.NullOrEmpty())
@@ -174,7 +176,7 @@ namespace Androids2
             {
                 return "VREA.AndroidStandIsOccupied".Translate();
             }
-            if (selPawn.HasActiveGene(A2_Defof.A2_BatteryPower) is false)
+            if (selPawn.HasActiveGene(A2_Defof.A2_BatteryPower) is false && selPawn.HasActiveGene(A2_Defof.A2_SuperCapacitor) is false)
             {
                 return "VREA.NotRechargable".Translate();
             }
