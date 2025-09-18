@@ -78,10 +78,10 @@ namespace Androids2
                     if (pwr != null && pwr.Energy < 1f)
                     {
                         var powerGain = pwr.Energy;
-                        if (compPower.transNet != null && occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor) )
+                        if (compPower.PowerNet != null && occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor) )
                         {
-                            Log.Error("TransNet found, super charging!");
-                            if (compPower.transNet.CurrentEnergyGainRate() >= 5000f)
+                            Log.Error("PowerNet found, super charging!");
+                            if (compPower.PowerNet.CurrentEnergyGainRate() >= 5000f)
                             {
                                 powerGain += chargeRate * 100;
                                 compPower.PowerOutput = -5000f;

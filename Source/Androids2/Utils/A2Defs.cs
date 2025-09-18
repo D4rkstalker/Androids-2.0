@@ -22,8 +22,14 @@ namespace Androids2
         public static GeneDef A2_Hardware_Integration_I;
         public static GeneDef A2_Hardware_Integration_II;
         public static GeneDef A2_Hardware_Integration_III;
+        public static GeneDef A2_Vanometric;
+        public static GeneDef A2_EltexPsyChip;
+        public static GeneDef A2_NeutroCatalyst;
+        public static GeneDef A2_SafetyOverrides;
 
-        public static HediffDef A2_HediffBattery;
+        public static GeneCategoryDef A2_Hardware;
+
+        public static HediffDef A2_HediffVanometric;
 
         public static ThingDef A2_AndroidCharger;
 

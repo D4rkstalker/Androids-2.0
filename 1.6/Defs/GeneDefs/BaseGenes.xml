@@ -2,6 +2,7 @@
 <Defs>
 	<Androids2.A2GeneDef Name="A2_ModdableHardware" ParentName="VREA_HardwareBase" Abstract="True">
 		<isCoreComponent>false</isCoreComponent>
+		<displayCategory>A2_Hardware</displayCategory>
 
 	</Androids2.A2GeneDef>
 

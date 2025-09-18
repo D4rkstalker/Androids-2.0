@@ -26,6 +26,8 @@ namespace Androids2.VREPatches
             var original = AccessTools.Method(typeof(HediffUtility), nameof(HediffUtility.CanHealNaturally));
 
             Helpers.Unpatch(original, "VREAndroids.HediffUtility_CanHealNaturally_Patch");
+            original = AccessTools.Method(typeof(HediffUtility), nameof(HediffUtility.CanHealFromTending));
+
             Helpers.Unpatch(original, "VREAndroids.HediffUtility_CanHealFromTending_Patch");
 
         }

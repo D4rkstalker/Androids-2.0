@@ -15,7 +15,6 @@ namespace Androids2
         public override float GetPriority(Pawn pawn)
         {
             var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
-            Log.Error(" Checking power for " + pawn.LabelShort + ": " + (power == null ? "no power" : power.Energy.ToString()));
             if (power == null || power.Energy > RechargeThreshold)
             {
                 return 0f;
@@ -26,7 +25,6 @@ namespace Androids2
         public override Job TryGiveJob(Pawn pawn)
         {
             var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
-            Log.Error(" Checking power for " + pawn.LabelShort + ": " + (power == null ? "no power" : power.Energy.ToString()));
 
             if (power == null)
             {

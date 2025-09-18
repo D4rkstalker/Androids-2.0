@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_EltexCoilExpansion</defName>
+		<label>eltex coil expansion</label>
+		<description>A secondary eltex mesh wrapped around the frame of the robot greatly increases psychic capabilities</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statFactors>
+			<MeditationFocusGain>0.4</MeditationFocusGain>
+			<PsychicEntropyRecoveryRate>0.4</PsychicEntropyRecoveryRate>
+			<PsychicSensitivity>0.5</PsychicSensitivity>
+		</statFactors>
+		<costList>
+			<VPE_Eltex>100</VPE_Eltex>
+			<ComponentSpacer>5</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
+</Defs>

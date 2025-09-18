@@ -14,7 +14,7 @@ namespace Androids2.Utils
 {
     public class AndroidMakerPatch
     {
-        public static void ApplyXenotype(Pawn pawn, List<GeneDef> genes, bool neutroLoss = true)
+        public static void ApplyXenotype(Pawn pawn, List<GeneDef> genes, bool neutroLoss = true, bool changeAge = true)
         {
 
             if (pawn == null)
@@ -145,9 +145,12 @@ namespace Androids2.Utils
                 }
             }
 
+            if (changeAge)
+            {
+                pawn.ageTracker.AgeBiologicalTicks = 0;
+                pawn.ageTracker.AgeChronologicalTicks = 0;
 
-            pawn.ageTracker.AgeBiologicalTicks = 0;
-            pawn.ageTracker.AgeChronologicalTicks = 0;
+            }
 
 
             if (pawn.genes.GetGene(VREA_DefOf.VREA_NeutroCirculation) != null && neutroLoss)
@@ -157,12 +160,6 @@ namespace Androids2.Utils
                 pawn.health.AddHediff(neutroloss);
 
             }
-
-            //if (pawn.genes.HasActiveGene(A2_Defof.A2_BatteryPower))
-            //{
-            //    pawn.health.AddHediff(A2_Defof.A2_HediffBattery, pawn.health.hediffSet.GetBodyPartRecord(A2_Defof.Stomach));
-            //    //pawn.health.RemoveHediff(pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor));
-            //}
 
 
         }

@@ -1,44 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<HediffDef ParentName="VREA_AndroidBodyPartBase">
-		<defName>A2_HediffBattery</defName>
-		<label>battery</label>
-		<labelNoun>a battery</labelNoun>
-		<description>An installed battery.</description>
-		<!-- <descriptionHyperlinks><ThingDef>VREA_Reactor</ThingDef></descriptionHyperlinks> -->
-		<hediffClass>VREAndroids.Hediff_AndroidReactor</hediffClass>
-		<!-- <spawnThingOnRemoved>VREA_Reactor</spawnThingOnRemoved> -->
-		<initialSeverity>0</initialSeverity>
-		<stages>
-			<li>
-				<!-- a stub -->
-			</li>
-			<li>
-				<minSeverity>1</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<postFactor>0</postFactor>
-					</li>
-					<li>
-						<capacity>Manipulation</capacity>
-						<postFactor>0</postFactor>
-					</li>
-				</capMods>
-			</li>
-		</stages>
+		<defName>A2_HediffVanometric</defName>
+		<label>vanometric power cell</label>
+		<labelNoun>a vanometric power cell</labelNoun>
+		<description>An installed vanometric power cell.</description>
+		<hediffClass>Androids2.Hediff_Vanometric</hediffClass>
+
 		<addedPartProps>
 			<solid>true</solid>
 		</addedPartProps>
-	</HediffDef>
-	<HediffDef>
-		<defName>A2_AuxBattery</defName>
-		<label>auxillary battery</label>
-		<labelNoun>an auxillary battery</labelNoun>
-		<description>An installed auxillary battery.</description>
-		<!-- <descriptionHyperlinks><ThingDef>VREA_Reactor</ThingDef></descriptionHyperlinks> -->
-		<defaultLabelColor>(0.6, 0.6, 1.0)</defaultLabelColor>
-		<!-- <spawnThingOnRemoved>VREA_Reactor</spawnThingOnRemoved> -->
 	</HediffDef>
 
 </Defs>

@@ -126,8 +126,8 @@
 			<ArmorRating_Sharp>1.50</ArmorRating_Sharp>
 			<ArmorRating_Blunt>1.50</ArmorRating_Blunt>
 			<ArmorRating_Heat>0.25</ArmorRating_Heat>
-			<MeleeDamageFactor>0.1</MeleeDamageFactor>
-			<MeleeCooldownFactor>0.5</MeleeCooldownFactor>
+			<MeleeDamageFactor>1.25</MeleeDamageFactor>
+			<MeleeCooldownFactor>1.1</MeleeCooldownFactor>
 			<MeleeDodgeChance>-15</MeleeDodgeChance>
 			<MoveSpeed>-0.1</MoveSpeed>
 		</statOffsets>
@@ -187,6 +187,84 @@
 		<costList>
 			<Plasteel>5</Plasteel>
 			<ComponentSpacer>10</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_Vanometric</defName>
+		<label>vanometric power cell</label>
+		<description>The robot's reactor is replaced with a vanometric power cell, allowing it to charge passively. WARNING VOLATILE: explodes when the REACTOR part is destroyed, or when the robot dies</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<exclusionTags>
+			<li>A2_Battery</li>
+		</exclusionTags>
+		<costList>
+			<VanometricPowerCell>1</VanometricPowerCell>
+			<ComponentSpacer>10</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_EltexPsyChip</defName>
+		<label>eltex psy-tuning chip</label>
+		<description>A specialized eltex psy-tuning chip has been installed into the robot's processor</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statFactors>
+			<PsychicSensitivity>1</PsychicSensitivity>
+		</statFactors>
+		<exclusionTags>
+			<li>VREA_PsychicSensitivity</li>
+		</exclusionTags>
+		<costList>
+			<ComponentSpacer>10</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_SafetyOverrides</defName>
+		<label>safety overrides</label>
+		<description>Disabling safety protocols increases the robot's performance, but also increases memory space drain, incoming damage and power drain (x3)</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statFactors>
+			<MoveSpeed>2</MoveSpeed>
+			<WorkSpeedGlobal>2</WorkSpeedGlobal>
+			<IncomingDamageFactor>1.5</IncomingDamageFactor>
+			<RangedCooldownFactor>0.2</RangedCooldownFactor>
+			<AimingDelayFactor>0.2</AimingDelayFactor>
+		</statFactors>
+		<statOffsets>
+			<MeleeCooldownFactor>0.5</MeleeCooldownFactor>
+			<MeleeDodgeChance>15</MeleeDodgeChance>
+			<CarryingCapacity>100</CarryingCapacity>
+			<VREA_MemorySpaceDrainMultiplier>1</VREA_MemorySpaceDrainMultiplier>
+		</statOffsets>
+		<costList>
+			<ComponentSpacer>10</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_NeutroCatalyst</defName>
+		<label>catalytic neutromine regenerator</label>
+		<description>Regerates neutromine, scaling exponentially with amount of stored neutromine in the robot. has no effect if the robot has completely ran out of neutromine</description>
+		<geneClass>Androids2.Gene_NeutroCatalyst</geneClass>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<costList>
+			<ComponentSpacer>5</ComponentSpacer>
+			<Plasteel>25</Plasteel>
+			<Silver>50</Silver>
 		</costList>
 	</Androids2.A2GeneDef>
 

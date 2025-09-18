@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.props" Condition="Exists('packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +15,8 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
     <LangVersion>8.0</LangVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +27,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PublicizeAll>true</PublicizeAll>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -71,6 +77,9 @@
       <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.6\Assemblies\VEF.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="VPEPuppeteer">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\3033779606\1.6\Assemblies\VPEPuppeteer.dll</HintPath>
+    </Reference>
     <Reference Include="VREAndroids">
       <HintPath>..\..\..\..\..\..\workshop\content\294100\2975771801\1.6\Assemblies\VREAndroids.dll</HintPath>
       <Private>False</Private>
@@ -93,7 +102,9 @@
     <Compile Include="Androids2Content\Buildings\IPawnCrafter.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
     <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
+    <Compile Include="Androids2Content\Genes\Gene_NeutroCatalyst.cs" />
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
+    <Compile Include="Androids2Content\Hediffs\VanometricCell.cs" />
     <Compile Include="Androids2Content\UI\FloatMenuOptionProvider_CarryAndroidToCharger.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_CancelConvert.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_PrinterPawnInfo.cs" />
@@ -118,13 +129,24 @@
     <Compile Include="VREExtensions\AndroidCreationStationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VREPatches\Patch_AndroidCreationStation.cs" />
-    <Compile Include="VREPatches\Patch_AdvancedAndroidCreation.cs" />
     <Compile Include="VREPatches\Patch_CharacterCardUtility.cs" />
     <Compile Include="VREPatches\Patch_EnergyDrain.cs" />
+    <Compile Include="VREPatches\Patch_Psylink.cs" />
     <Compile Include="VREPatches\Patch_SynthFlesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="VanillaPatches\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.props'))" />
+    <Error Condition="!Exists('packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.targets'))" />
+  </Target>
+  <Import Project="packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.targets" Condition="Exists('packages\Krafs.Publicizer.2.3.0\build\Krafs.Publicizer.targets')" />
 </Project>

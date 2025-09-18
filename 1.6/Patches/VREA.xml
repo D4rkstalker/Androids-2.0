@@ -2,8 +2,6 @@
 <Patch>
 	<Operation Class="PatchOperationSequence">
 		<operations>
-
-			
 			<li Class="PatchOperationReplace">
 				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/prerequisites</xpath>
 				<value>
@@ -20,7 +18,20 @@
 					<tab>Androids2</tab>
 				</value>
 			</li>
-
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_PsychicallyDeaf"]</xpath>
+				<value>
+					<exclusionTags> <li>VREA_PsychicSensitivity</li> </exclusionTags>
+				</value>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>Defs/VREAndroids.AndroidSettings/androidsShouldNotReceiveHediffs/li[text()="PsychicAmplifier"]</xpath>
+			</li>
 		</operations>
 	</Operation>
+		<!-- <Operation Class="PatchOperationAdd"> -->
+			<!-- <xpath>Defs/VREAndroids.AndroidConvertableGenesDef[defName="VREA_AndroidConvertableGenes"]/geneCategories</xpath> -->
+			<!-- <value><li>A2_Hardware</li></value> -->
+	<!-- </Operation> -->
+
 </Patch>

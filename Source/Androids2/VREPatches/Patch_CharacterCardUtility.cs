@@ -44,7 +44,6 @@ namespace Androids2
             var target = ResolveDrawerLambda();
             if (target == null)
             {
-                Log.Warning("[your mod] Could not find DoLeftSection drawer lambda to unpatch.");
                 return;
             }
 

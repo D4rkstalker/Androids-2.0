@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/Androids2.A2GeneDef[defName="A2_EltexPsyChip"]/costList</xpath>
+		<value>
+			<costList>
+				<VPE_Eltex>25</VPE_Eltex>
+				<ComponentSpacer>5</ComponentSpacer>
+			</costList>
+		</value>
+	</Operation>
+
+</Patch>

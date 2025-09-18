@@ -152,6 +152,7 @@ namespace Androids2
         {
 
             ingredients.ClearAndDestroyContents(0);
+            
             if (!currentPawn.IsAndroid())
             {
 
@@ -184,14 +185,13 @@ namespace Androids2
                     alienComp.RegenerateAddonsForced();
                 }
             }
-            AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false);
+            AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false, false);
             foreach (GeneDef gene in selectedGenes)
             {
                 currentPawn.genes.AddGene(gene, false);
                 recipe.customXenotype.genes.Add(gene);
             }
 
-            Log.Warning("newPawn: " + currentPawn.kindDef.ToString());
             Open();
             ResetProcess();
         }

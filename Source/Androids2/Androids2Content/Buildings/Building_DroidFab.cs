@@ -84,7 +84,6 @@ namespace Androids2
         {
             //Update costs.
             orderProcessor.requestedItems.Clear();
-            Log.Warning("Base ingredient count: " + def.costList.Count);
             def.CalcCost();
             foreach (ThingOrderRequest cost in def.costList)
             {
@@ -107,7 +106,6 @@ namespace Androids2
                 return;
             }
             pawnBeingCrafted = PawnGenerator.GeneratePawn(PawnKindDefOf.Colonist, Faction);
-            Log.Warning("Setting xenotype for pawn.");
             pawnBeingCrafted.genes.xenotypeName = def.customXenotype.name;
             pawnBeingCrafted.genes.iconDef = def.customXenotype.IconDef;
             foreach (var gene in VREAndroids.Utils.allAndroidGenes)

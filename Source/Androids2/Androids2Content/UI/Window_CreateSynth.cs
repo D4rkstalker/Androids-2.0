@@ -615,7 +615,7 @@ namespace Androids2
         public void DrawBackstories(Rect rect)
         {
 
-            Rect rowRect = new Rect(32f, 64, 256f - 16f, 24f);
+            Rect rowRect = new Rect(48 + 256, 32, 256f - 16f, 24f);
 
             Widgets.DrawBox(rowRect);
             Widgets.DrawHighlightIfMouseover(rowRect);
@@ -640,7 +640,7 @@ namespace Androids2
 
             if (newAndroid.story.Childhood != null)
                 TooltipHandler.TipRegion(rowRect, newAndroid.story.Childhood.FullDescriptionFor(newAndroid));
-            rowRect = new Rect(32 + 16f + 256f, 32, 256f - 16f, 24f);
+            rowRect = new Rect(48f + 256, 64, 256f - 16f, 24f);
 
             Widgets.DrawBox(rowRect);
             Widgets.DrawHighlightIfMouseover(rowRect);

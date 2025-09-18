@@ -38,8 +38,10 @@ namespace Androids2
                     {
                         efficiencyFactor *= item.def.GetModExtension<HardwareIntegration>().complexityMult;
                     }
-
-
+                    else if (item.def == A2_Defof.A2_SafetyOverrides)
+                    {
+                        efficiencyFactor *= 3f;
+                    }
                 }
             }
             if (efficiency > 0)
