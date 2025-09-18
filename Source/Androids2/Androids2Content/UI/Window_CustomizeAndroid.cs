@@ -21,7 +21,7 @@ namespace Androids2.Androids2Content
         {
             this.station = station;
             this.creator = creator;
-            selectedGenes = VREAndroids.Utils.AndroidGenesGenesInOrder.Where(x => x.CanBeRemovedFromAndroid() is false && x.displayCategory == A2_Defof.A2_Hardware).ToList();
+            selectedGenes = VREAndroids.Utils.AndroidGenesGenesInOrder.Where(x => x.CanBeRemovedFromAndroid() is false).ToList();
             OnGenesChanged();
 
         }

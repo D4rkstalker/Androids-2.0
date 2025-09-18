@@ -1176,7 +1176,7 @@ namespace Androids2
             station.recipe.costList = A2_Defof.A2_Synth.costList;
             station.recipe.costList.AddRange(requestedItems);
             station.recipe.timeCost += finalExtraPrintingTimeCost;
-            if (hi! == null)
+            if (hi != null)
             {
                 station.recipe.timeCost = (int)(station.recipe.timeCost * hi.timeMult);
                 station.requestedNutrition = (int)(station.requestedNutrition * hi.costMult);

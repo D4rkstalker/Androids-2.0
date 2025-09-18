@@ -51,7 +51,7 @@ namespace Androids2.Utils
             }
 
             var geneSyntheticBody = pawn.genes?.GetGene(VREA_DefOf.VREA_SyntheticBody) as Gene_SyntheticBody;
-            if (geneSyntheticBody != null)
+            if (geneSyntheticBody != null && changeAge)
             {
                 var years = Rand.Range(0f, 25f);
                 pawn.ageTracker.AgeBiologicalTicks = (long)(years * 3600000f);
@@ -169,12 +169,12 @@ namespace Androids2.Utils
             Debug.LogWarning("Calculating final level of skill: " + sk.defName);
             foreach (BackstoryDef item in pawn.story.AllBackstories.Where((BackstoryDef bs) => bs != null))
             {
-                Debug.LogWarning("Checking backstory: " + item.defName);
+               // Debug.LogWarning("Checking backstory: " + item.defName);
                 foreach (var skillGain in item.skillGains)
                 {
                     if (skillGain.skill == sk)
                     {
-                        Debug.LogWarning("Found skill gain in backstory: " + item.defName + " for skill: " + sk.defName);
+                        //Debug.LogWarning("Found skill gain in backstory: " + item.defName + " for skill: " + sk.defName);
                         num += (float)skillGain.amount;
                     }
                 }
