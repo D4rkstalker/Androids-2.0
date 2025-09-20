@@ -19,7 +19,7 @@ namespace Androids2
         public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
 
         public CompPowerTrader compPower;
-        public float chargeRate = 0.0001f;
+        public float chargeRate = 0.00001f;
         public Pawn CurOccupant
         {
             get
@@ -70,7 +70,7 @@ namespace Androids2
                 {
                     occupant.jobs.curDriver.rotateToFace = TargetIndex.C;
                 }
-                if (compPower != null && compPower.PowerOn && (occupant.HasActiveGene(A2_Defof.A2_BatteryPower) || occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor)))
+                if (compPower != null && compPower.PowerOn && (occupant.HasActiveGene(A2_Defof.VREA_A2_BatteryPower) || occupant.HasActiveGene(A2_Defof.VREA_A2_SuperCapacitor)))
                 {
                     var pwr = occupant.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
 
@@ -78,7 +78,7 @@ namespace Androids2
                     if (pwr != null && pwr.Energy < 1f)
                     {
                         var powerGain = pwr.Energy;
-                        if (compPower.PowerNet != null && occupant.HasActiveGene(A2_Defof.A2_SuperCapacitor) )
+                        if (compPower.PowerNet != null && occupant.HasActiveGene(A2_Defof.VREA_A2_SuperCapacitor) )
                         {
                             Log.Error("PowerNet found, super charging!");
                             if (compPower.PowerNet.CurrentEnergyGainRate() >= 5000f)
@@ -92,13 +92,17 @@ namespace Androids2
                                 compPower.PowerOutput = -compPower.transNet.CurrentEnergyGainRate();
                             }
                         }
-                        else if (occupant.HasActiveGene(A2_Defof.A2_AuxBattery))
+                        else if (occupant.HasActiveGene(A2_Defof.VREA_A2_AuxBattery))
                         {
                             powerGain += chargeRate;
+                            compPower.PowerOutput = -chargeRate * 100;
+
                         }
                         else
                         {
                             powerGain += chargeRate * 2;
+                            compPower.PowerOutput = -chargeRate * 200;
+
                         }
                         pwr.Energy = Mathf.Min(1f, powerGain);
                     }
@@ -111,8 +115,8 @@ namespace Androids2
             {
                 yield return opt;
             }
-            if (this.Faction == Faction.OfPlayer && (selPawn.HasActiveGene(A2_Defof.A2_SuperCapacitor)|| selPawn.HasActiveGene(A2_Defof.A2_BatteryPower)))
-            {
+            //if (this.Faction == Faction.OfPlayer && (selPawn.HasActiveGene(A2_Defof.A2_SuperCapacitor)|| selPawn.HasActiveGene(A2_Defof.A2_BatteryPower)))
+            //{
                 var cannotUseReason = CannotUseNowReason(selPawn);
                 if (cannotUseReason.NullOrEmpty())
                 {
@@ -129,7 +133,7 @@ namespace Androids2
                 {
                     yield return new FloatMenuOption("Androids2.Recharge".Translate() + ": " + cannotUseReason, null);
                 }
-            }
+            //}
         }
         public override IEnumerable<Gizmo> GetGizmos()
         {
@@ -176,7 +180,7 @@ namespace Androids2
             {
                 return "VREA.AndroidStandIsOccupied".Translate();
             }
-            if (selPawn.HasActiveGene(A2_Defof.A2_BatteryPower) is false && selPawn.HasActiveGene(A2_Defof.A2_SuperCapacitor) is false)
+            if (selPawn.HasActiveGene(A2_Defof.VREA_A2_BatteryPower) is false && selPawn.HasActiveGene(A2_Defof.VREA_A2_SuperCapacitor) is false)
             {
                 return "VREA.NotRechargable".Translate();
             }

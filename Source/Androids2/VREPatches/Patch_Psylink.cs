@@ -17,7 +17,7 @@ namespace Androids2.VREPatches
     {
         public static bool Prefix(Pawn p)
         {
-            if (p.HasActiveGene(VREA_DefOf.VREA_JoyDisabled) && p.HasActiveGene(A2_Defof.A2_EltexPsyChip))
+            if (p.HasActiveGene(VREA_DefOf.VREA_JoyDisabled) && p.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip))
             {
                 return false;
             }
@@ -30,7 +30,7 @@ namespace Androids2.VREPatches
     {
         public static bool Prefix(Pawn pawn)
         {
-            if (pawn.HasActiveGene(VREA_DefOf.VREA_JoyDisabled) && pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip))
+            if (pawn.HasActiveGene(VREA_DefOf.VREA_JoyDisabled) && pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip))
             {
                 return false;
             }
@@ -44,7 +44,7 @@ namespace Androids2.VREPatches
         [HarmonyPriority(Priority.High)]
         public static void PostFix(ref bool __result, Pawn pawn)
         {
-            if (pawn.HasActiveGene(VREAndroids.VREA_DefOf.VREA_JoyDisabled) && !(pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip)))
+            if (pawn.HasActiveGene(VREAndroids.VREA_DefOf.VREA_JoyDisabled) && !(pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip)))
             {
                 __result = false;
             }
@@ -57,7 +57,7 @@ namespace Androids2.VREPatches
         [HarmonyPriority(Priority.High)]
         public static void PostFix(ref Job __result, Pawn pawn)
         {
-            if (pawn.HasActiveGene(VREAndroids.VREA_DefOf.VREA_JoyDisabled) && pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip))
+            if (pawn.HasActiveGene(VREAndroids.VREA_DefOf.VREA_JoyDisabled) && pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip))
             {
                 __result = MeditationUtility.GetMeditationJob(pawn, forJoy: false);
             }
@@ -72,7 +72,7 @@ namespace Androids2.VREPatches
         {
             if (__result && req.Thing is Pawn pawn && pawn.IsAndroid())
             {
-                if (___stat == StatDefOf.MeditationFocusGain && pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip))
+                if (___stat == StatDefOf.MeditationFocusGain && pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip))
                 {
                     __result = true;
                 }
@@ -89,7 +89,7 @@ namespace Androids2.VREPatches
             {
                 return true;
             }
-            if (pawn.IsAndroid() && pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip) && pawn.psychicEntropy == null)
+            if (pawn.IsAndroid() && pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip) && pawn.psychicEntropy == null)
             {
                 pawn.psychicEntropy = new Pawn_PsychicEntropyTracker(pawn);
             }
@@ -106,7 +106,7 @@ namespace Androids2.VREPatches
             {
                 return true;
             }
-            if (pawn.IsAndroid() && pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip) && pawn.psychicEntropy == null)
+            if (pawn.IsAndroid() && pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip) && pawn.psychicEntropy == null)
             {
                 pawn.psychicEntropy = new Pawn_PsychicEntropyTracker(pawn);
             }
@@ -119,7 +119,7 @@ namespace Androids2.VREPatches
         public static void Postfix(ref bool __result, object[] __args)
         {
             Hediff_Psylink instance = (Hediff_Psylink)__args[0];
-            if (instance.pawn.IsAndroid() && instance.pawn.HasActiveGene(A2_Defof.A2_EltexPsyChip))
+            if (instance.pawn.IsAndroid() && instance.pawn.HasActiveGene(A2_Defof.VREA_A2_EltexPsyChip))
             {
                 __result = true;
             }

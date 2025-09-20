@@ -13,19 +13,19 @@ namespace Androids2
         public static JobDef A2_AndroidCharge;
         public static JobDef A2_HaulAndroidToCharger;
 
-        public static GeneDef A2_BatteryPower;
-        public static GeneDef A2_AuxBattery;
-        public static GeneDef A2_BasicDroid;
-        public static GeneDef A2_AdvancedDroid;
-        public static GeneDef A2_SynthFlesh;
-        public static GeneDef A2_SuperCapacitor;
-        public static GeneDef A2_Hardware_Integration_I;
-        public static GeneDef A2_Hardware_Integration_II;
-        public static GeneDef A2_Hardware_Integration_III;
-        public static GeneDef A2_Vanometric;
-        public static GeneDef A2_EltexPsyChip;
-        public static GeneDef A2_NeutroCatalyst;
-        public static GeneDef A2_SafetyOverrides;
+        public static GeneDef VREA_A2_BatteryPower;
+        public static GeneDef VREA_A2_AuxBattery;
+        public static GeneDef VREA_A2_BasicDroid;
+        public static GeneDef VREA_A2_AdvancedDroid;
+        public static GeneDef VREA_A2_SynthFlesh;
+        public static GeneDef VREA_A2_SuperCapacitor;
+        public static GeneDef VREA_A2_Hardware_Integration_I;
+        public static GeneDef VREA_A2_Hardware_Integration_II;
+        public static GeneDef VREA_A2_Hardware_Integration_III;
+        public static GeneDef VREA_A2_Vanometric;
+        public static GeneDef VREA_A2_EltexPsyChip;
+        public static GeneDef VREA_A2_NeutroCatalyst;
+        public static GeneDef VREA_A2_SafetyOverrides;
 
         public static GeneCategoryDef A2_Hardware;
 

@@ -27,14 +27,14 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
-			<li>A2_WorkSpeed_6</li>
-			<li>A2_BatteryPower</li>
-			<li>A2_BasicDroid</li>
-			<li>A2_MechFlesh</li>
-			<li>A2_DroidDiscount</li>
-			<li>ATK_AnthrohyenaFur</li>
-			<li>ATK_AnthrohyenaEars</li>
-			<li>ATK_AnthrohyenaTail</li>
+			<li>VREA_A2_WorkSpeed_6</li>
+			<li>VREA_A2_BatteryPower</li>
+			<li>VREA_A2_BasicDroid</li>
+			<li>VREA_A2_MechFlesh</li>
+			<li>VREA_A2_DroidDiscount</li>
+			<li>VREA_ATK_AnthrohyenaFur</li>
+			<li>VREA_ATK_AnthrohyenaEars</li>
+			<li>VREA_ATK_AnthrohyenaTail</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -65,16 +65,16 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
-			<li>A2_WorkSpeed_6</li>
-			<li>A2_BatteryPower</li>
-			<li>A2_BasicDroid</li>
-			<li>A2_AdvancedServos</li>
-			<li>A2_SynthWeave</li>
-			<li>A2_MechFlesh</li>
-			<li>A2_DroidDiscount</li>
-			<li>ATK_AnthrocatFur</li>
-			<li>ATK_AnthrocatEars</li>
-			<li>ATK_AnthrocatTail</li>
+			<li>VREA_A2_WorkSpeed_6</li>
+			<li>VREA_A2_BatteryPower</li>
+			<li>VREA_A2_BasicDroid</li>
+			<li>VREA_A2_AdvancedServos</li>
+			<li>VREA_A2_SynthWeave</li>
+			<li>VREA_A2_MechFlesh</li>
+			<li>VREA_A2_DroidDiscount</li>
+			<li>VREA_ATK_AnthrocatFur</li>
+			<li>VREA_ATK_AnthrocatEars</li>
+			<li>VREA_ATK_AnthrocatTail</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -106,18 +106,18 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_SelfDestructProtocols</li>
-			<li>A2_WorkSpeed_6</li>
-			<li>A2_BatteryPower</li>
-			<li>A2_BasicDroid</li>
-			<li>A2_HeavyHydraulics</li>
-			<li>A2_FortressArmor</li>
-			<li>A2_SynthWeave</li>
-			<li>A2_MechFlesh</li>
-			<li>A2_DroidDiscount</li>
-			<li>ATK_AnthrogriffFur</li>
-			<li>ATK_AnthrogriffEars</li>
-			<li>ATK_AnthrogriffTail</li>
-			<li>ATK_AnthrogriffBackbone</li>
+			<li>VREA_A2_WorkSpeed_6</li>
+			<li>VREA_A2_BatteryPower</li>
+			<li>VREA_A2_BasicDroid</li>
+			<li>VREA_A2_HeavyHydraulics</li>
+			<li>VREA_A2_FortressArmor</li>
+			<li>VREA_A2_SynthWeave</li>
+			<li>VREA_A2_MechFlesh</li>
+			<li>VREA_A2_DroidDiscount</li>
+			<li>VREA_ATK_AnthrogriffFur</li>
+			<li>VREA_ATK_AnthrogriffEars</li>
+			<li>VREA_ATK_AnthrogriffTail</li>
+			<li>VREA_ATK_AnthrogriffBackbone</li>
 		</genes>
 	</XenotypeDef>
 	

@@ -111,17 +111,17 @@ namespace Androids2
 
         public override void DoWindowContents(Rect rect)
         {
-            if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_I))
+            if (selectedGenes.Contains(A2_Defof.VREA_A2_Hardware_Integration_I))
             {
-                metMod = A2_Defof.A2_Hardware_Integration_I.GetModExtension<HardwareIntegration>().complexityMult;
+                metMod = A2_Defof.VREA_A2_Hardware_Integration_I.GetModExtension<HardwareIntegration>().complexityMult;
             }
-            else if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_II))
+            else if (selectedGenes.Contains(A2_Defof.VREA_A2_Hardware_Integration_II))
             {
-                metMod = A2_Defof.A2_Hardware_Integration_II.GetModExtension<HardwareIntegration>().complexityMult;
+                metMod = A2_Defof.VREA_A2_Hardware_Integration_II.GetModExtension<HardwareIntegration>().complexityMult;
             }
-            else if (selectedGenes.Contains(A2_Defof.A2_Hardware_Integration_III))
+            else if (selectedGenes.Contains(A2_Defof.VREA_A2_Hardware_Integration_III))
             {
-                metMod = A2_Defof.A2_Hardware_Integration_III.GetModExtension<HardwareIntegration>().complexityMult;
+                metMod = A2_Defof.VREA_A2_Hardware_Integration_III.GetModExtension<HardwareIntegration>().complexityMult;
             }
             // Reserve bottom strip for buttons (unchanged)
             Rect content = rect;
@@ -999,11 +999,11 @@ namespace Androids2
                 Rect iconRect2 = new Rect(curX, curY + margin + num2, num3, num3);
                 if (met < 10)
                 {
-                    GeneUIUtility.DrawStat(iconRect2, AndroidStatsTable.PowerEfficiencyIconTex, met.ToStringWithSign(), num3);
+                    GeneUIUtility.DrawStat(iconRect2, Helpers.PowerEfficiencyIconTex, met.ToStringWithSign(), num3);
                 }
                 else
                 {
-                    GUI.DrawTexture(iconRect2, AndroidStatsTable.PowerEfficiencyIconTex.Texture);
+                    GUI.DrawTexture(iconRect2, Helpers.PowerEfficiencyIconTex.Texture);
                     Text.Anchor = TextAnchor.MiddleRight;
                     Widgets.Label(new Rect(iconRect2.xMax - 6, iconRect2.y, num3 + 6, num3), met.ToStringWithSign());
                     Text.Anchor = TextAnchor.UpperLeft;
@@ -1157,7 +1157,7 @@ namespace Androids2
             foreach (GeneDef gene in selectedGenes)
             {
                 station.pawnBeingCrafted.genes.AddGene(gene, false);
-                customXenotype.genes.Add(gene);
+                //customXenotype.genes.Add(gene);
                 if (gene is A2GeneDef geneAndroid)
                 {
                     finalExtraPrintingTimeCost += geneAndroid.timeCost;

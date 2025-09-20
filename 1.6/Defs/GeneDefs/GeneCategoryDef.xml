@@ -6,4 +6,9 @@
 		<label>hardware</label>
 		<displayPriorityInXenotype>2</displayPriorityInXenotype>
 	</GeneCategoryDef>
+	<GeneCategoryDef>
+		<defName>A2_Jobs</defName>
+		<label>work type specialization</label>
+		<displayPriorityInXenotype>3</displayPriorityInXenotype>
+	</GeneCategoryDef>
 </Defs>

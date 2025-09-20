@@ -30,7 +30,7 @@ namespace RimWorld
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Pawn pawn2 = t as Pawn;
-            if (pawn2 == null || !pawn2.Spawned || !pawn2.IsAndroid() || (!pawn2.HasActiveGene(A2_Defof.A2_BatteryPower) && !pawn2.HasActiveGene(A2_Defof.A2_SuperCapacitor)))
+            if (pawn2 == null || !pawn2.Spawned || !pawn2.IsAndroid() || (!pawn2.HasActiveGene(A2_Defof.VREA_A2_BatteryPower) && !pawn2.HasActiveGene(A2_Defof.VREA_A2_SuperCapacitor)))
             {
                 return false;
             }

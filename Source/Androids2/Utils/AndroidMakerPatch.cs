@@ -40,7 +40,12 @@ namespace Androids2.Utils
             Debug.LogWarning(pawn.story.adulthood?.defName + " " + pawn.story.childhood?.defName);
             foreach (var gene in genes.OrderByDescending(g => !g.CanBeRemovedFromAndroid()))
             {
-                pawn.genes.AddGene(gene, true);
+                //if(pawn.genes.GetGene(gene) != null)
+                //{
+                //    Log.Warning("Skipping duplicate gene: " + gene.defName);
+                //    continue;
+                //}
+                pawn.genes.AddGene(gene, false);
                 //Log.Warning("Adding gene: " + gene.defName);
                 if (gene.GetModExtension<SkillFloor>() is SkillFloor extension)
                 {

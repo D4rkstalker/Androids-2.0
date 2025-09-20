@@ -27,15 +27,15 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
-			<li>A2_SkillFloor_8</li>
-			<li>A2_WorkSpeed_6</li>
-			<li>A2_BatteryPower</li>
-			<li>A2_BasicDroid</li>
-			<li>A2_MechFlesh</li>
-			<li>A2_DroidDiscount</li>
-			<li>ATK_AnthrowolfFur</li>
-			<li>ATK_AnthrowolfEars</li>
-			<li>ATK_AnthrowolfTail</li>
+			<li>VREA_A2_SkillFloor_8</li>
+			<li>VREA_A2_WorkSpeed_6</li>
+			<li>VREA_A2_BatteryPower</li>
+			<li>VREA_A2_BasicDroid</li>
+			<li>VREA_A2_MechFlesh</li>
+			<li>VREA_A2_DroidDiscount</li>
+			<li>VREA_ATK_AnthrowolfFur</li>
+			<li>VREA_ATK_AnthrowolfEars</li>
+			<li>VREA_ATK_AnthrowolfTail</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -66,17 +66,17 @@
 			<li>VREA_PsychologyDisabled</li>
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
-			<li>A2_SkillFloor_10</li>
-			<li>A2_WorkSpeed_8</li>
-			<li>A2_BatteryPower</li>
-			<li>A2_AdvancedDroid</li>
-			<li>A2_MechFlesh</li>
-			<li>A2_DroidDiscount</li>
-			<li>ATK_AnthrodrakeSkin</li>
-			<li>ATK_AnthrodrakeHeadbone</li>
-			<li>ATK_AnthrodrakeHeadbone_Spiraled</li>
-			<li>ATK_AnthrodrakeEars</li>
-			<li>ATK_AnthrodrakeTail</li>
+			<li>VREA_A2_SkillFloor_10</li>
+			<li>VREA_A2_WorkSpeed_8</li>
+			<li>VREA_A2_BatteryPower</li>
+			<li>VREA_A2_AdvancedDroid</li>
+			<li>VREA_A2_MechFlesh</li>
+			<li>VREA_A2_DroidDiscount</li>
+			<li>VREA_ATK_AnthrodrakeSkin</li>
+			<li>VREA_ATK_AnthrodrakeHeadbone</li>
+			<li>VREA_ATK_AnthrodrakeHeadbone_Spiraled</li>
+			<li>VREA_ATK_AnthrodrakeEars</li>
+			<li>VREA_ATK_AnthrodrakeTail</li>
 		</genes>
 	</XenotypeDef>
 
@@ -93,9 +93,9 @@
 			<li>VREA_ComponentOverheating</li>
 			<li>VREA_ColdTolerant</li>
 			<li>VREA_HeatTolerant</li>
-			<li>A2_BatteryPower</li>
-			<li>A2_MechFlesh</li>
-			<li>A2_Synth</li>
+			<li>VREA_A2_BatteryPower</li>
+			<li>VREA_A2_MechFlesh</li>
+			<li>VREA_A2_Synth</li>
 		</genes>
 	</XenotypeDef>
 	

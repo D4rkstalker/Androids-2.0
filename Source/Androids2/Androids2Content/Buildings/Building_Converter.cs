@@ -186,11 +186,11 @@ namespace Androids2
                 }
             }
             AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false, false);
-            foreach (GeneDef gene in selectedGenes)
-            {
-                currentPawn.genes.AddGene(gene, false);
-                recipe.customXenotype.genes.Add(gene);
-            }
+            //foreach (GeneDef gene in selectedGenes)
+            //{
+            //    currentPawn.genes.AddGene(gene, false);
+            //    recipe.customXenotype.genes.Add(gene);
+            //}
 
             Open();
             ResetProcess();

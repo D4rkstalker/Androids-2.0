@@ -22,23 +22,23 @@ namespace Androids2
                 if (!item.Overridden)
                 {
                     efficiency += item.def.biostatMet;
-                    if (item.def == A2_Defof.A2_BatteryPower)
-                    {
-                        efficiencyFactor *= 2;
-                    }
-                    else if (item.def == A2_Defof.A2_SuperCapacitor)
+                    if (item.def == A2_Defof.VREA_A2_BatteryPower)
                     {
                         efficiencyFactor *= 4;
                     }
-                    else if (item.def == A2_Defof.A2_AuxBattery)
+                    else if (item.def == A2_Defof.VREA_A2_SuperCapacitor)
+                    {
+                        efficiencyFactor *= 10;
+                    }
+                    else if (item.def == A2_Defof.VREA_A2_AuxBattery)
                     {
                         efficiencyFactor *= 0.5f;
                     }
-                    else if ((item.def == A2_Defof.A2_Hardware_Integration_I || item.def == A2_Defof.A2_Hardware_Integration_II || item.def == A2_Defof.A2_Hardware_Integration_III))
+                    else if ((item.def == A2_Defof.VREA_A2_Hardware_Integration_I || item.def == A2_Defof.VREA_A2_Hardware_Integration_II || item.def == A2_Defof.VREA_A2_Hardware_Integration_III))
                     {
                         efficiencyFactor *= item.def.GetModExtension<HardwareIntegration>().complexityMult;
                     }
-                    else if (item.def == A2_Defof.A2_SafetyOverrides)
+                    else if (item.def == A2_Defof.VREA_A2_SafetyOverrides)
                     {
                         efficiencyFactor *= 3f;
                     }

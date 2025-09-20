@@ -123,10 +123,10 @@ namespace Androids2
                 
             }
 
-            foreach (GeneDef gene in recipe.customXenotype.genes.OrderByDescending(x => x.CanBeRemovedFromAndroid() is false).ToList())
-            {
-                pawnBeingCrafted.genes.AddGene(gene, true);
-            }
+            //foreach (GeneDef gene in recipe.customXenotype.genes.OrderByDescending(x => x.CanBeRemovedFromAndroid() is false).ToList())
+            //{
+            //    pawnBeingCrafted.genes.AddGene(gene, false);
+            //}
             AndroidMakerPatch.ApplyXenotype(pawnBeingCrafted, def.customXenotype.genes,false);
             pawnBeingCrafted.apparel?.wornApparel?.Clear();
             pawnBeingCrafted.equipment?.equipment?.Clear();
@@ -138,6 +138,7 @@ namespace Androids2
             crafterStatus = CrafterStatus.Filling;
             pawnBeingCrafted.Drawer.renderer.EnsureGraphicsInitialized();
 
+            //Log.Warning("Has battery: " + pawnBeingCrafted.genes.GetGene(A2_Defof.A2_BatteryPower).def.defName);
         }
 
 

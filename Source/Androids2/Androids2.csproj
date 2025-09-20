@@ -131,6 +131,7 @@
     <Compile Include="VREPatches\Patch_AndroidCreationStation.cs" />
     <Compile Include="VREPatches\Patch_CharacterCardUtility.cs" />
     <Compile Include="VREPatches\Patch_EnergyDrain.cs" />
+    <Compile Include="VREPatches\Patch_GeneUIUtility_DrawGenesInfo_Patch.cs" />
     <Compile Include="VREPatches\Patch_Psylink.cs" />
     <Compile Include="VREPatches\Patch_SynthFlesh.cs" />
   </ItemGroup>

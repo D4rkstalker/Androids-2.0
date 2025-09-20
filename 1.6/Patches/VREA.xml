@@ -29,9 +29,14 @@
 			</li>
 		</operations>
 	</Operation>
-		<!-- <Operation Class="PatchOperationAdd"> -->
-			<!-- <xpath>Defs/VREAndroids.AndroidConvertableGenesDef[defName="VREA_AndroidConvertableGenes"]/geneCategories</xpath> -->
-			<!-- <value><li>A2_Hardware</li></value> -->
-	<!-- </Operation> -->
+	<Operation Class="PatchOperationAdd">
+			<xpath>Defs/VREAndroids.AndroidConvertableGenesDef[defName="VREA_AndroidConvertableGenes"]/geneCategories</xpath>
+			<value><li>A2_Hardware</li></value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+			<xpath>Defs/VREAndroids.AndroidConvertableGenesDef[defName="VREA_AndroidConvertableGenes"]/geneCategories</xpath>
+			<value><li>A2_Jobs</li></value>
+	</Operation>
 
 </Patch>

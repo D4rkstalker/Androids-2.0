@@ -36,7 +36,7 @@ namespace Androids2.VREPatches
         {
             public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.A2_SynthFlesh))
+                if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh))
                 {
                     __result = false;
                     return false;
@@ -50,7 +50,7 @@ namespace Androids2.VREPatches
             [HarmonyPriority(int.MinValue)]
             public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.A2_SynthFlesh))
+                if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh))
                 {
                     __result = false;
                     return false;
@@ -66,7 +66,7 @@ namespace Androids2.VREPatches
             [HarmonyPriority(Priority.Last)]
             public static bool Prefix(Pawn android, ref bool __result)
             {
-                if(android.HasActiveGene(A2_Defof.A2_SynthFlesh))
+                if(android.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh))
                 {
                     __result = false;
                     return false;

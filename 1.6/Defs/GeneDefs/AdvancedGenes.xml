@@ -3,7 +3,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_BatteryPower</defName>
 		<label>battery power</label>
-		<description>The robot's reactor has been swapped to a rechargable battery, needs to be recharged at an android charging station. Halves max energy capacity</description>
+		<description>The robot's reactor has been swapped to a rechargable battery, needs to be recharged at an android charging station. Quaters max energy capacity</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
@@ -33,7 +33,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SuperCapacitor</defName>
 		<label>super capacitor</label>
-		<description>The robot's reactor has been swapped to a super capacitor, allowing the robot to be recharged instantly at a super charger. Quaters max energy capacity</description>
+		<description>The robot's reactor has been swapped to a super capacitor, allowing the robot to be recharged instantly at a super charger. Reduces max energy capacity by a factor of 10</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
@@ -116,7 +116,7 @@
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_FortressArmor</defName>
-		<label>heavy armor</label>
+		<label>fortress armor</label>
 		<description>The robot's normally decorative exterior panels are replaced with a heavy steel armor plates, allowing it to survive anything smaller than a dedicated anti armor weapon. However it does make the robot bulkier and slower</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
@@ -126,8 +126,8 @@
 			<ArmorRating_Sharp>1.50</ArmorRating_Sharp>
 			<ArmorRating_Blunt>1.50</ArmorRating_Blunt>
 			<ArmorRating_Heat>0.25</ArmorRating_Heat>
-			<MeleeDamageFactor>1.25</MeleeDamageFactor>
-			<MeleeCooldownFactor>1.1</MeleeCooldownFactor>
+			<MeleeDamageFactor>0.25</MeleeDamageFactor>
+			<MeleeCooldownFactor>0.1</MeleeCooldownFactor>
 			<MeleeDodgeChance>-15</MeleeDodgeChance>
 			<MoveSpeed>-0.1</MoveSpeed>
 		</statOffsets>
@@ -154,7 +154,7 @@
 		  <ShootingAccuracyFactor_Short>1.25</ShootingAccuracyFactor_Short>
 		  <AimingDelayFactor>0.9</AimingDelayFactor>
 		<MeleeDamageFactor>1.5</MeleeDamageFactor>
-		<MeleeCooldownFactor>0.5</MeleeCooldownFactor>
+		<MeleeCooldownFactor>-0.5</MeleeCooldownFactor>
 		</statFactors>
 		<statOffsets>
 			<MeleeDodgeChance>15</MeleeDodgeChance>
@@ -187,6 +187,22 @@
 		<costList>
 			<Plasteel>5</Plasteel>
 			<ComponentSpacer>10</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_Storage</defName>
+		<label>internal storage compartments</label>
+		<description>Modular internal storage compartments allows the robot to carry extra stuff</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statOffsets>
+			<VEF_MassCarryCapacity>25</VEF_MassCarryCapacity>
+		</statOffsets>
+		<costList>
+			<Plasteel>15</Plasteel>
+			<ComponentIndustrial>1</ComponentIndustrial>
 		</costList>
 	</Androids2.A2GeneDef>
 
@@ -238,8 +254,8 @@
 			<MoveSpeed>2</MoveSpeed>
 			<WorkSpeedGlobal>2</WorkSpeedGlobal>
 			<IncomingDamageFactor>1.5</IncomingDamageFactor>
-			<RangedCooldownFactor>0.2</RangedCooldownFactor>
-			<AimingDelayFactor>0.2</AimingDelayFactor>
+			<RangedCooldownFactor>-0.2</RangedCooldownFactor>
+			<AimingDelayFactor>-0.2</AimingDelayFactor>
 		</statFactors>
 		<statOffsets>
 			<MeleeCooldownFactor>0.5</MeleeCooldownFactor>

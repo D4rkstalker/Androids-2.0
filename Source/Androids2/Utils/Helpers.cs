@@ -5,16 +5,21 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using Verse;
 using VREAndroids;
 namespace Androids2
 {
     public static class Helpers
     {
+        public static readonly Texture2D PowerEfficiencyIcon = ContentFinder<Texture2D>.Get("UI/BiostatIcon/BiostatEfficiency");
+        public static readonly Texture2D ResourceCostIcon = ContentFinder<Texture2D>.Get("UI/BiostatIcon/BiostatResourceCost");
+        public static readonly CachedTexture PowerEfficiencyIconTex = new CachedTexture("UI/BiostatIcon/BiostatEfficiency");
+
         public static bool IsDroid(this Pawn pawn)
         {
 
-            if (pawn.HasActiveGene(A2_Defof.A2_BasicDroid) || pawn.HasActiveGene(A2_Defof.A2_AdvancedDroid))
+            if (pawn.HasActiveGene(A2_Defof.VREA_A2_BasicDroid) || pawn.HasActiveGene(A2_Defof.VREA_A2_AdvancedDroid))
             {
                 return true;
             }
