@@ -165,27 +165,29 @@ namespace Androids2
                     }
                 }
             }
-
-            currentPawn.gender = newAndroid.gender;
-            currentPawn.def = newAndroid.def;
-            currentPawn.ChangeKind(newAndroid.kindDef);
-            currentPawn.story.headType = newAndroid.story.headType;
-            currentPawn.story.bodyType = newAndroid.story.bodyType;
-            currentPawn.style = newAndroid.style;
-            currentPawn.story.hairDef = null;
-            //currentPawn.story.hairDef = newAndroid.story.hairDef;
-            currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
-            currentPawn.RaceProps.body = newAndroid.RaceProps.body;
-            if (currentPawn.def is ThingDef_AlienRace alien && newAndroid.def is ThingDef_AlienRace src_alien)
+            if(currentPawn.kindDef.race.defName != newAndroid.kindDef.race.defName)
             {
-                AlienPartGenerator.AlienComp alienComp = currentPawn.GetComp<AlienPartGenerator.AlienComp>();
-                if (alienComp != null)
+                currentPawn.gender = newAndroid.gender;
+                currentPawn.def = newAndroid.def;
+                currentPawn.ChangeKind(newAndroid.kindDef);
+                currentPawn.story.headType = newAndroid.story.headType;
+                currentPawn.story.bodyType = newAndroid.story.bodyType;
+                currentPawn.style = newAndroid.style;
+                currentPawn.story.hairDef = null;
+                currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
+                currentPawn.RaceProps.body = newAndroid.RaceProps.body;
+                if (currentPawn.def is ThingDef_AlienRace alien && newAndroid.def is ThingDef_AlienRace src_alien)
                 {
-                    alienComp.UpdateColors();
-                    alienComp.RegenerateAddonsForced();
+                    AlienPartGenerator.AlienComp alienComp = currentPawn.GetComp<AlienPartGenerator.AlienComp>();
+                    if (alienComp != null)
+                    {
+                        alienComp.UpdateColors();
+                        alienComp.RegenerateAddonsForced();
+                    }
                 }
             }
-            AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false, false);
+
+            AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false, false, true);
             //foreach (GeneDef gene in selectedGenes)
             //{
             //    currentPawn.genes.AddGene(gene, false);
@@ -302,7 +304,14 @@ namespace Androids2
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Deep.Look<ThingOwner>(ref innerContainer, "innerContainer", new object[] { this });
+            Scribe_Deep.Look(ref innerContainer, "innerContainer");
+            Scribe_Deep.Look(ref newAndroid, "newAndroid");
+            Scribe_Deep.Look(ref ingredients, "ingredients");
+            Scribe_Values.Look(ref nextResourceTick, "nextResourceTick");
+            Scribe_Deep.Look(ref inputSettings, "inputSettings");
+            Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
+            Scribe_Values.Look(ref recipe, "recipe");
+
         }
 
         // Token: 0x06000052 RID: 82 RVA: 0x00004083 File Offset: 0x00002283

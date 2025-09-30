@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef Name="A2_BaseAndroids" Abstract="True">
+    <race>Human</race>
+    <isFighter>true</isFighter>
+    <itemQuality>Normal</itemQuality>
+    <inventoryOptions>
+     <skipChance>0.70</skipChance>
+     <subOptionsTakeAll>
+       <li>
+         <thingDef>Silver</thingDef>
+         <countRange>30~100</countRange>
+       </li>
+       <li>
+         <thingDef>Neutroamine</thingDef>
+         <countRange>3~10</countRange>
+       </li>
+     </subOptionsTakeAll>
+    </inventoryOptions>
+    <initialWillRange>3~5</initialWillRange>
+    <initialResistanceRange>16~25</initialResistanceRange>
+    <techHediffsChance>0.15</techHediffsChance>
+    <techHediffsMoney>0~100</techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+      <li>ImplantEmpireCommon</li>
+    </techHediffsTags>
+	<skills>
+      <li>
+        <skill>Shooting</skill>
+        <range>8~12</range>
+      </li>
+      <li>
+        <skill>Melee</skill>
+        <range>8~13</range>
+      </li>
+    </skills>
+
+
+  </PawnKindDef>
+  <PawnKindDef ParentName="A2_BaseAndroids">
+    <defName>A2_RaiderDroid</defName>
+    <label>Raider Droid</label>
+	<description>A basic mass produced wardroid</description>
+    <combatPower>40</combatPower>
+    <itemQuality>Good</itemQuality>
+    <weaponTags>
+      <li>IndustrialGun</li>
+      <li>IndustrialGunAdvanced</li>
+      <li>MedievalMeleeAdvanced</li>
+    </weaponTags>
+    <weaponMoney>300~900</weaponMoney>
+    <apparelMoney>0~3800</apparelMoney>
+    <apparelTags>
+      <li>IndustrialBasic</li>
+      <li>IndustrialAdvanced</li>
+      <li>IndustrialMilitaryBasic</li>
+      <li>IndustrialMilitaryAdvanced</li>
+    </apparelTags>
+    <xenotypeSet>
+      <xenotypeChances>
+        <VREA_AndroidBasic>0.25</VREA_AndroidBasic>
+        <A2_LineDroid>0.25</A2_LineDroid>
+        <A2_SkirmisherDroid>0.25</A2_SkirmisherDroid>
+        <A2_JuggernautDroid>0.25</A2_JuggernautDroid>
+      </xenotypeChances>
+    </xenotypeSet>
+  </PawnKindDef>
+  
+  <PawnKindDef ParentName="A2_BaseAndroids">
+    <defName>A2_AndroidMedium</defName>
+    <label>Android Infantry</label>
+	<description>An android fighter, usually serving as front line units commanding teams of wardroids</description>
+    <itemQuality>Excellent</itemQuality>
+
+    <combatPower>100</combatPower>
+    <weaponTags>
+      <li>IndustrialGunAdvanced</li>
+      <li>SpacerGun</li>
+      <li>SniperRifle</li>
+      <li>UltratechMelee</li>
+    </weaponTags>
+    <weaponMoney>1550~2700</weaponMoney>
+    <apparelMoney>7000~10000</apparelMoney>
+    <techHediffsMoney>500~3000</techHediffsMoney>
+    <techHediffsMaxAmount>3</techHediffsMaxAmount>
+   <apparelTags>
+      <li>IndustrialMilitaryAdvanced</li>
+    </apparelTags>
+    <xenotypeSet>
+      <xenotypeChances>
+        <A2_SynthBasic>0.5</A2_SynthBasic>
+        <A2_SynthAdvance>0.25</A2_SynthAdvance>
+         <A2_SynthOverdriven>0.25</A2_SynthOverdriven>
+     </xenotypeChances>
+    </xenotypeSet>
+  </PawnKindDef>
+
+  <PawnKindDef ParentName="A2_BaseAndroids">
+    <defName>A2_AndroidHigh</defName>
+    <label>Android Cataphract</label>
+	<description>An elite android shock trooper</description>
+
+    <combatPower>200</combatPower>
+    <weaponTags>
+      <li>GunHeavy</li>
+      <li>SpacerGun</li>
+       <li>UltratechMelee</li>
+   </weaponTags>
+    <weaponMoney>3000~3500</weaponMoney>
+    <apparelMoney>10000~15000</apparelMoney>
+    <techHediffsMoney>1000~5000</techHediffsMoney>
+    <techHediffsMaxAmount>5</techHediffsMaxAmount>
+   <apparelTags>
+      <li>SpacerMilitary</li>
+      <li>PrestigeCombatGear</li>
+    </apparelTags>
+    <xenotypeSet>
+      <xenotypeChances>
+        <A2_SynthAdvance>0.25</A2_SynthAdvance>
+        <A2_SynthElite>0.5</A2_SynthElite>
+        <A2_SynthOverdriven>0.25</A2_SynthOverdriven>
+      </xenotypeChances>
+    </xenotypeSet>
+  </PawnKindDef>
+
+</Defs>

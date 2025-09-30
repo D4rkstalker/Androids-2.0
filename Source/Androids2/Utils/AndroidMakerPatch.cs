@@ -14,7 +14,7 @@ namespace Androids2.Utils
 {
     public class AndroidMakerPatch
     {
-        public static void ApplyXenotype(Pawn pawn, List<GeneDef> genes, bool neutroLoss = true, bool changeAge = true)
+        public static void ApplyXenotype(Pawn pawn, List<GeneDef> genes, bool neutroLoss = true, bool changeAge = true, bool keepBaseSkill = false)
         {
 
             if (pawn == null)
@@ -38,6 +38,7 @@ namespace Androids2.Utils
             }
             int skillFloor = 0;
             Debug.LogWarning(pawn.story.adulthood?.defName + " " + pawn.story.childhood?.defName);
+            bool isNeuralLocked = false;
             foreach (var gene in genes.OrderByDescending(g => !g.CanBeRemovedFromAndroid()))
             {
                 //if(pawn.genes.GetGene(gene) != null)
@@ -51,6 +52,10 @@ namespace Androids2.Utils
                 {
                     //Log.Warning("setting skillfloor: " + extension.floor);
                     skillFloor = extension.floor;
+                }
+                if (gene == A2_Defof.VREA_A2_NeuralLock)
+                {
+                    isNeuralLocked |= true;
                 }
 
             }
@@ -69,7 +74,18 @@ namespace Androids2.Utils
             {
                 SkillDef skillDef = allDefsListForReading[i];
                 var skillRecord = pawn.skills.GetSkill(skillDef);
-                skillRecord.Level = FinalLevelOfSkill(pawn, skillDef) + skillFloor;
+                int tempLevel = FinalLevelOfSkill(pawn, skillDef) + skillFloor;
+                if (keepBaseSkill)
+                {
+                    if (tempLevel < skillRecord.Level)
+                    {
+                        tempLevel = skillRecord.Level;
+                    }
+                }
+                else
+                {
+                    skillRecord.Level = tempLevel;
+                }
                 if (pawn.HasActiveGene(VREA_DefOf.VREA_NoSkillGain))
                 {
                     skillRecord.passion = Passion.None;
@@ -77,85 +93,102 @@ namespace Androids2.Utils
                 }
                 else
                 {
-                    skillRecord.passion = Passion.None;
-                    if (!skillRecord.TotallyDisabled)
+                    if (!keepBaseSkill)
                     {
-                        float num2 = (float)skillRecord.Level * 0.11f;
-                        float value = Rand.Value;
-                        if (value < num2)
+                        skillRecord.passion = Passion.None;
+                        if (!skillRecord.TotallyDisabled)
                         {
-                            if (value < num2 * 0.2f)
+                            float num2 = (float)skillRecord.Level * 0.11f;
+                            float value = Rand.Value;
+                            if (value < num2)
                             {
-                                skillRecord.passion = Passion.Major;
+                                if (value < num2 * 0.2f)
+                                {
+                                    skillRecord.passion = Passion.Major;
+                                }
+                                else
+                                {
+                                    skillRecord.passion = Passion.Minor;
+                                }
                             }
-                            else
-                            {
-                                skillRecord.passion = Passion.Minor;
-                            }
+                            skillRecord.xpSinceLastLevel = Rand.Range(skillRecord.XpRequiredForLevelUp * 0.1f, skillRecord.XpRequiredForLevelUp * 0.9f);
                         }
-                        skillRecord.xpSinceLastLevel = Rand.Range(skillRecord.XpRequiredForLevelUp * 0.1f, skillRecord.XpRequiredForLevelUp * 0.9f);
                     }
                 }
             }
             if (pawn.IsAwakened())
             {
-                var majorPassions = 2;
-                var minorPassions = 2;
-
-                foreach (SkillRecord item in pawn.skills.skills.OrderByDescending((SkillRecord sr) =>
-                    sr.GetLevel(includeAptitudes: false)))
+                if (isNeuralLocked)
                 {
-                    if (item.TotallyDisabled)
+                    foreach(var _gene in VREAndroids.Utils.AndroidGenesGenesInOrder.Where(x => x.CanBeRemovedFromAndroid() is false).ToList())
                     {
-                        continue;
+                        pawn.genes.AddGene(_gene,false);
                     }
-                    bool flag = false;
-                    foreach (Trait allTrait2 in pawn.story.traits.allTraits)
+                    pawn.genes.AddGene(VREA_DefOf.VREA_AntiAwakeningProtocols,false);
+                }
+                else
+                {
+                    var majorPassions = 2;
+                    var minorPassions = 2;
+
+                    foreach (SkillRecord item in pawn.skills.skills.OrderByDescending((SkillRecord sr) =>
+                        sr.GetLevel(includeAptitudes: false)))
                     {
-                        if (allTrait2.def.ConflictsWithPassion(item.def))
+                        if (item.TotallyDisabled)
                         {
-                            flag = true;
-                            break;
+                            continue;
                         }
-                    }
-                    if (ModsConfig.BiotechActive && pawn.genes != null)
-                    {
-                        foreach (Gene item2 in pawn.genes.GenesListForReading)
+                        bool flag = false;
+                        foreach (Trait allTrait2 in pawn.story.traits.allTraits)
                         {
-                            if (item2.Active && item2.def.passionMod != null && item2.def.passionMod.modType == PassionMod.PassionModType.DropAll && item2.def.passionMod.skill == item.def)
+                            if (allTrait2.def.ConflictsWithPassion(item.def))
                             {
                                 flag = true;
                                 break;
                             }
                         }
+                        if (ModsConfig.BiotechActive && pawn.genes != null)
+                        {
+                            foreach (Gene item2 in pawn.genes.GenesListForReading)
+                            {
+                                if (item2.Active && item2.def.passionMod != null && item2.def.passionMod.modType == PassionMod.PassionModType.DropAll && item2.def.passionMod.skill == item.def)
+                                {
+                                    flag = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!flag)
+                        {
+                            CreatePassion(item, force: false);
+                        }
                     }
-                    if (!flag)
-                    {
-                        CreatePassion(item, force: false);
-                    }
-                }
 
-                void CreatePassion(SkillRecord record, bool force)
-                {
-                    if (majorPassions > 0)
+                    void CreatePassion(SkillRecord record, bool force)
                     {
-                        record.passion = Passion.Major;
-                        majorPassions--;
-                    }
-                    else if (minorPassions > 0 || force)
-                    {
-                        record.passion = Passion.Minor;
-                        minorPassions--;
+                        if (majorPassions > 0)
+                        {
+                            record.passion = Passion.Major;
+                            majorPassions--;
+                        }
+                        else if (minorPassions > 0 || force)
+                        {
+                            record.passion = Passion.Minor;
+                            minorPassions--;
+                        }
                     }
                 }
             }
-
-            if (changeAge)
+            if (pawn.lord.faction != Faction.OfPlayer)
             {
-                pawn.ageTracker.AgeBiologicalTicks = 0;
-                pawn.ageTracker.AgeChronologicalTicks = 0;
-
+                if(!pawn.IsAwakened() || isNeuralLocked)
+                    pawn.lord.faction = Faction.OfPlayer;
             }
+
+            pawn.ageTracker.AgeBiologicalTicks = 0;
+            pawn.ageTracker.AgeChronologicalTicks = 0;
+
+
 
 
             if (pawn.genes.GetGene(VREA_DefOf.VREA_NeutroCirculation) != null && neutroLoss)
@@ -174,7 +207,7 @@ namespace Androids2.Utils
             Debug.LogWarning("Calculating final level of skill: " + sk.defName);
             foreach (BackstoryDef item in pawn.story.AllBackstories.Where((BackstoryDef bs) => bs != null))
             {
-               // Debug.LogWarning("Checking backstory: " + item.defName);
+                // Debug.LogWarning("Checking backstory: " + item.defName);
                 foreach (var skillGain in item.skillGains)
                 {
                     if (skillGain.skill == sk)

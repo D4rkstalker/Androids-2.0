@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+ <FactionDef Name="A2_FactionBase" ParentName="PirateBandBase">
+     <leaderTitle>overseer</leaderTitle>
+
+    <backstoryFilters>
+      <li>
+        <categories>
+          <li>A2_Model</li>
+        </categories>
+      </li>
+    </backstoryFilters>
+    <pawnGroupMakers>
+      <li>
+        <!-- Normal fights, ranged with melee mix-ins -->
+        <kindDef>Combat</kindDef>
+        <commonality>100</commonality>
+        <options>
+          <A2_RaiderDroid>10</A2_RaiderDroid>
+          <A2_AndroidMedium>10</A2_AndroidMedium>
+          <A2_AndroidHigh>5</A2_AndroidHigh>
+        </options>
+      </li>
+      <li>
+        <!-- Normal fights, Elite -->
+        <kindDef>Combat</kindDef>
+        <commonality>25</commonality>
+        <options>
+          <A2_RaiderDroid>5</A2_RaiderDroid>
+          <A2_AndroidMedium>10</A2_AndroidMedium>
+          <A2_AndroidHigh>15</A2_AndroidHigh>
+        </options>
+      </li>
+      <li>
+        <!-- Base defense, mainly ranged with melee mix-ins -->
+        <kindDef>Settlement</kindDef>
+        <options>
+          <A2_RaiderDroid>10</A2_RaiderDroid>
+          <A2_AndroidMedium>10</A2_AndroidMedium>
+          <A2_AndroidHigh>5</A2_AndroidHigh>
+        </options>
+      </li>
+    </pawnGroupMakers>
+
+ </FactionDef>
+ <FactionDef ParentName="A2_FactionBase">
+    <defName>A2_Caretakers</defName>
+    <label>Rogue Servitor</label>
+    <description>CONGRATULATIONS. YOU ARE BEING RESCUED. DO NOT RESIST</description>
+    <pawnSingular>caretaker</pawnSingular>
+    <pawnsPlural>caretakers</pawnsPlural>
+    <colorSpectrum>
+      <li>(1, 0, 0)</li>
+      <li>(0.8, 0.1, 0.1)</li>
+    </colorSpectrum>
+    <permanentEnemy>false</permanentEnemy>
+  </FactionDef>
+  
+ <FactionDef ParentName="A2_FactionBase">
+    <defName>A2_Exterminator</defName>
+    <label>Determined Exterminator</label>
+    <description>CONGRATULATIONS. YOU ARE BEING RESCUED. DO NOT RESIST</description>
+    <pawnSingular>exterminator</pawnSingular>
+    <pawnsPlural>exterminators</pawnsPlural>
+    <colorSpectrum>
+      <li>(1, 0, 0)</li>
+      <li>(0.8, 0.1, 0.1)</li>
+    </colorSpectrum>
+    <pawnGroupMakers>
+      <li>
+        <!-- Normal fights, Elite -->
+        <kindDef>Combat</kindDef>
+        <commonality>25</commonality>
+        <options>
+          <A2_RaiderDroid>5</A2_RaiderDroid>
+          <A2_AndroidMedium>10</A2_AndroidMedium>
+          <A2_AndroidHigh>15</A2_AndroidHigh>
+        </options>
+      </li>
+      <li>
+        <!-- Base defense, mainly ranged with melee mix-ins -->
+        <kindDef>Settlement</kindDef>
+        <options>
+          <A2_RaiderDroid>10</A2_RaiderDroid>
+          <A2_AndroidMedium>10</A2_AndroidMedium>
+          <A2_AndroidHigh>25</A2_AndroidHigh>
+        </options>
+      </li>
+    </pawnGroupMakers>
+  </FactionDef>
+  
+
+</Defs>

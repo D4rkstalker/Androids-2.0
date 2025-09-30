@@ -111,9 +111,10 @@ namespace Androids2
             }
             else if (station.mode == ConversionMode.Modify)
             {
-                selectedGenes = station.currentPawn.genes.GenesListForReading.Where(g => g.def.CanBeRemovedFromAndroid()).Select(g => g.def).ToList();
+                selectedGenes = station.currentPawn.genes.GenesListForReading.Select(g => g.def).ToList();
             }
             newAndroid = GetNewPawn(station.currentPawn.gender);
+
             OnGenesChanged();
         }
 
@@ -1050,16 +1051,16 @@ namespace Androids2
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = Color.white;
             }
-            else if (met* metMod< -20)
-            {
-                string text = "VREA.TooLowEfficiency".Translate();
-                float x2 = Text.CalcSize(text).x;
-                GUI.color = ColorLibrary.RedReadable;
-                Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(new Rect(rect.xMax - ButSize.x - x2 - 4f, rect.y, x2, rect.height), text);
-                Text.Anchor = TextAnchor.UpperLeft;
-                GUI.color = Color.white;
-            }
+            //else if (met* metMod< -20)
+            //{
+            //    string text = "VREA.TooLowEfficiency".Translate();
+            //    float x2 = Text.CalcSize(text).x;
+            //    GUI.color = ColorLibrary.RedReadable;
+            //    Text.Anchor = TextAnchor.MiddleLeft;
+            //    Widgets.Label(new Rect(rect.xMax - ButSize.x - x2 - 4f, rect.y, x2, rect.height), text);
+            //    Text.Anchor = TextAnchor.UpperLeft;
+            //    GUI.color = Color.white;
+            //}
         }
 
         public override bool WithinAcceptableBiostatLimits(bool showMessage)
@@ -1088,10 +1089,10 @@ namespace Androids2
                 Messages.Message("VREA.AndroidNameCannotBeEmpty".Translate(), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
             }
-            if (!WithinAcceptableBiostatLimits(showMessage: true))
-            {
-                return false;
-            }
+            //if (!WithinAcceptableBiostatLimits(showMessage: true))
+            //{
+            //    return false;
+            //}
             List<GeneDef> selectedGenes = SelectedGenes;
             foreach (GeneDef selectedGene in SelectedGenes)
             {
@@ -1133,6 +1134,8 @@ namespace Androids2
                         station.requestedNutrition += geneAndroid.nutrition;
                         requestedItems.AddRange(geneAndroid.costList);
                     }
+                    station.selectedGenes.Add(gene);
+
                 }
 
 

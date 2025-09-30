@@ -26,6 +26,7 @@ namespace Androids2
         public static GeneDef VREA_A2_EltexPsyChip;
         public static GeneDef VREA_A2_NeutroCatalyst;
         public static GeneDef VREA_A2_SafetyOverrides;
+        public static GeneDef VREA_A2_NeuralLock;
 
         public static GeneCategoryDef A2_Hardware;
 

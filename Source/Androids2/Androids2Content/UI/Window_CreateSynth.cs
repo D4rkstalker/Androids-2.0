@@ -1092,16 +1092,16 @@ namespace Androids2
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = Color.white;
             }
-            else if (met < -20)
-            {
-                string text = "VREA.TooLowEfficiency".Translate();
-                float x2 = Text.CalcSize(text).x;
-                GUI.color = ColorLibrary.RedReadable;
-                Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(new Rect(rect.xMax - ButSize.x - x2 - 4f, rect.y, x2, rect.height), text);
-                Text.Anchor = TextAnchor.UpperLeft;
-                GUI.color = Color.white;
-            }
+            //else if (met < -20)
+            //{
+            //    string text = "VREA.TooLowEfficiency".Translate();
+            //    float x2 = Text.CalcSize(text).x;
+            //    GUI.color = ColorLibrary.RedReadable;
+            //    Text.Anchor = TextAnchor.MiddleLeft;
+            //    Widgets.Label(new Rect(rect.xMax - ButSize.x - x2 - 4f, rect.y, x2, rect.height), text);
+            //    Text.Anchor = TextAnchor.UpperLeft;
+            //    GUI.color = Color.white;
+            //}
         }
 
         public override bool WithinAcceptableBiostatLimits(bool showMessage)
@@ -1130,10 +1130,10 @@ namespace Androids2
                 Messages.Message("VREA.AndroidNameCannotBeEmpty".Translate(), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
             }
-            if (!WithinAcceptableBiostatLimits(showMessage: true))
-            {
-                return false;
-            }
+            //if (!WithinAcceptableBiostatLimits(showMessage: true))
+            //{
+            //    return false;
+            //}
             List<GeneDef> selectedGenes = SelectedGenes;
             foreach (GeneDef selectedGene in SelectedGenes)
             {

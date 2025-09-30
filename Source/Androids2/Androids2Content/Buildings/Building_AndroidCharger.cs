@@ -88,8 +88,8 @@ namespace Androids2
                             }
                             else
                             {
-                                powerGain += chargeRate * 100 * (compPower.transNet.CurrentEnergyGainRate() / 5000f);
-                                compPower.PowerOutput = -compPower.transNet.CurrentEnergyGainRate();
+                                powerGain += chargeRate * 100 * (compPower.PowerNet.CurrentEnergyGainRate() / 5000f);
+                                compPower.PowerOutput = -compPower.PowerNet.CurrentEnergyGainRate();
                             }
                         }
                         else if (occupant.HasActiveGene(A2_Defof.VREA_A2_AuxBattery))
