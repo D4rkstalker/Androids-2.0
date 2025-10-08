@@ -179,7 +179,7 @@ namespace Androids2.Utils
                     }
                 }
             }
-            if (pawn.lord.faction != Faction.OfPlayer)
+            if (pawn.lord != null && pawn.lord.faction != Faction.OfPlayer)
             {
                 if(!pawn.IsAwakened() || isNeuralLocked)
                     pawn.lord.faction = Faction.OfPlayer;

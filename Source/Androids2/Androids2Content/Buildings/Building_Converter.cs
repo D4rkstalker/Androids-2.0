@@ -26,8 +26,13 @@ namespace Androids2
         public float requestedNutrition = 0f;
         public ThingOwner innerContainer;
         public ConversionMode mode = ConversionMode.Convert;
-        public List<GeneDef> selectedGenes = new List<GeneDef>();
         public Pawn newAndroid;
+
+        public Building_Converter()
+        {
+            innerContainer = new ThingOwner<Thing>(this, false, LookMode.Deep);
+            ingredients = new ThingOwner<Thing>(this, true, LookMode.Deep);
+        }
         public bool HasAnyContents
         {
             get
@@ -187,7 +192,7 @@ namespace Androids2
                 }
             }
 
-            AndroidMakerPatch.ApplyXenotype(currentPawn, selectedGenes, false, false, true);
+            AndroidMakerPatch.ApplyXenotype(currentPawn, recipe.xenotypeDef.genes, false, false, true);
             //foreach (GeneDef gene in selectedGenes)
             //{
             //    currentPawn.genes.AddGene(gene, false);
@@ -271,7 +276,7 @@ namespace Androids2
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            crafterStatus = CrafterStatus.WaitingForPawn;
+            //crafterStatus = CrafterStatus.WaitingForPawn;
             powerComp = base.GetComp<CompPowerTrader>();
             flickableComp = base.GetComp<CompFlickable>();
             if (inputSettings == null)
@@ -286,7 +291,6 @@ namespace Androids2
             {
                 orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
             }
-            innerContainer = new ThingOwner<Thing>(this, false, LookMode.Deep);
 
             AdjustPowerNeed();
         }
@@ -304,13 +308,15 @@ namespace Androids2
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Deep.Look(ref innerContainer, "innerContainer");
+            Scribe_Deep.Look<ThingOwner>(ref this.innerContainer, "innerContainer", new object[]
+            {
+                this
+            });
             Scribe_Deep.Look(ref newAndroid, "newAndroid");
             Scribe_Deep.Look(ref ingredients, "ingredients");
             Scribe_Values.Look(ref nextResourceTick, "nextResourceTick");
             Scribe_Deep.Look(ref inputSettings, "inputSettings");
             Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
-            Scribe_Values.Look(ref recipe, "recipe");
 
         }
 
@@ -431,26 +437,46 @@ namespace Androids2
         // (get) Token: 0x0600005A RID: 90 RVA: 0x00004A68 File Offset: 0x00002C68
         public Pawn currentPawn
         {
-            set
-            {
-                if (value != null)
-                {
-                    innerContainer.ClearAndDestroyContents(0);
-
-                    innerContainer.TryAdd(value, true);
-                    contentsKnown = true;
-                    Notify_PawnEntered();
-                }
-            }
             get
             {
-                if(innerContainer.Count == 0)
-                {
-                    return null;
-                }
                 return innerContainer.First<Thing>() as Pawn;
             }
         }
+
+        public string CannotUseNowReason(Pawn selPawn)
+        {
+            if (powerComp != null && !powerComp.PowerOn)
+            {
+                return "NoPower".Translate().CapitalizeFirst();
+            }
+            if (!selPawn.CanReach(this, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return "NoPath".Translate().CapitalizeFirst();
+            }
+            if (!selPawn.CanReserve(this))
+            {
+                Pawn pawn = selPawn.Map.reservationManager.FirstRespectedReserver(this, selPawn);
+                if (pawn == null)
+                {
+                    pawn = selPawn.Map.physicalInteractionReservationManager.FirstReserverOf(selPawn);
+                }
+                if (pawn != null)
+                {
+                    return "ReservedBy".Translate(pawn.LabelShort, pawn);
+                }
+                else
+                {
+                    return "Reserved".Translate();
+                }
+            }
+            if (currentPawn != null || crafterStatus != CrafterStatus.WaitingForPawn)
+            {
+                return "ConverterInUse".Translate().CapitalizeFirst();
+            }
+
+            return null;
+        }
+
         // Token: 0x04000042 RID: 66
         protected bool contentsKnown;
 

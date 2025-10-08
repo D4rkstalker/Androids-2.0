@@ -224,6 +224,7 @@ namespace Androids2
             Scribe_Deep.Look(ref pawnBeingCrafted, "pawnBeingCrafted");
             Scribe_Deep.Look(ref inputSettings, "inputSettings");
             Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
+            Scribe_Defs.Look(ref recipe, "recipe");
 
         }
 

@@ -156,7 +156,6 @@ namespace Androids2
         {
             base.ExposeData();
 
-            Scribe_Defs.Look(ref recipe, "recipe");
             Scribe_Values.Look(ref repeatLastPawn, "repeatLastPawn");
         }
 

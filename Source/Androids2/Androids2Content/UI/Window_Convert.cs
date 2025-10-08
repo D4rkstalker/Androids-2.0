@@ -1116,7 +1116,6 @@ namespace Androids2
                 station.orderProcessor.requestedItems = requestedItems;
                 station.crafterStatus = CrafterStatus.Filling;
                 station.recipe = A2_Defof.A2_Synth;
-                station.recipe.customXenotype = customXenotype;
                 station.recipe.costList = A2_Defof.A2_Synth.costList;
                 station.recipe.costList.AddRange(requestedItems);
                 station.recipe.timeCost += finalExtraPrintingTimeCost;
@@ -1126,6 +1125,7 @@ namespace Androids2
                     Log.Error("No pawn to convert!");
                     return;
                 }
+                station.newAndroid.genes.ClearXenogenes();
                 foreach (GeneDef gene in selectedGenes)
                 {
                     if (gene is A2GeneDef geneAndroid)
@@ -1134,9 +1134,10 @@ namespace Androids2
                         station.requestedNutrition += geneAndroid.nutrition;
                         requestedItems.AddRange(geneAndroid.costList);
                     }
-                    station.selectedGenes.Add(gene);
+                    station.newAndroid.genes.AddGene(gene, true);
 
                 }
+                //station.recipe.customXenotype = customXenotype;
 
 
             }
@@ -1243,7 +1244,7 @@ namespace Androids2
             pawn.skills.skills = station.currentPawn.skills.skills;
             pawn.story.traits.allTraits = station.currentPawn.story.traits.allTraits;
             pawn.story.hairDef = station.currentPawn.story.hairDef;
-            pawn.health.hediffSet.hediffs = station.currentPawn.health.hediffSet.hediffs;
+            //pawn.health.hediffSet.hediffs = station.currentPawn.health.hediffSet.hediffs;
 
             return pawn;
         }

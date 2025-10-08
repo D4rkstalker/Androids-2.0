@@ -89,10 +89,13 @@
     <Compile Include="Androids2Content\AI\JobDriver_EnterConverter.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_AndroidCharge.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_HaulAndroidToCharger.cs" />
+    <Compile Include="Androids2Content\AI\JobDriver_HualPawnToConverter.cs" />
     <Compile Include="Androids2Content\AI\JobGiver_AndroidCharge.cs" />
     <Compile Include="Androids2Content\AI\JobGiver_GetAndroid_Charger.cs" />
+    <Compile Include="Androids2Content\AI\JobGiver_GetAndroid_Converter.cs" />
     <Compile Include="Androids2Content\AI\PawnCrafterWorkgiverProperties.cs" />
     <Compile Include="Androids2Content\AI\WorkGiver_HaulAndroidToCharger.cs" />
+    <Compile Include="Androids2Content\AI\WorkGiver_HualPawnToConverter.cs" />
     <Compile Include="Androids2Content\AI\WorkGIver_PawnCrafter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_Converter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_DroidFab.cs" />

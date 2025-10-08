@@ -12,6 +12,8 @@ namespace Androids2
         public static JobDef A2_FillConverter;
         public static JobDef A2_AndroidCharge;
         public static JobDef A2_HaulAndroidToCharger;
+        public static JobDef A2_HaulPawnToConverter;
+        
 
         public static GeneDef VREA_A2_BatteryPower;
         public static GeneDef VREA_A2_AuxBattery;
@@ -27,12 +29,16 @@ namespace Androids2
         public static GeneDef VREA_A2_NeutroCatalyst;
         public static GeneDef VREA_A2_SafetyOverrides;
         public static GeneDef VREA_A2_NeuralLock;
+        public static GeneDef VREA_A2_BioReactor;
+        public static GeneDef VREA_A2_ChemReactor;
+        public static GeneDef VREA_A2_ToxReactor;
 
         public static GeneCategoryDef A2_Hardware;
 
         public static HediffDef A2_HediffVanometric;
 
         public static ThingDef A2_AndroidCharger;
+        public static ThingDef A2_Converter;
 
         public static AndroidRecipe A2_Synth;
 
