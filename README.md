@@ -1,3 +1,5 @@
+Textures / descriptions / stats are placeholders
+
 Completed:
 
 Droid fab
