@@ -27,6 +27,9 @@
 			<li Class="PatchOperationRemove">
 				<xpath>Defs/VREAndroids.AndroidSettings/androidsShouldNotReceiveHediffs/li[text()="PsychicAmplifier"]</xpath>
 			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThinkTreeDef[defName="MainColonistBehaviorCore"]/thinkRoot/subNodes/li/subNodes/li[@Class="VREAndroids.JobGiver_FreeMemorySpace"]</xpath>
+			</li>
 		</operations>
 	</Operation>
 	<Operation Class="PatchOperationAdd">

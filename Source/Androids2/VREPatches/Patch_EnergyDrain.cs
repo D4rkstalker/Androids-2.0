@@ -24,7 +24,7 @@ namespace Androids2
                     efficiency += item.def.biostatMet;
                     if (item.def == A2_Defof.VREA_A2_BatteryPower)
                     {
-                        efficiencyFactor *= 4;
+                        efficiencyFactor *= 5;
                     }
                     else if (item.def == A2_Defof.VREA_A2_SuperCapacitor)
                     {

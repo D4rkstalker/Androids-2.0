@@ -19,7 +19,7 @@ namespace Androids2
         public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
 
         public CompPowerTrader compPower;
-        public float chargeRate = 0.00001f;
+        public float chargeRate = 0.00005f;
         public Pawn CurOccupant
         {
             get
@@ -41,7 +41,6 @@ namespace Androids2
             base.SpawnSetup(map, respawningAfterLoad);
             chargers.Add(this);
             compPower = this.TryGetComp<CompPowerTrader>();
-            this.Medical = true;
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
@@ -49,15 +48,15 @@ namespace Androids2
             base.DeSpawn(mode);
             chargers.Remove(this);
         }
-        public override string GetInspectString()
-        {
-            this.Medical = false;
-            this.def.building.bed_humanlike = false;
-            var sb = new StringBuilder(base.GetInspectString() + "\n");
-            this.Medical = true;
-            this.def.building.bed_humanlike = true;
-            return sb.ToString().TrimEndNewlines();
-        }
+        //public override string GetInspectString()
+        //{
+        //    this.Medical = false;
+        //    this.def.building.bed_humanlike = false;
+        //    var sb = new StringBuilder(base.GetInspectString() + "\n");
+        //    this.Medical = true;
+        //    this.def.building.bed_humanlike = true;
+        //    return sb.ToString().TrimEndNewlines();
+        //}
 
         public override void Tick()
         {
@@ -78,7 +77,7 @@ namespace Androids2
                     if (pwr != null && pwr.Energy < 1f)
                     {
                         var powerGain = pwr.Energy;
-                        if (compPower.PowerNet != null && occupant.HasActiveGene(A2_Defof.VREA_A2_SuperCapacitor) )
+                        if (compPower.PowerNet != null && occupant.HasActiveGene(A2_Defof.VREA_A2_SuperCapacitor))
                         {
                             Log.Error("PowerNet found, super charging!");
                             if (compPower.PowerNet.CurrentEnergyGainRate() >= 5000f)
@@ -117,38 +116,46 @@ namespace Androids2
             }
             //if (this.Faction == Faction.OfPlayer && (selPawn.HasActiveGene(A2_Defof.A2_SuperCapacitor)|| selPawn.HasActiveGene(A2_Defof.A2_BatteryPower)))
             //{
-                var cannotUseReason = CannotUseNowReason(selPawn);
-                if (cannotUseReason.NullOrEmpty())
+            var cannotUseReason = CannotUseNowReason(selPawn);
+            if (cannotUseReason.NullOrEmpty())
+            {
+                yield return new FloatMenuOption("Androids2.Recharge".Translate(), delegate
                 {
-                    yield return new FloatMenuOption("Androids2.Recharge".Translate(), delegate
+                    if (CompAssignableToPawn.AssignedPawns.Contains(selPawn) is false)
                     {
-                        if (CompAssignableToPawn.AssignedPawns.Contains(selPawn) is false)
-                        {
-                            CompAssignableToPawn.TryAssignPawn(selPawn);
-                        }
-                        selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(A2_Defof.A2_AndroidCharge, this));
-                    });
-                }
-                else
+                        CompAssignableToPawn.TryAssignPawn(selPawn);
+                    }
+                    selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(A2_Defof.A2_AndroidCharge, this));
+                });
+                yield return new FloatMenuOption("VREA.FreeMemorySpace".Translate(), delegate
                 {
-                    yield return new FloatMenuOption("Androids2.Recharge".Translate() + ": " + cannotUseReason, null);
-                }
+                    if (CompAssignableToPawn.AssignedPawns.Contains(selPawn) is false)
+                    {
+                        CompAssignableToPawn.TryAssignPawn(selPawn);
+                    }
+                    selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(VREA_DefOf.VREA_FreeMemorySpace, this));
+                });
+            }
+            else
+            {
+                yield return new FloatMenuOption("Androids2.Recharge".Translate() + ": " + cannotUseReason, null);
+            }
             //}
         }
-        public override IEnumerable<Gizmo> GetGizmos()
-        {
-            foreach (Gizmo gizmo in base.GetGizmos())
-            {
-                if (gizmo is Command_Toggle toggle)
-                {
-                    if (toggle.defaultLabel == "CommandBedSetAsMedicalLabel".Translate())
-                    {
-                        continue;
-                    }
-                }
-                yield return gizmo;
-            }
-        }
+        //public override IEnumerable<Gizmo> GetGizmos()
+        //{
+        //    foreach (Gizmo gizmo in base.GetGizmos())
+        //    {
+        //        if (gizmo is Command_Toggle toggle)
+        //        {
+        //            if (toggle.defaultLabel == "CommandBedSetAsMedicalLabel".Translate())
+        //            {
+        //                continue;
+        //            }
+        //        }
+        //        yield return gizmo;
+        //    }
+        //}
 
         public string CannotUseNowReason(Pawn selPawn)
         {
@@ -184,83 +191,83 @@ namespace Androids2
             {
                 return "VREA.NotRechargable".Translate();
             }
-            if (!CanUseBedNow(this, selPawn, checkSocialProperness: false))
+            if (!RestUtility.CanUseBedNow(this, selPawn, checkSocialProperness: false))
             {
                 return "VREA.CannotUse".Translate();
             }
             return null;
         }
-        public static bool CanUseBedNow(Thing bedThing, Pawn sleeper, bool checkSocialProperness, bool allowMedBedEvenIfSetToNoCare = false, GuestStatus? guestStatusOverride = null)
-        {
-            if (!(bedThing is Building_Bed building_Bed))
-            {
-                return false;
-            }
+        //public static bool CanUseBedNow(Thing bedThing, Pawn sleeper, bool checkSocialProperness, bool allowMedBedEvenIfSetToNoCare = false, GuestStatus? guestStatusOverride = null)
+        //{
+        //    if (!(bedThing is Building_Bed building_Bed))
+        //    {
+        //        return false;
+        //    }
 
-            if (!building_Bed.Spawned)
-            {
-                return false;
-            }
+        //    if (!building_Bed.Spawned)
+        //    {
+        //        return false;
+        //    }
 
-            if (building_Bed.Map != sleeper.MapHeld)
-            {
-                return false;
-            }
+        //    if (building_Bed.Map != sleeper.MapHeld)
+        //    {
+        //        return false;
+        //    }
 
-            if (building_Bed.IsBurning())
-            {
-                return false;
-            }
+        //    if (building_Bed.IsBurning())
+        //    {
+        //        return false;
+        //    }
 
-            if (sleeper.HarmedByVacuum && building_Bed.Position.GetVacuum(bedThing.Map) >= 0.5f)
-            {
-                return false;
-            }
-
-
-            int? assignedSleepingSlot;
-            bool flag = building_Bed.IsOwner(sleeper, out assignedSleepingSlot);
-            int? sleepingSlot;
-            bool flag2 = sleeper.CurrentBed(out sleepingSlot) == building_Bed;
-            if (!building_Bed.AnyUnoccupiedSleepingSlot && !flag && !flag2)
-            {
-                return false;
-            }
-
-            GuestStatus? obj = guestStatusOverride ?? sleeper.GuestStatus;
-            bool flag3 = obj == GuestStatus.Prisoner;
-            bool flag4 = obj == GuestStatus.Slave;
-            if (checkSocialProperness && !building_Bed.IsSociallyProper(sleeper, flag3))
-            {
-                return false;
-            }
-
-            if (building_Bed.ForPrisoners != flag3)
-            {
-                return false;
-            }
-
-            if (building_Bed.ForSlaves != flag4)
-            {
-                return false;
-            }
-
-            if (building_Bed.ForPrisoners && !building_Bed.Position.IsInPrisonCell(building_Bed.Map))
-            {
-                return false;
-            }
+        //    if (sleeper.HarmedByVacuum && building_Bed.Position.GetVacuum(bedThing.Map) >= 0.5f)
+        //    {
+        //        return false;
+        //    }
 
 
-            if (sleeper.IsColonist && !flag3)
-            {
-                if (building_Bed.IsForbidden(sleeper))
-                {
-                    return false;
-                }
-            }
+        //    int? assignedSleepingSlot;
+        //    bool flag = building_Bed.IsOwner(sleeper, out assignedSleepingSlot);
+        //    int? sleepingSlot;
+        //    bool flag2 = sleeper.CurrentBed(out sleepingSlot) == building_Bed;
+        //    if (!building_Bed.AnyUnoccupiedSleepingSlot && !flag && !flag2)
+        //    {
+        //        return false;
+        //    }
 
-            return true;
-        }
+        //    GuestStatus? obj = guestStatusOverride ?? sleeper.GuestStatus;
+        //    bool flag3 = obj == GuestStatus.Prisoner;
+        //    bool flag4 = obj == GuestStatus.Slave;
+        //    if (checkSocialProperness && !building_Bed.IsSociallyProper(sleeper, flag3))
+        //    {
+        //        return false;
+        //    }
+
+        //    if (building_Bed.ForPrisoners != flag3)
+        //    {
+        //        return false;
+        //    }
+
+        //    if (building_Bed.ForSlaves != flag4)
+        //    {
+        //        return false;
+        //    }
+
+        //    if (building_Bed.ForPrisoners && !building_Bed.Position.IsInPrisonCell(building_Bed.Map))
+        //    {
+        //        return false;
+        //    }
+
+
+        //    if (sleeper.IsColonist && !flag3)
+        //    {
+        //        if (building_Bed.IsForbidden(sleeper))
+        //        {
+        //            return false;
+        //        }
+        //    }
+
+        //    return true;
+        //}
 
     }
 

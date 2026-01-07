@@ -12,11 +12,14 @@ namespace Androids2
 {
     public class JobGiver_AndroidCharge : ThinkNode_JobGiver
     {
+        public const float FreeMemorySpaceThreshold = 0.2f;
         public const float RechargeThreshold = 0.2f;
         public override float GetPriority(Pawn pawn)
         {
+            var memorySpace = pawn.needs.TryGetNeed<Need_MemorySpace>();
+            if (memorySpace != null) { return 0f; }
             var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
-            if (power == null || power.Energy > RechargeThreshold)
+            if (power == null || (power.Energy > RechargeThreshold && memorySpace.CurLevelPercentage > FreeMemorySpaceThreshold))
             {
                 return 0f;
             }
@@ -129,9 +132,18 @@ namespace Androids2
         {
             foreach (var charger in Building_AndroidCharger.chargers)
             {
-                if (charger.CannotUseNowReason(pawn) is null
+                if (charger.CompAssignableToPawn.AssignedPawns.Contains(pawn) && charger.CannotUseNowReason(pawn) is null
                     && pawn.CanReserveAndReach(charger, PathEndMode.OnCell, Danger.Deadly))
                 {
+                    return charger;
+                }
+            }
+            foreach (var charger in Building_AndroidCharger.chargers)
+            {
+                if (charger.CompAssignableToPawn.AssignedPawns.Any() is false && charger.CannotUseNowReason(pawn) is null
+                    && pawn.CanReserveAndReach(charger, PathEndMode.OnCell, Danger.Deadly))
+                {
+                    charger.CompAssignableToPawn.TryAssignPawn(pawn);
                     return charger;
                 }
             }

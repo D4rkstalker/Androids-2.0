@@ -44,7 +44,7 @@
 			<Cleanliness>-2</Cleanliness>
 			<Mass>80</Mass>
 		</statBases>
-		<size>(3,3)</size>
+		<size>(5,3)</size>
 		<designationCategory>Production</designationCategory>
 		<passability>PassThroughOnly</passability>
 		<pathCost>60</pathCost>

@@ -29,10 +29,6 @@
     <fillPercent>0.20</fillPercent>
 	<building>
 		<bed_showSleeperBody>True</bed_showSleeperBody>
-		<buildingSizeCategory>Small</buildingSizeCategory>
-		<bed_humanlike>true</bed_humanlike>
-		<bed_healPerDay>0</bed_healPerDay>
-		<bed_defaultMedical>true</bed_defaultMedical>
 	</building>
     <comps>
       <li Class="CompProperties_Power">
@@ -40,13 +36,13 @@
         <shortCircuitInRain>true</shortCircuitInRain>
         <basePowerConsumption>40</basePowerConsumption>
       </li>
-		<li Class="CompProperties_AssignableToPawn">
-			<drawAssignmentOverlay>false</drawAssignmentOverlay>
-			<compClass>CompAssignableToPawn_Bed</compClass>
-		</li>
+      <li Class="CompProperties_AssignableToPawn">
+        <drawAssignmentOverlay>false</drawAssignmentOverlay>
+        <compClass>VREAndroids.CompAssignableToPawn_AndroidStand</compClass>
+      </li>
     </comps>
     <researchPrerequisites>
-      <li>VREA_AndroidTech</li>
+      <li>A2_BasicDroid</li>
     </researchPrerequisites>
   </ThingDef>
 </Defs>
