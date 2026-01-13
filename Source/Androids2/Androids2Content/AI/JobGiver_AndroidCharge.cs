@@ -17,9 +17,8 @@ namespace Androids2
         public override float GetPriority(Pawn pawn)
         {
             var memorySpace = pawn.needs.TryGetNeed<Need_MemorySpace>();
-            if (memorySpace != null) { return 0f; }
             var power = pawn.health.hediffSet.GetFirstHediffOfDef(VREA_DefOf.VREA_Reactor) as Hediff_AndroidReactor;
-            if (power == null || (power.Energy > RechargeThreshold && memorySpace.CurLevelPercentage > FreeMemorySpaceThreshold))
+            if (memorySpace == null || power == null || (power.Energy > RechargeThreshold && memorySpace.CurLevelPercentage > FreeMemorySpaceThreshold))
             {
                 return 0f;
             }

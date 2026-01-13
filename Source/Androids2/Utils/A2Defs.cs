@@ -13,7 +13,8 @@ namespace Androids2
         public static JobDef A2_AndroidCharge;
         public static JobDef A2_HaulAndroidToCharger;
         public static JobDef A2_HaulPawnToConverter;
-        
+        public static JobDef A2_EnterRepairGantry;
+        public static JobDef A2_CarryToRepairGantry;
 
         public static GeneDef VREA_A2_BatteryPower;
         public static GeneDef VREA_A2_AuxBattery;

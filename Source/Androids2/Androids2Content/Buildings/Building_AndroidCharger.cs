@@ -12,8 +12,7 @@ using VREAndroids;
 namespace Androids2
 {
 
-    // Token: 0x02002A35 RID: 10805
-    [HotSwappable]
+
     public class Building_AndroidCharger : Building_Bed
     {
         public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
@@ -50,11 +49,7 @@ namespace Androids2
         }
         //public override string GetInspectString()
         //{
-        //    this.Medical = false;
-        //    this.def.building.bed_humanlike = false;
         //    var sb = new StringBuilder(base.GetInspectString() + "\n");
-        //    this.Medical = true;
-        //    this.def.building.bed_humanlike = true;
         //    return sb.ToString().TrimEndNewlines();
         //}
 

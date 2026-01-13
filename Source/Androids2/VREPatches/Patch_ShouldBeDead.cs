@@ -4,7 +4,6 @@ using VREAndroids;
 
 namespace Androids2.VREPatches
 {
-    [StaticConstructorOnStartup]
     public class Patch_ShouldBeDead
     {
         static Patch_ShouldBeDead()
@@ -24,26 +23,26 @@ namespace Androids2.VREPatches
         }
     }
 
-    [HarmonyPatch(typeof(Pawn_HealthTracker), "ShouldBeDead")]
-    public static class Pawn_HealthTracker_ShouldBeDead_Patch
-    {
-        [HarmonyPriority(int.MinValue)]
-        public static void Postfix(ref bool __result, Pawn_HealthTracker __instance, Pawn ___pawn)
-        {
-            if (PawnCapacityUtility.CalculatePartEfficiency(__instance.hediffSet, ___pawn.RaceProps.body.corePart) <= 0.0001f)
-            {
-                __result = true;
-                return;
-            }
-            if (__result && ___pawn.IsAndroid())
-            {
-                if (___pawn.health.hediffSet.GetBrain() != null)
-                {
-                    __result = false;
-                }
+    //[HarmonyPatch(typeof(Pawn_HealthTracker), "ShouldBeDead")]
+    //public static class Pawn_HealthTracker_ShouldBeDead_Patch
+    //{
+    //    [HarmonyPriority(int.MinValue)]
+    //    public static void Postfix(ref bool __result, Pawn_HealthTracker __instance, Pawn ___pawn)
+    //    {
+    //        if (PawnCapacityUtility.CalculatePartEfficiency(__instance.hediffSet, ___pawn.RaceProps.body.corePart) <= 0.0001f)
+    //        {
+    //            __result = true;
+    //            return;
+    //        }
+    //        if (__result && ___pawn.IsAndroid())
+    //        {
+    //            if (___pawn.health.hediffSet.GetBrain() != null)
+    //            {
+    //                __result = false;
+    //            }
 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 
 }

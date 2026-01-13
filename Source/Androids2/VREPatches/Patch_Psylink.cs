@@ -125,91 +125,91 @@ namespace Androids2.VREPatches
             }
         }
     }
-    [StaticConstructorOnStartup]
-    public static class PuppeteerCompatBootstrap
-    {
-        static PuppeteerCompatBootstrap()
-        {
-            if (!ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
-                return; // Puppeteer not loaded → do nothing
+    //[StaticConstructorOnStartup]
+    //public static class PuppeteerCompatBootstrap
+    //{
+    //    static PuppeteerCompatBootstrap()
+    //    {
+    //        if (!ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
+    //            return; // Puppeteer not loaded → do nothing
 
-            Androids2.harmony.Patch(
-                AccessTools.Method(typeof(MentalStateHandler), nameof(MentalStateHandler.TryStartMentalState),
-                    new[]
-                    {
-                            typeof(MentalStateDef), typeof(string), typeof(bool), typeof(bool), typeof(bool),
-                            typeof(Pawn), typeof(bool), typeof(bool), typeof(bool)
-                    }),
-                prefix: new HarmonyMethod(typeof(AllowVREAStatesOnPuppets_Patch), nameof(AllowVREAStatesOnPuppets_Patch.Prefix)),
-                finalizer: new HarmonyMethod(typeof(AllowVREAStatesOnPuppets_Patch), nameof(AllowVREAStatesOnPuppets_Patch.Finalizer))
-            );
-        }
-    }
+    //        Androids2.harmony.Patch(
+    //            AccessTools.Method(typeof(MentalStateHandler), nameof(MentalStateHandler.TryStartMentalState),
+    //                new[]
+    //                {
+    //                        typeof(MentalStateDef), typeof(string), typeof(bool), typeof(bool), typeof(bool),
+    //                        typeof(Pawn), typeof(bool), typeof(bool), typeof(bool)
+    //                }),
+    //            prefix: new HarmonyMethod(typeof(AllowVREAStatesOnPuppets_Patch), nameof(AllowVREAStatesOnPuppets_Patch.Prefix)),
+    //            finalizer: new HarmonyMethod(typeof(AllowVREAStatesOnPuppets_Patch), nameof(AllowVREAStatesOnPuppets_Patch.Finalizer))
+    //        );
+    //    }
+    //}
 
-    [HarmonyPatch(typeof(MentalStateHandler), nameof(MentalStateHandler.TryStartMentalState))]
-    public static class AllowVREAStatesOnPuppets_Patch
-    {
-        private static FieldInfo _shouldStartField;
-        private static MethodInfo _isPuppetMI;
-        private static bool _resolved;
+    //[HarmonyPatch(typeof(MentalStateHandler), nameof(MentalStateHandler.TryStartMentalState))]
+    //public static class AllowVREAStatesOnPuppets_Patch
+    //{
+    //    private static FieldInfo _shouldStartField;
+    //    private static MethodInfo _isPuppetMI;
+    //    private static bool _resolved;
 
-        // Resolve Puppeteer reflection targets once; only if the mod is active
-        private static void EnsureResolved()
-        {
-            if (_resolved) return;
-            _resolved = true;
+    //    // Resolve Puppeteer reflection targets once; only if the mod is active
+    //    private static void EnsureResolved()
+    //    {
+    //        if (_resolved) return;
+    //        _resolved = true;
 
-            if (!ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
-                return;
+    //        if (!ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
+    //            return;
 
-            var asm = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .FirstOrDefault(a => a.GetName().Name == "VPEPuppeteer");
-            if (asm == null) return;
+    //        var asm = AppDomain.CurrentDomain
+    //            .GetAssemblies()
+    //            .FirstOrDefault(a => a.GetName().Name == "VPEPuppeteer");
+    //        if (asm == null) return;
 
-            var patchType = asm.GetType("VPEPuppeteer.MentalStateHandler_TryStartMentalState_Patch");
-            _shouldStartField = AccessTools.Field(patchType, "shouldStartMentalState");
+    //        var patchType = asm.GetType("VPEPuppeteer.MentalStateHandler_TryStartMentalState_Patch");
+    //        _shouldStartField = AccessTools.Field(patchType, "shouldStartMentalState");
 
-            var utilsType = asm.GetType("VPEPuppeteer.VPEPUtils");
-            _isPuppetMI = AccessTools.Method(utilsType, "IsPuppet", new[] { typeof(Pawn) });
-        }
+    //        var utilsType = asm.GetType("VPEPuppeteer.VPEPUtils");
+    //        _isPuppetMI = AccessTools.Method(utilsType, "IsPuppet", new[] { typeof(Pawn) });
+    //    }
 
-        // Runs as early as possible; we don’t hard-order vs Puppeteer but match its max priority
-        [HarmonyPriority(int.MaxValue)]
-        public static void Prefix(
-            MentalStateDef stateDef,
-            Pawn ___pawn,
-            out bool __state // did we flip the flag?
-        )
-        {
-            __state = false;
+    //    // Runs as early as possible; we don’t hard-order vs Puppeteer but match its max priority
+    //    [HarmonyPriority(int.MaxValue)]
+    //    public static void Prefix(
+    //        MentalStateDef stateDef,
+    //        Pawn ___pawn,
+    //        out bool __state // did we flip the flag?
+    //    )
+    //    {
+    //        __state = false;
 
-            if (!ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
-                return;
+    //        if (!ModsConfig.IsActive("VanillaExpanded.VPE.Puppeteer"))
+    //            return;
 
-            EnsureResolved();
-            if (_shouldStartField == null || _isPuppetMI == null || stateDef == null || ___pawn == null)
-                return;
+    //        EnsureResolved();
+    //        if (_shouldStartField == null || _isPuppetMI == null || stateDef == null || ___pawn == null)
+    //            return;
 
-            // Only for these two VREA states, and only if the pawn is a puppet per Puppeteer
-            if ((stateDef.defName == "VREA_Reformatting" || stateDef.defName == "VREA_SolarFlared"))
-            {
-                var isPuppet = _isPuppetMI.Invoke(null, new object[] { ___pawn }) as bool? ?? false;
-                if (isPuppet)
-                {
-                    _shouldStartField.SetValue(null, true);
-                    __state = true; // mark that we changed it
-                }
-            }
-        }
+    //        // Only for these two VREA states, and only if the pawn is a puppet per Puppeteer
+    //        if ((stateDef.defName == "VREA_Reformatting" || stateDef.defName == "VREA_SolarFlared"))
+    //        {
+    //            var isPuppet = _isPuppetMI.Invoke(null, new object[] { ___pawn }) as bool? ?? false;
+    //            if (isPuppet)
+    //            {
+    //                _shouldStartField.SetValue(null, true);
+    //                __state = true; // mark that we changed it
+    //            }
+    //        }
+    //    }
 
-        public static void Finalizer(
-            Exception __exception,
-            bool __state // restore only if we flipped it
-        )
-        {
-            if (!__state) return;
-                _shouldStartField?.SetValue(null, false);
-        }
-    }
+    //    public static void Finalizer(
+    //        Exception __exception,
+    //        bool __state // restore only if we flipped it
+    //    )
+    //    {
+    //        if (!__state) return;
+    //            _shouldStartField?.SetValue(null, false);
+    //    }
+    //}
 }

@@ -999,11 +999,11 @@ namespace Androids2
                 Rect iconRect2 = new Rect(curX, curY + margin + num2, num3, num3);
                 if (met < 10)
                 {
-                    GeneUIUtility.DrawStat(iconRect2, Helpers.PowerEfficiencyIconTex, met.ToStringWithSign(), num3);
+                    GeneUIUtility.DrawStat(iconRect2, AndroidStatsTable.PowerEfficiencyIconTex, met.ToStringWithSign(), num3);
                 }
                 else
                 {
-                    GUI.DrawTexture(iconRect2, Helpers.PowerEfficiencyIconTex.Texture);
+                    GUI.DrawTexture(iconRect2, AndroidStatsTable.PowerEfficiencyIconTex.Texture);
                     Text.Anchor = TextAnchor.MiddleRight;
                     Widgets.Label(new Rect(iconRect2.xMax - 6, iconRect2.y, num3 + 6, num3), met.ToStringWithSign());
                     Text.Anchor = TextAnchor.UpperLeft;

@@ -28,6 +28,7 @@
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
 			<li>VREA_A2_SkillFloor_8</li>
+			<li>VREA_A2_SkillCeil_8</li>
 			<li>VREA_A2_WorkSpeed_6</li>
 			<li>VREA_A2_BatteryPower</li>
 			<li>VREA_A2_BasicDroid</li>
@@ -67,6 +68,7 @@
 			<li>VREA_AntiAwakeningProtocols</li>
 			<li>VREA_NeutroSynthesis</li>
 			<li>VREA_A2_SkillFloor_10</li>
+			<li>VREA_A2_SkillCeil_10</li>
 			<li>VREA_A2_WorkSpeed_8</li>
 			<li>VREA_A2_BatteryPower</li>
 			<li>VREA_A2_AdvancedDroid</li>

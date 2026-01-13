@@ -18,6 +18,7 @@
 		  <li>Intellectual</li>
 		  <li>Caring</li>
 		  <li>Social</li>
+		  <li>Artistic</li>
 		</workDisables>
 	</BackstoryDef>
 	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">
@@ -31,6 +32,10 @@
 			<li>A2_Model</li>
 		</spawnCategories>
 		<baseDesc>A more advanced robot that does what you tell it to do.</baseDesc>
+		<workDisables>
+		  <li>Intellectual</li>
+		  <li>Artistic</li>
+		</workDisables>
 	</BackstoryDef>
 
 	<BackstoryDef ParentName="VREA_AndroidBackstoryBase">

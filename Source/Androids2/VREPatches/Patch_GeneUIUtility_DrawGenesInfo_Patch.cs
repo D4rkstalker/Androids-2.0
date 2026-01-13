@@ -11,7 +11,6 @@ using VREAndroids;
 
 namespace Androids2.VREPatches
 {
-    [StaticConstructorOnStartup]
     public class Patch_GeneUIUtility_DrawGenesInfo_Patch
     {
         Patch_GeneUIUtility_DrawGenesInfo_Patch()

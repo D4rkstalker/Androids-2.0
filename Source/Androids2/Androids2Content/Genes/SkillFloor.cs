@@ -9,6 +9,7 @@ namespace Androids2
 {
     public class SkillFloor : DefModExtension
     {
-        public int floor;
+        public int floor = -1;
+        public int ceiling = 20;
     }
 }

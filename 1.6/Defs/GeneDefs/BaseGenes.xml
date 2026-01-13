@@ -40,7 +40,39 @@
 		
 		<modExtensions>
 			<li Class="Androids2.SkillFloor">
-				<floor>8</floor>
+				<floor>10</floor>
+			</li>
+		</modExtensions>	
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_SkillCeil_8</defName>
+		<label>Skill Ceiling: 8</label>
+		<description>A baseline package of skills.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		
+		<timeCost>0</timeCost>
+		<moddable>false</moddable>
+		<modExtensions>
+			<li Class="Androids2.SkillFloor">
+				<ceiling>8</ceiling>
+			</li>
+		</modExtensions>	
+	</Androids2.A2GeneDef>
+	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_SkillCeil_10</defName>
+		<label>Skill Ceiling: 10</label>
+		<description>An advanced package of skills.</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		
+		<timeCost>0</timeCost>
+		<moddable>false</moddable>
+		
+		<modExtensions>
+			<li Class="Androids2.SkillFloor">
+				<ceiling>10</ceiling>
 			</li>
 		</modExtensions>	
 	</Androids2.A2GeneDef>

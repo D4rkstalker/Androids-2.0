@@ -9,7 +9,6 @@ using VREAndroids;
 
 namespace Androids2.VREPatches
 {
-    [StaticConstructorOnStartup]
 
     public class Patch_SynthFlesh
     {

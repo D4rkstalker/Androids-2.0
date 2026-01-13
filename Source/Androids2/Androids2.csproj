@@ -77,9 +77,6 @@
       <HintPath>..\..\..\..\..\..\workshop\content\294100\2023507013\1.6\Assemblies\VEF.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VPEPuppeteer">
-      <HintPath>..\..\..\..\..\..\workshop\content\294100\3033779606\1.6\Assemblies\VPEPuppeteer.dll</HintPath>
-    </Reference>
     <Reference Include="VREAndroids">
       <HintPath>..\..\..\..\..\..\workshop\content\294100\2975771801\1.6\Assemblies\VREAndroids.dll</HintPath>
       <Private>False</Private>
@@ -88,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Androids2Content\AI\JobDriver_EnterConverter.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_AndroidCharge.cs" />
+    <Compile Include="Androids2Content\AI\JobDriver_EnterRepairGantry.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_HaulAndroidToCharger.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_HualPawnToConverter.cs" />
     <Compile Include="Androids2Content\AI\JobGiver_AndroidCharge.cs" />
@@ -103,6 +101,13 @@
     <Compile Include="Androids2Content\Buildings\Building_SynthPrinter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_AndroidCharger.cs" />
     <Compile Include="Androids2Content\Buildings\IPawnCrafter.cs" />
+    <Compile Include="Androids2Content\Comps\CompAssignableToPawn_AndroidCharger.cs" />
+    <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry.cs" />
+    <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_BaseCycle.cs" />
+    <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_RepairCycle.cs" />
+    <Compile Include="Androids2Content\Comps\CompRepairGantry.cs" />
+    <Compile Include="Androids2Content\Comps\CompRepairGantry_Cycle.cs" />
+    <Compile Include="Androids2Content\Comps\CompRepairGantry_RepairCycle.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
     <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
     <Compile Include="Androids2Content\Genes\Gene_NeutroCatalyst.cs" />

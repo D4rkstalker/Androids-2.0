@@ -14,9 +14,12 @@ namespace Androids2
 
         public Androids2(ModContentPack content) : base(content)
         {
-            harmony = new Harmony("firedragonmc.androids2");
-            harmony.PatchAll();
-            _instance = this;
+            LongEventHandler.ExecuteWhenFinished(() =>
+            {
+                harmony = new Harmony("firedragonmc.androids2");
+                harmony.PatchAll();
+                _instance = this;
+            });
         }
 
     }

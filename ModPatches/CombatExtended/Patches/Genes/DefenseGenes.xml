@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-  <operations>
-	 <li Class="PatchOperationReplace">
+
+	 <Operation Class="PatchOperationReplace">
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_MechFlesh"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
@@ -9,8 +9,8 @@
 			<ArmorRating_Blunt>1</ArmorRating_Blunt>
 		</statOffsets>
 	  </value>
-	</li>
-	 <li Class="PatchOperationReplace">
+	</Operation>
+	 <Operation Class="PatchOperationReplace">
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_HeavyArmor"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
@@ -19,8 +19,8 @@
 			<ArmorRating_Heat>0.25</ArmorRating_Heat>
 		</statOffsets>
 	  </value>
-	</li>
-	 <li Class="PatchOperationReplace">
+	</Operation>
+	 <Operation Class="PatchOperationReplace">
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_FortressArmor"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
@@ -33,17 +33,17 @@
 			<MoveSpeed>-0.1</MoveSpeed>
 		</statOffsets>
 	  </value>
-	</li>
-	 <li Class="PatchOperationReplace">
+	</Operation>
+	 <Operation Class="PatchOperationReplace">
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_Storage"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
 			<VEF_MassCarryCapacity>25</VEF_MassCarryCapacity>
-			<CarryBulk>10</CarryBulk>
+			<CarryBulk>25</CarryBulk>
 		</statOffsets>
 	  </value>
-	</li>
+	</Operation>
  
-  </operations>
+
 
 </Patch>

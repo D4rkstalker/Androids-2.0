@@ -134,11 +134,12 @@
 			<MiningSpeed>0.25</MiningSpeed>
 			<ConstructionSpeed>0.25</ConstructionSpeed>
 			<MeleeDamageFactor>1</MeleeDamageFactor>
-			<CarryingCapacity>150</CarryingCapacity>
+			<CarryingCapacity>75</CarryingCapacity>
+			<VEF_MassCarryCapacity>75</VEF_MassCarryCapacity>
 		</statOffsets>
 		<costList>
 			<Plasteel>5</Plasteel>
-			<ComponentSpacer>10</ComponentSpacer>
+			<ComponentSpacer>3</ComponentSpacer>
 		</costList>
 	</Androids2.A2GeneDef>
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
@@ -239,7 +240,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_NeuralLock</defName>
 		<label>Neural Lock</label>
-		<description>[Only has effect in android converter] A hardware lock that suppresses an android's awakaned behaviour, turning them back into a drone. Can be applied to prisoners to recruit them</description>
+		<description>WIP [Only has effect in android converter] A hardware lock that suppresses an android's awakaned behaviour, turning them back into a drone. Can be applied to prisoners to recruit them</description>
 		<!-- <geneClass>Androids2.Gene_NeuralLock</geneClass> -->
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>

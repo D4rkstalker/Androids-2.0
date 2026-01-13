@@ -2,8 +2,9 @@
 <loadFolders>
     <v1.6>
         <li>/</li>
-        <li IfModActive="CETeam.CombatExtended">CE</li>
-        <li IfModActive="CETeam.CombatExtended_copy">CE</li>
-        <li IfModActive="CETeam.CombatExtended_Steam">CE</li>
+        <li>1.6</li>
+        <li>ModPatches/Vanilla Psycasts Expanded</li>
+		<li IfModActive="CETeam.CombatExtended">ModPatches/CombatExtended</li>
+
     </v1.6>
 </loadFolders>

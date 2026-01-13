@@ -37,6 +37,7 @@ namespace Androids2.Utils
                     pawn.genes.RemoveGene(existing);
             }
             int skillFloor = 0;
+            int skillCeiling = 20;
             Debug.LogWarning(pawn.story.adulthood?.defName + " " + pawn.story.childhood?.defName);
             bool isNeuralLocked = false;
             foreach (var gene in genes.OrderByDescending(g => !g.CanBeRemovedFromAndroid()))
@@ -50,8 +51,12 @@ namespace Androids2.Utils
                 //Log.Warning("Adding gene: " + gene.defName);
                 if (gene.GetModExtension<SkillFloor>() is SkillFloor extension)
                 {
-                    //Log.Warning("setting skillfloor: " + extension.floor);
-                    skillFloor = extension.floor;
+                    Log.Warning("setting skillfloor: " + extension.floor);
+                    Log.Warning("setting skillceilling: " + extension.ceiling);
+                    if(extension.floor > skillFloor)
+                        skillFloor = extension.floor;
+                    if(extension.ceiling < skillCeiling)
+                        skillCeiling = extension.ceiling;
                 }
                 if (gene == A2_Defof.VREA_A2_NeuralLock)
                 {
@@ -74,7 +79,7 @@ namespace Androids2.Utils
             {
                 SkillDef skillDef = allDefsListForReading[i];
                 var skillRecord = pawn.skills.GetSkill(skillDef);
-                int tempLevel = FinalLevelOfSkill(pawn, skillDef) + skillFloor;
+                int tempLevel = FinalLevelOfSkill(pawn, skillDef);
                 if (keepBaseSkill)
                 {
                     if (tempLevel < skillRecord.Level)
@@ -114,6 +119,14 @@ namespace Androids2.Utils
                             skillRecord.xpSinceLastLevel = Rand.Range(skillRecord.XpRequiredForLevelUp * 0.1f, skillRecord.XpRequiredForLevelUp * 0.9f);
                         }
                     }
+                }
+                if(skillRecord.Level > skillCeiling)
+                {
+                    skillRecord.Level = skillCeiling;
+                }
+                if(skillFloor > -1 && skillRecord.Level < skillFloor)
+                {
+                    skillRecord.Level = skillFloor;
                 }
             }
             if (pawn.IsAwakened())

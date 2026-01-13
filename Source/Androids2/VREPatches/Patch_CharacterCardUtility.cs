@@ -12,7 +12,6 @@ using VREAndroids;
 
 namespace Androids2
 {
-    [StaticConstructorOnStartup]
     public class Patch_CharacterCardUtility
     {
         static Patch_CharacterCardUtility()

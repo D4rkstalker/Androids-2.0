@@ -10,11 +10,12 @@ using Verse;
 using VREAndroids;
 namespace Androids2
 {
+    [StaticConstructorOnStartup]
     public static class Helpers
     {
-        public static readonly Texture2D PowerEfficiencyIcon = ContentFinder<Texture2D>.Get("UI/BiostatIcon/BiostatEfficiency");
-        public static readonly Texture2D ResourceCostIcon = ContentFinder<Texture2D>.Get("UI/BiostatIcon/BiostatResourceCost");
-        public static readonly CachedTexture PowerEfficiencyIconTex = new CachedTexture("UI/BiostatIcon/BiostatEfficiency");
+        //public static readonly Texture2D PowerEfficiencyIcon = ContentFinder<Texture2D>.Get("UI/BiostatIcon/BiostatEfficiency");
+        //public static readonly Texture2D ResourceCostIcon = ContentFinder<Texture2D>.Get("UI/BiostatIcon/BiostatResourceCost");
+        //public static readonly CachedTexture PowerEfficiencyIconTex = new CachedTexture("UI/BiostatIcon/BiostatEfficiency");
 
         public static bool IsDroid(this Pawn pawn)
         {

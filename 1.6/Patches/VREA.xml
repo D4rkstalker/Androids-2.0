@@ -18,6 +18,36 @@
 					<tab>Androids2</tab>
 				</value>
 			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/researchViewX</xpath>
+				<value>
+					<researchViewX>2.00</researchViewX>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ResearchProjectDef[defName="VREA_AndroidTech"]/researchViewY</xpath>
+				<value>
+					<researchViewY>1.00</researchViewY>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ResearchProjectDef[defName="VREA_NeutroamineLogistics"]/researchViewX</xpath>
+				<value>
+					<researchViewX>0.00</researchViewX>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ResearchProjectDef[defName="VREA_NeutroamineLogistics"]/researchViewY</xpath>
+				<value>
+					<researchViewY>2.00</researchViewY>
+				</value>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThingDef[defName="VREA_AndroidStand"]/designationCategory</xpath>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThingDef[defName="VREA_AndroidStand"]/researchPrerequisites</xpath>
+			</li>
 			<li Class="PatchOperationAdd">
 				<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_PsychicallyDeaf"]</xpath>
 				<value>
