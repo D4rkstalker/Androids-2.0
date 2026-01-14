@@ -1,9 +1,10 @@
-﻿using Androids2.Androids2Content.Comps;
+﻿using Androids2.Androids2Content;
+using RimWorld;
 using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 
-namespace Androids2.Androids2Content.AI
+namespace Androids2
 {
 
     public class JobDriver_EnterRepairGantry : JobDriver
@@ -16,7 +17,7 @@ namespace Androids2.Androids2Content.AI
 
         public const TargetIndex IngredientInd = TargetIndex.B;
 
-        public CompRepairGantry BiosculpterPod => job.targetA.Thing.TryGetComp<CompRepairGantry>();
+        public CompRepairGantry RepairGantry => job.targetA.Thing.TryGetComp<CompRepairGantry>();
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -46,14 +47,14 @@ namespace Androids2.Androids2Content.AI
 
             AddFinishAction(delegate
             {
-                if (BiosculpterPod != null)
+                if (RepairGantry != null)
                 {
-                    if (BiosculpterPod.queuedEnterJob == job)
+                    if (RepairGantry.queuedEnterJob == job)
                     {
-                        BiosculpterPod.ClearQueuedInformation();
+                        RepairGantry.ClearQueuedInformation();
                     }
 
-                    if (BiosculpterPod.Occupant != GetActor())
+                    if (RepairGantry.Occupant != GetActor())
                     {
                         foreach (Thing pickedUpIngredient in pickedUpIngredients)
                         {
@@ -66,7 +67,7 @@ namespace Androids2.Androids2Content.AI
                 }
             });
             this.FailOnDespawnedOrNull(TargetIndex.A);
-            this.FailOn(() => job.biosculpterCycleKey == null || !BiosculpterPod.CanAcceptOnceCycleChosen(GetActor()));
+            this.FailOn(() => job.biosculpterCycleKey == null || !RepairGantry.CanAcceptOnceCycleChosen(GetActor()));
             Toil goToPod = Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
             yield return Toils_Jump.JumpIf(goToPod, () => job.GetTargetQueue(TargetIndex.B).NullOrEmpty());
             foreach (Toil item in CollectIngredientsToilsHelper(TargetIndex.B, pawn, pickedUpIngredients))
@@ -74,12 +75,12 @@ namespace Androids2.Androids2Content.AI
                 yield return item;
             }
 
-            yield return goToPod.FailOn(() => !BiosculpterPod.PawnCarryingExtraCycleIngredients(pawn, job.biosculpterCycleKey));
+            yield return goToPod.FailOn(() => !RepairGantry.PawnCarryingExtraCycleIngredients(pawn, job.biosculpterCycleKey));
             yield return PrepareToEnterToil(TargetIndex.A);
             Toil enter = ToilMaker.MakeToil("MakeNewToils");
             enter.initAction = delegate
             {
-                BiosculpterPod.TryAcceptPawn(enter.actor, job.biosculpterCycleKey);
+                RepairGantry.TryAcceptPawn(enter.actor, job.biosculpterCycleKey);
             };
             enter.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return enter;
@@ -87,7 +88,7 @@ namespace Androids2.Androids2Content.AI
 
         public override string GetReport()
         {
-            if (!BiosculpterPod.PawnCarryingExtraCycleIngredients(pawn, job.biosculpterCycleKey))
+            if (!RepairGantry.PawnCarryingExtraCycleIngredients(pawn, job.biosculpterCycleKey))
             {
                 return "BiosculpterJobReportCollectIngredients".Translate();
             }

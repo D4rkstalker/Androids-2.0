@@ -1,11 +1,11 @@
-﻿using Androids2;
+﻿using RimWorld;
 using System;
 using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 using VREAndroids;
 
-namespace RimWorld
+namespace Androids2
 {
     // Token: 0x020015DC RID: 5596
     public class WorkGiver_HualPawnToConverter : WorkGiver_Scanner

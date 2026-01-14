@@ -94,17 +94,16 @@
       </li>
       <li Class="CompProperties_Flickable"/>
       <!-- <li Class="CompProperties_BiosculpterPod"> -->
-      <li Class="CompProperties_RepairGantry">
+      <li Class="Androids2.CompProperties_RepairGantry">
         <enterSound>BiosculpterPod_Enter</enterSound>
         <exitSound>BiosculpterPod_Exit</exitSound>
         <operatingEffecter>BiosculpterPod_Operating</operatingEffecter>
         <readyEffecter>BiosculpterPod_Ready</readyEffecter>
         <selectCycleColor>(0.321, 1, 0.349)</selectCycleColor>
-        <biotunedCycleSpeedFactor>1.25</biotunedCycleSpeedFactor>
       </li>
       <!-- <li Class="CompProperties_BiosculpterPod_HealingCycle"> -->
-      <li Class="CompProperties_RepairGantry_MaintainenceCycle">
-        <compClass>CompRepairGantry_MaintainenceCycle</compClass>
+      <li Class="Androids2.CompProperties_RepairGantry_GantryCycle">
+        <compClass>Androids2.CompRepairGantry_MaintainenceCycle</compClass>
         <key>maintainence</key>
         <label>maintainence cycle</label>
         <description>Repairs all damaged parts.</description>
@@ -113,8 +112,8 @@
         <operatingColor>(0.554,0.887,1.000)</operatingColor>
       </li>
 
-      <li Class="CompProperties_RepairGantry_RepairCycle">
-        <compClass>CompRepairGantry_RepairCycle</compClass>
+      <li Class="Androids2.CompProperties_RepairGantry_GantryCycle">
+        <compClass>Androids2.CompRepairGantry_RepairCycle</compClass>
         <key>repairCycle</key>
         <label>repair cycle</label>
         <description>Repairs all damaged parts, and rebuild small missing body parts like fingers and toes.</description>

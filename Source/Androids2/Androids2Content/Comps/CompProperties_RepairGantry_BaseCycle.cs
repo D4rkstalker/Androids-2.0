@@ -1,13 +1,9 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
-namespace Androids2.Androids2Content.Comps
+namespace Androids2
 {
     public abstract class CompProperties_RepairGantry_BaseCycle : CompProperties
     {

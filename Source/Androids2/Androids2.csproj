@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Androids2Content\AI\JobDriver_CarryToRepairGantry.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_EnterConverter.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_AndroidCharge.cs" />
     <Compile Include="Androids2Content\AI\JobDriver_EnterRepairGantry.cs" />
@@ -104,10 +105,13 @@
     <Compile Include="Androids2Content\Comps\CompAssignableToPawn_AndroidCharger.cs" />
     <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry.cs" />
     <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_BaseCycle.cs" />
-    <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_RepairCycle.cs" />
+    <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_GantryCycle.cs" />
     <Compile Include="Androids2Content\Comps\CompRepairGantry.cs" />
+    <Compile Include="Androids2Content\Comps\CompRepairGantry_BaseCycle.cs" />
     <Compile Include="Androids2Content\Comps\CompRepairGantry_Cycle.cs" />
+    <Compile Include="Androids2Content\Comps\CompRepairGantry_MaintainenceCycle.cs" />
     <Compile Include="Androids2Content\Comps\CompRepairGantry_RepairCycle.cs" />
+    <Compile Include="Androids2Content\Comps\RepairGantryState.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
     <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
     <Compile Include="Androids2Content\Genes\Gene_NeutroCatalyst.cs" />

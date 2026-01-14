@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<JobDef>
+		<defName>A2_EnterRepairGantry</defName>
+		<driverClass>Androids2.JobDriver_EnterRepairGantry</driverClass>
+		<reportString>Enter Repair Gantry.</reportString>
+	</JobDef>
+	<JobDef>
+		<defName>A2_CarryToRepairGantry</defName>
+		<driverClass>Androids2.JobDriver_CarryToRepairGantry</driverClass>
+		<reportString>Carry To Repair Gantry.</reportString>
+	</JobDef>
+</Defs>

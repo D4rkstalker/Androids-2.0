@@ -11,8 +11,6 @@ using VREAndroids;
 
 namespace Androids2
 {
-
-
     public class Building_AndroidCharger : Building_Bed
     {
         public static HashSet<Building_AndroidCharger> chargers = new HashSet<Building_AndroidCharger>();
