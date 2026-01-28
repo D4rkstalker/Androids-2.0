@@ -44,7 +44,7 @@ namespace Androids2
 
                 //var powerGain = power.curLevelInt + AndroidCharger.chargeRate;
                 //power.curLevelInt = Mathf.Min(1f, powerGain);
-                Debug.LogWarning("power gain rate: " + AndroidCharger.chargeRate);
+                //Debug.LogWarning("power gain rate: " + AndroidCharger.chargeRate);
                 if (memorySpace.curLevelInt == 1f && power.Energy == 1f)
                 {
                     this.EndJobWith(JobCondition.Succeeded);

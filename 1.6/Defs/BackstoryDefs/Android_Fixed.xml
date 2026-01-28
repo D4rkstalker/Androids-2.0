@@ -33,7 +33,6 @@
 		</spawnCategories>
 		<baseDesc>A more advanced robot that does what you tell it to do.</baseDesc>
 		<workDisables>
-		  <li>Intellectual</li>
 		  <li>Artistic</li>
 		</workDisables>
 	</BackstoryDef>

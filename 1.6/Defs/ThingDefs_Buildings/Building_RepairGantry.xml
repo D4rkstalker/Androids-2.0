@@ -114,7 +114,7 @@
 
       <li Class="Androids2.CompProperties_RepairGantry_GantryCycle">
         <compClass>Androids2.CompRepairGantry_RepairCycle</compClass>
-        <key>repairCycle</key>
+        <key>repair</key>
         <label>repair cycle</label>
         <description>Repairs all damaged parts, and rebuild small missing body parts like fingers and toes.</description>
         <iconPath>UI/Gizmos/BiosculpterCycleBioregeneration</iconPath>

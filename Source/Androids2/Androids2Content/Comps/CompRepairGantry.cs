@@ -16,9 +16,7 @@ namespace Androids2
     {
         public const int NoPowerEjectCumulativeTicks = 60000;
 
-        public const int BiotunedDuration = 4800000;
-
-        public const float NutritionRequired = 5f;
+        public const int SteelRequired = 5;
 
         public const float CacheForSecs = 2f;
 
@@ -38,19 +36,13 @@ namespace Androids2
 
         public ThingOwner innerContainer;
 
-        public Pawn biotunedTo;
+        public StorageSettings allowedMaterialsSettings;
 
-        public int biotunedCountdownTicks;
+        public int storedMaterials;
 
-        public StorageSettings allowedNutritionSettings;
-
-        public float liquifiedNutrition;
-
-        public bool autoLoadNutrition = true;
+        public bool autoLoadMaterials = true;
 
         public bool devFillPodLatch;
-
-        public bool autoAgeReversal;
 
         public int tickEntered = -99999;
 
@@ -61,13 +53,11 @@ namespace Androids2
         public List<ThingCount> chosenExtraItems = new List<ThingCount>();
 
         public List<FloatMenuOption> cycleEligiblePawnOptions = new List<FloatMenuOption>();
-        public Pawn pawnEnteringBiosculpter;
+        public Pawn pawnEnteringGantry;
 
         public Dictionary<CompRepairGantry_Cycle, List<IngredientCount>> cachedExtraIngredients = new Dictionary<CompRepairGantry_Cycle, List<IngredientCount>>();
 
         public Dictionary<CompRepairGantry_Cycle, CacheAnyPawnEligibleCycle> cachedAnyPawnEligible = new Dictionary<CompRepairGantry_Cycle, CacheAnyPawnEligibleCycle>();
-
-        public static Dictionary<Pawn, List<CompRepairGantry>> cachedBiotunedPods = new Dictionary<Pawn, List<CompRepairGantry>>();
 
         public Pawn cacheReachIngredientsPawn;
 
@@ -106,24 +96,9 @@ namespace Androids2
 
         public bool IsContentsSuspended => true;
 
-        public float RequiredNutritionRemaining => Mathf.Max(5f - liquifiedNutrition, 0f);
+        public float RequiredMaterialsRemaining => Mathf.Max(5f - storedMaterials, 0f);
 
-        public bool NutritionLoaded => RequiredNutritionRemaining <= 0f;
-
-        public bool AutoAgeReversal => autoAgeReversal;
-
-        public Texture2D AutoAgeReversalIcon
-        {
-            get
-            {
-                if (cachedAutoAgeReverseIcon == null)
-                {
-                    cachedAutoAgeReverseIcon = ContentFinder<Texture2D>.Get("UI/Gizmos/BiosculpterAutoAgeReversal");
-                }
-
-                return cachedAutoAgeReverseIcon;
-            }
-        }
+        public bool NutritionLoaded => RequiredMaterialsRemaining <= 0f;
 
         public RepairGantryState State
         {
@@ -147,9 +122,9 @@ namespace Androids2
         {
             get
             {
-                if (pawnEnteringBiosculpter != null)
+                if (pawnEnteringGantry != null)
                 {
-                    return pawnEnteringBiosculpter;
+                    return pawnEnteringGantry;
                 }
 
                 if (currentCycleKey == null)
@@ -213,7 +188,7 @@ namespace Androids2
             }
         }
 
-        public float CycleSpeedFactorNoPawn => CleanlinessSpeedFactor * BiotunedSpeedFactor;
+        public float CycleSpeedFactorNoPawn => CleanlinessSpeedFactor;
 
         public float CycleSpeedFactor
         {
@@ -230,18 +205,6 @@ namespace Androids2
 
         public float CleanlinessSpeedFactor => parent.GetStatValue(StatDefOf.BiosculpterPodSpeedFactor);
 
-        public float BiotunedSpeedFactor
-        {
-            get
-            {
-                if (biotunedTo == null)
-                {
-                    return 1f;
-                }
-
-                return Props.biotunedCycleSpeedFactor;
-            }
-        }
 
         public bool PowerOn => parent.TryGetComp<CompPowerTrader>().PowerOn;
 
@@ -261,10 +224,10 @@ namespace Androids2
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
-            allowedNutritionSettings = new StorageSettings(this);
+            allowedMaterialsSettings = new StorageSettings(this);
             if (parent.def.building.defaultStorageSettings != null)
             {
-                allowedNutritionSettings.CopyFrom(parent.def.building.defaultStorageSettings);
+                allowedMaterialsSettings.CopyFrom(parent.def.building.defaultStorageSettings);
             }
         }
 
@@ -283,22 +246,19 @@ namespace Androids2
             Scribe_Values.Look(ref currentCycleKey, "currentCycleKey");
             Scribe_Values.Look(ref currentCycleTicksRemaining, "currentCycleTicksRemaining", 0f);
             Scribe_Values.Look(ref currentCyclePowerCutTicks, "currentCyclePowerCutTicks", 0);
-            Scribe_References.Look(ref biotunedTo, "biotunedTo");
-            Scribe_Values.Look(ref biotunedCountdownTicks, "biotunedCountdownTicks", 0);
-            Scribe_Deep.Look(ref allowedNutritionSettings, "allowedNutritionSettings");
-            Scribe_Values.Look(ref liquifiedNutrition, "liquifiedNutrition", 0f);
-            Scribe_Values.Look(ref autoLoadNutrition, "autoLoadNutrition", defaultValue: false);
+            Scribe_Deep.Look(ref allowedMaterialsSettings, "allowedMaterialsSettings");
+            Scribe_Values.Look(ref storedMaterials, "storedMaterials", 0);
+            Scribe_Values.Look(ref autoLoadMaterials, "autoLoadMaterials", defaultValue: false);
             Scribe_Values.Look(ref devFillPodLatch, "devFillPodLatch", defaultValue: false);
-            Scribe_Values.Look(ref autoAgeReversal, "autoAgeReversal", defaultValue: false);
             Scribe_Values.Look(ref tickEntered, "tickEntered", 0);
             Scribe_References.Look(ref queuedEnterJob, "queuedEnterJob");
             Scribe_References.Look(ref queuedPawn, "queuedPawn");
-            if (allowedNutritionSettings == null)
+            if (allowedMaterialsSettings == null)
             {
-                allowedNutritionSettings = new StorageSettings(this);
+                allowedMaterialsSettings = new StorageSettings(this);
                 if (parent.def.building.defaultStorageSettings != null)
                 {
-                    allowedNutritionSettings.CopyFrom(parent.def.building.defaultStorageSettings);
+                    allowedMaterialsSettings.CopyFrom(parent.def.building.defaultStorageSettings);
                 }
             }
 
@@ -309,12 +269,7 @@ namespace Androids2
                     currentCycleKey = "medic";
                 }
 
-                if (biotunedTo != null)
-                {
-                    SetBiotuned(biotunedTo);
-                }
-
-                LiquifyNutrition();
+                StoreMaterials();
             }
         }
 
@@ -344,39 +299,8 @@ namespace Androids2
             }
         }
 
-        public void SetBiotuned(Pawn newBiotunedTo)
-        {
-            if (newBiotunedTo != biotunedTo)
-            {
-                autoAgeReversal = false;
-            }
-
-            if (biotunedTo != null && cachedBiotunedPods.ContainsKey(biotunedTo))
-            {
-                cachedBiotunedPods[biotunedTo].Remove(this);
-            }
-
-            if (newBiotunedTo != null && !cachedBiotunedPods.ContainsKey(newBiotunedTo))
-            {
-                cachedBiotunedPods[newBiotunedTo] = new List<CompRepairGantry>();
-            }
-
-            if (newBiotunedTo != null && !cachedBiotunedPods[newBiotunedTo].Contains(this))
-            {
-                cachedBiotunedPods[newBiotunedTo].Add(this);
-            }
-
-            if (newBiotunedTo != null && newBiotunedTo != biotunedTo)
-            {
-                biotunedCountdownTicks = 4800000;
-            }
-
-            biotunedTo = newBiotunedTo;
-        }
-
         public override void PostDestroy(DestroyMode mode, Map previousMap)
         {
-            SetBiotuned(null);
             if (mode == DestroyMode.Deconstruct || mode == DestroyMode.KillFinalize)
             {
                 EjectContents(interrupted: true, playSounds: false, previousMap);
@@ -405,9 +329,9 @@ namespace Androids2
         public override void DrawGUIOverlay()
         {
             base.DrawGUIOverlay();
-            if (!Find.ScreenshotModeHandler.Active && (biotunedTo != null || Occupant != null))
+            if (!Find.ScreenshotModeHandler.Active && Occupant != null)
             {
-                GenMapUI.DrawThingLabel(parent, biotunedTo?.LabelShort ?? Occupant.LabelShort, GenMapUI.DefaultThingLabelColor);
+                GenMapUI.DrawThingLabel(parent, Occupant.LabelShort, GenMapUI.DefaultThingLabelColor);
             }
         }
 
@@ -422,10 +346,6 @@ namespace Androids2
                 {
                     stringBuilder.AppendLineIfNotEmpty().Append("RepairGantryCycleLabel".Translate()).Append(": ")
                         .Append(currentCycle.Props.LabelCap);
-                    if (biotunedTo == null)
-                    {
-                        stringBuilder.Append(" " + "RepairGantryCycleWillBiotune".Translate());
-                    }
                 }
                 else if (state == RepairGantryState.SelectingCycle)
                 {
@@ -449,10 +369,8 @@ namespace Androids2
                 if (state == RepairGantryState.LoadingMaterials)
                 {
                     stringBuilder.Append("RepairGantryCycleLabelLoading".Translate().CapitalizeFirst());
-                    stringBuilder.AppendLineIfNotEmpty().Append("Nutrition".Translate()).Append(": ")
-                        .Append(liquifiedNutrition.ToStringByStyle(ToStringStyle.FloatMaxOne))
-                        .Append(" / ")
-                        .Append(5f);
+                    stringBuilder.AppendLineIfNotEmpty().Append("Materials".Translate()).Append(": ")
+                        .Append(storedMaterials);
                 }
 
                 if (state == RepairGantryState.Occupied)
@@ -473,24 +391,9 @@ namespace Androids2
                         stringBuilder.Append(" (" + "BiosculpterCycleAccelerated".Translate() + ")");
                     }
 
-                    if (biotunedTo != null)
-                    {
-                        stringBuilder.AppendLine().Append("BiosculpterBiotunedSpeedFactor".Translate()).Append(": ")
-                            .Append(BiotunedSpeedFactor.ToStringPercent());
-                    }
-
                     stringBuilder.AppendLine().Append("BiosculpterCleanlinessSpeedFactor".Translate()).Append(": ")
                         .Append(CleanlinessSpeedFactor.ToStringPercent());
                 }
-            }
-
-            if (biotunedTo != null && state != RepairGantryState.Occupied)
-            {
-                stringBuilder.AppendLineIfNotEmpty().Append("BiosculpterBiotunedTo".Translate()).Append(": ")
-                    .Append(biotunedTo.LabelShort)
-                    .Append(" (")
-                    .Append(biotunedCountdownTicks.ToStringTicksToPeriod())
-                    .Append(")");
             }
 
             if (stringBuilder.Length <= 0)
@@ -509,21 +412,14 @@ namespace Androids2
             {
                 string text = cycleIndependentCannotUseReason ?? CannotUseNowCycleReason(cycle);
                 Command_Action command_Action = new Command_Action();
-                command_Action.defaultLabel = "RepairGantryCycleCommand".Translate(cycle.Props.label) + ((biotunedTo != null) ? (" (" + biotunedTo.LabelShort + ")") : "");
+                command_Action.defaultLabel = "RepairGantryCycleCommand".Translate(cycle.Props.label) + "";
                 command_Action.defaultDesc = CycleDescription(cycle);
                 command_Action.icon = cycle.Props.Icon;
                 command_Action.action = delegate
                 {
                     SelectPawnsForCycleOptions(cycle, out var options2);
-                    if (biotunedTo != null && options2.Count > 0)
-                    {
-                        options2[0].action();
+                    Find.WindowStack.Add(new FloatMenu(options2));
 
-                    }
-                    else
-                    {
-                        Find.WindowStack.Add(new FloatMenu(options2));
-                    }
                 };
                 command_Action.activateSound = SoundDefOf.Tick_Tiny;
                 command_Action.Disabled = text != null;
@@ -534,7 +430,7 @@ namespace Androids2
                 }
                 else if (!SelectPawnsForCycleOptions(cycle, out options, shortCircuit: true))
                 {
-                    command_Action.Disable((biotunedTo != null) ? "BiosculpterNoEligiblePawnsBiotuned".Translate(biotunedTo.Named("PAWN")) : "BiosculpterNoEligiblePawns".Translate());
+                    command_Action.Disable("BiosculpterNoEligiblePawns".Translate());
                 }
 
                 yield return command_Action;
@@ -557,35 +453,15 @@ namespace Androids2
             Command_Toggle command_Toggle = new Command_Toggle();
             command_Toggle.defaultLabel = "BiosculpterAutoLoadNutritionLabel".Translate();
             command_Toggle.defaultDesc = "BiosculpterAutoLoadNutritionDescription".Translate();
-            command_Toggle.icon = (autoLoadNutrition ? TexCommand.ForbidOff : TexCommand.ForbidOn);
-            command_Toggle.isActive = () => autoLoadNutrition;
+            command_Toggle.icon = (autoLoadMaterials ? TexCommand.ForbidOff : TexCommand.ForbidOn);
+            command_Toggle.isActive = () => autoLoadMaterials;
             command_Toggle.toggleAction = delegate
             {
-                autoLoadNutrition = !autoLoadNutrition;
+                autoLoadMaterials = !autoLoadMaterials;
             };
             yield return command_Toggle;
-            if ((biotunedTo?.Ideo?.HasPrecept(PreceptDefOf.AgeReversal_Demanded)).GetValueOrDefault())
-            {
-                Command_Toggle command_Toggle2 = new Command_Toggle();
-                command_Toggle2.defaultLabel = "BiosculpterAutoAgeReversalLabel".Translate(biotunedTo.Named("PAWN"));
-                TaggedString taggedString = ((biotunedTo.ageTracker.AgeReversalDemandedDeadlineTicks > 0) ? "BiosculpterAutoAgeReversalDescriptionFuture".Translate(biotunedTo.Named("PAWN"), ((int)biotunedTo.ageTracker.AgeReversalDemandedDeadlineTicks).ToStringTicksToPeriodVague().Named("TIME")) : "BiosculpterAutoAgeReversalDescriptionNow".Translate(biotunedTo.Named("PAWN")));
-                command_Toggle2.defaultDesc = "BiosculpterAutoAgeReversalDescription".Translate(biotunedTo.Named("PAWN"), taggedString.Named("NEXTTREATMENT"));
-                command_Toggle2.icon = AutoAgeReversalIcon;
-                command_Toggle2.isActive = () => AutoAgeReversal;
-                command_Toggle2.toggleAction = delegate
-                {
-                    autoAgeReversal = !autoAgeReversal;
-                };
-                if (!CanAgeReverse(biotunedTo))
-                {
-                    command_Toggle2.Disable("UnderMinBiosculpterAgeReversalAge".Translate(biotunedTo.ageTracker.AdultMinAge.Named("ADULTAGE")).CapitalizeFirst());
-                    autoAgeReversal = false;
-                }
 
-                yield return command_Toggle2;
-            }
-
-            foreach (Gizmo item in StorageSettingsClipboard.CopyPasteGizmosFor(allowedNutritionSettings))
+            foreach (Gizmo item in StorageSettingsClipboard.CopyPasteGizmosFor(allowedMaterialsSettings))
             {
                 yield return item;
             }
@@ -618,22 +494,13 @@ namespace Androids2
                 };
                 yield return new Command_Action
                 {
-                    defaultLabel = "DEV: complete biotune timer",
-                    action = delegate
-                    {
-                        biotunedCountdownTicks = 10;
-                    },
-                    Disabled = (biotunedCountdownTicks <= 0)
-                };
-                yield return new Command_Action
-                {
                     defaultLabel = "DEV: fill nutrition and cycle ingredients",
                     action = delegate
                     {
-                        liquifiedNutrition = 5f;
+                        storedMaterials = 5;
                         devFillPodLatch = true;
                     },
-                    Disabled = (State == RepairGantryState.Occupied || (devFillPodLatch && liquifiedNutrition == 5f))
+                    Disabled = (State == RepairGantryState.Occupied || (devFillPodLatch && storedMaterials == 5f))
                 };
             }
         }
@@ -655,7 +522,6 @@ namespace Androids2
         public string CycleDescription(CompRepairGantry_Cycle cycle)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(cycle.Description(biotunedTo));
             float num = cycle.Props.durationDays / CycleSpeedFactor;
             float num2 = num / PreceptDefOf.Biosculpting_Accelerated.biosculpterPodCycleSpeedFactor;
             stringBuilder.AppendLine("\n\n" + "RepairGantryCycleDuration".Translate() + ": " + ((int)(num * 60000f)).ToStringTicksToDays());
@@ -698,34 +564,6 @@ namespace Androids2
             }
         }
 
-        public static bool CanAgeReverse(Pawn biosculptee)
-        {
-            return biosculptee.ageTracker.Adult;
-        }
-
-        public static List<CompRepairGantry> BiotunedPods(Pawn pawn)
-        {
-            return cachedBiotunedPods.TryGetValue(pawn);
-        }
-
-        public static bool HasBiotunedAutoAgeReversePod(Pawn pawn)
-        {
-            List<CompRepairGantry> list = cachedBiotunedPods.TryGetValue(pawn);
-            if (list == null)
-            {
-                return false;
-            }
-
-            foreach (CompRepairGantry item in list)
-            {
-                if (item.AutoAgeReversal)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         public static string CannotStartText(CompRepairGantry_Cycle cycle, string translatedReason)
         {
@@ -760,11 +598,6 @@ namespace Androids2
 
         public string CannotUseNowPawnCycleReason(Pawn hauler, Pawn biosculptee, CompRepairGantry_Cycle cycle, bool checkIngredients = true)
         {
-            if (AgeReversalCycleKey != null && cycle.Props.key == AgeReversalCycleKey && !CanAgeReverse(biosculptee))
-            {
-                return "UnderMinBiosculpterAgeReversalAge".Translate(biosculptee.ageTracker.AdultMinAge.Named("ADULTAGE")).CapitalizeFirst();
-            }
-
             if (checkIngredients && !CanReachOrHasIngredients(hauler, biosculptee, cycle, useCache: true))
             {
                 return "BiosculpterMissingIngredients".Translate(IngredientsDescription(cycle).Named("INGREDIENTS")).CapitalizeFirst();
@@ -775,11 +608,6 @@ namespace Androids2
 
         public string CannotUseNowPawnReason(Pawn p)
         {
-            if (biotunedTo != null && biotunedTo != p)
-            {
-                return "BiosculpterBiotunedToAnother".Translate().CapitalizeFirst();
-            }
-
             if (!p.CanReach(parent, PathEndMode.InteractionCell, Danger.Deadly))
             {
                 return "NoPath".Translate().CapitalizeFirst();
@@ -881,35 +709,17 @@ namespace Androids2
             }
 
             cachedAnyPawnEligible[cycle].gameTime = ticksGame;
-            if (biotunedTo != null)
+            foreach (Pawn item in parent.Map.mapPawns.FreeColonistsSpawned)
             {
-                if (biotunedTo.Dead || !biotunedTo.Spawned || biotunedTo.Map != parent.Map)
-                {
-                    cachedAnyPawnEligible[cycle].anyEligible = false;
-                    return cachedAnyPawnEligible[cycle].anyEligible;
-                }
-
-                if (SelectPawnCycleOption(biotunedTo, cycle, out var option) && shortCircuit)
+                if (SelectPawnCycleOption(item, cycle, out var option2) && shortCircuit)
                 {
                     cachedAnyPawnEligible[cycle].anyEligible = true;
                     return cachedAnyPawnEligible[cycle].anyEligible;
                 }
 
-                cycleEligiblePawnOptions.Add(option);
+                cycleEligiblePawnOptions.Add(option2);
             }
-            else
-            {
-                foreach (Pawn item in parent.Map.mapPawns.FreeColonistsSpawned)
-                {
-                    if (SelectPawnCycleOption(item, cycle, out var option2) && shortCircuit)
-                    {
-                        cachedAnyPawnEligible[cycle].anyEligible = true;
-                        return cachedAnyPawnEligible[cycle].anyEligible;
-                    }
 
-                    cycleEligiblePawnOptions.Add(option2);
-                }
-            }
 
             cachedAnyPawnEligible[cycle].anyEligible = cycleEligiblePawnOptions.Count > 0;
             return cachedAnyPawnEligible[cycle].anyEligible;
@@ -987,17 +797,12 @@ namespace Androids2
 
         public bool CanAcceptNutrition(Thing thing)
         {
-            return allowedNutritionSettings.AllowedToAccept(thing);
+            return allowedMaterialsSettings.AllowedToAccept(thing);
         }
 
         public bool CanAcceptOnceCycleChosen(Pawn pawn)
         {
             if (State != RepairGantryState.SelectingCycle || !PowerOn)
-            {
-                return false;
-            }
-
-            if (biotunedTo != null && biotunedTo != pawn)
             {
                 return false;
             }
@@ -1055,7 +860,7 @@ namespace Androids2
 
             currentCycleKey = cycle.Props.key;
             innerContainer.ClearAndDestroyContents();
-            pawnEnteringBiosculpter = pawn;
+            pawnEnteringGantry = pawn;
             bool num = pawn.DeSpawnOrDeselect();
             if (pawn.holdingOwner != null)
             {
@@ -1071,9 +876,9 @@ namespace Androids2
                 Find.Selector.Select(pawn, playSound: false, forceDesignatorDeselect: false);
             }
 
-            pawnEnteringBiosculpter = null;
+            pawnEnteringGantry = null;
             currentCycleTicksRemaining = cycle.Props.durationDays * 60000f;
-            liquifiedNutrition = 0f;
+            storedMaterials = 0;
             devFillPodLatch = false;
             ClearQueuedInformation();
             tickEntered = Find.TickManager.TicksGame;
@@ -1091,7 +896,7 @@ namespace Androids2
             currentCycleKey = null;
             currentCycleTicksRemaining = 0f;
             currentCyclePowerCutTicks = 0;
-            liquifiedNutrition = 0f;
+            storedMaterials = 0;
             devFillPodLatch = false;
             innerContainer.TryDropAll(parent.InteractionCell, destMap, ThingPlaceMode.Near);
             if (occupant != null)
@@ -1114,7 +919,6 @@ namespace Androids2
         {
             Pawn occupant = Occupant;
             CompRepairGantry_Cycle currentCycle = CurrentCycle;
-            SetBiotuned(occupant);
             currentCycle.CycleCompleted(occupant);
             EjectContents(interrupted: false, playSounds: true);
             if (occupant != null)
@@ -1136,7 +940,7 @@ namespace Androids2
                     occupant.needs?.mood?.thoughts.memories.TryGainMemory(ThoughtDefOf.AgeReversalReceived);
                 }
 
-              //  Find.HistoryEventsManager.RecordEvent(new HistoryEvent(HistoryEventDefOf.UsedRepairGantry, occupant.Named(HistoryEventArgsNames.Doer)));
+                //  Find.HistoryEventsManager.RecordEvent(new HistoryEvent(HistoryEventDefOf.UsedRepairGantry, occupant.Named(HistoryEventArgsNames.Doer)));
             }
 
             if (tickEntered > 0)
@@ -1145,15 +949,15 @@ namespace Androids2
             }
         }
 
-        public void LiquifyNutrition()
+        public void StoreMaterials()
         {
             tmpItems.AddRange(innerContainer);
             foreach (Thing tmpItem in tmpItems)
             {
-                float num = tmpItem.GetStatValue(StatDefOf.Nutrition) * (float)tmpItem.stackCount;
+                int num = tmpItem.stackCount;
                 if (!(num <= 0f) && !(tmpItem is Pawn))
                 {
-                    liquifiedNutrition = Mathf.Min(5f, liquifiedNutrition + num);
+                    storedMaterials = Math.Min(5, storedMaterials + num);
                     tmpItem.Destroy();
                 }
             }
@@ -1196,7 +1000,6 @@ namespace Androids2
             else
             {
                 Pawn occupant = Occupant;
-                biotunedCountdownTicks = 4800000;
                 if (PowerOn)
                 {
                     int num = 1;
@@ -1254,22 +1057,7 @@ namespace Androids2
                     }
                 }
             }
-
-            if (PowerOn && biotunedCountdownTicks > 0)
-            {
-                biotunedCountdownTicks--;
-            }
-
-            if (biotunedCountdownTicks <= 0)
-            {
-                SetBiotuned(null);
-            }
-
             SetPower();
-            if (biotunedTo?.Ideo != null && !biotunedTo.Ideo.HasPrecept(PreceptDefOf.AgeReversal_Demanded))
-            {
-                autoAgeReversal = false;
-            }
         }
 
         public void SetPower()
@@ -1347,7 +1135,7 @@ namespace Androids2
 
         public StorageSettings GetStoreSettings()
         {
-            return allowedNutritionSettings;
+            return allowedMaterialsSettings;
         }
 
         public StorageSettings GetParentStoreSettings()
@@ -1358,7 +1146,7 @@ namespace Androids2
         public void Notify_SettingsChanged()
         {
         }
-        
+
         public static void OrderToPod(CompRepairGantry_Cycle cycle, Pawn pawn, Action giveJobAct)
         {
             if (cycle is CompRepairGantry_BaseCycle compRepairGantry_HealingCycle)
@@ -1393,10 +1181,6 @@ namespace Androids2
             bool Validator(Thing t)
             {
                 CompRepairGantry compRepairGantry = t.TryGetComp<CompRepairGantry>();
-                if (biotuned && compRepairGantry.biotunedTo != traveller)
-                {
-                    return false;
-                }
 
                 return compRepairGantry.CanAcceptOnceCycleChosen(traveller);
             }
@@ -1420,7 +1204,7 @@ namespace Androids2
 
         public void Notify_HauledTo(Pawn hauler, Thing thing, int count)
         {
-            LiquifyNutrition();
+            StoreMaterials();
             SoundDefOf.Standard_Drop.PlayOneShot(parent);
         }
     }

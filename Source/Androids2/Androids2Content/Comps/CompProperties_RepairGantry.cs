@@ -21,7 +21,6 @@ namespace Androids2
 
         public Color selectCycleColor;
 
-        public float biotunedCycleSpeedFactor;
 
         public CompProperties_RepairGantry()
         {
