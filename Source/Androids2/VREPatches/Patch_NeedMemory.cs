@@ -43,13 +43,13 @@ namespace Androids2.VREPatches
                     var frag = __instance.pawn.health.hediffSet.GetFirstHediffOfDef(A2_Defof.A2_DataFragmentation);
                     if (frag != null)
                     {
-                        frag.Severity += 0.1f;
+                        frag.Severity += 0.01f;
 
                     }
                     else
                     {
                         frag = HediffMaker.MakeHediff(A2_Defof.A2_DataFragmentation, __instance.pawn);
-                        frag.Severity = 0.1f;
+                        frag.Severity = 0.01f;
                     }
 
                 }
