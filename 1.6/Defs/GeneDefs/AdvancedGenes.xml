@@ -251,4 +251,34 @@
 		</costList>
 	</Androids2.A2GeneDef>
 
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_AuxMechanite</defName>
+		<label>Auxiliary mechanite</label>
+		<description>[WIP] Allows robots to regenrate damage, and lost neutromine. For robots with the synth flesh hardware, enables lost part regeneration</description>
+		<!-- <geneClass>Androids2.Gene_NeuralLock</geneClass> -->
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<costList>
+			<MechSerumHealer>1</MechSerumHealer>
+			<ComponentSpacer>5</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_ReconstructionMechanite</defName>
+		<label>Reconstruction mechanite</label>
+		<description>[WIP] Increases regeneration rate, emables lost part regeneration for robots with mech flesh hardware. Grants an ability to inject healer mechanites into other targets </description>
+		<geneClass>Androids2.Gene_ReconstructionMechanites</geneClass>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<costList>
+			<MechSerumResurrector>1</MechSerumResurrector>
+			<ComponentSpacer>5</ComponentSpacer>
+		</costList>
+	</Androids2.A2GeneDef>
+
 </Defs>

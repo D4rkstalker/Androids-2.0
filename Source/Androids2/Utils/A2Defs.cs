@@ -33,11 +33,14 @@ namespace Androids2
         public static GeneDef VREA_A2_BioReactor;
         public static GeneDef VREA_A2_ChemReactor;
         public static GeneDef VREA_A2_ToxReactor;
+        public static GeneDef VREA_A2_AuxMechanite;
+        public static GeneDef VREA_A2_ReconstructionMechanite;
 
         public static GeneCategoryDef A2_Hardware;
 
         public static HediffDef A2_HediffVanometric;
-
+        public static HediffDef A2_DataFragmentation;
+        
         public static ThingDef A2_AndroidCharger;
         public static ThingDef A2_Converter;
 

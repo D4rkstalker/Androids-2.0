@@ -13,6 +13,8 @@
 		</exclusionTags>
 
 		<costList>
+			<Plasteel>10</Plasteel>
+			<ComponentSpacer>2</ComponentSpacer>
 			<ComponentIndustrial>4</ComponentIndustrial>
 		</costList>
 	</Androids2.A2GeneDef>
@@ -33,7 +35,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SuperCapacitor</defName>
 		<label>super capacitor</label>
-		<description>The robot's reactor has been swapped to a super capacitor, allowing the robot to be recharged instantly at a super charger. Reduces max energy capacity by a factor of 10</description>
+		<description>[WIP] The robot's reactor has been swapped to a super capacitor, allowing the robot to be recharged instantly. Reduces max energy capacity by a factor of 10</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
@@ -52,7 +54,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_BioReactor</defName>
 		<label>bio reactor</label>
-		<description>Allows the robot to recharge by eating normal food. Experience what its like to eat without a table. Less energy efficient than direct charging</description>
+		<description>[WIP] Allows the robot to recharge by eating normal food. Experience what its like to eat without a table. Less energy efficient than direct charging</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
@@ -66,7 +68,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_ChemReactor</defName>
 		<label>chemfuel reactor</label>
-		<description>Allows the robot to recharge by drinking chemfuel. Just like eating, but with extra steps. More efficient compared to eating food</description>
+		<description>[WIP] Allows the robot to recharge by drinking chemfuel. Just like eating, but with extra steps. More efficient compared to eating food</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
@@ -80,7 +82,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_ToxReactor</defName>
 		<label>tox reactor</label>
-		<description>Allows the robot to recharge by eating wastepacks. Reduce, Reuse, Recycle. Converts wastepacks back into pollution and tox gas</description>
+		<description>[WIP] Allows the robot to recharge by eating wastepacks. Reduce, Reuse, Recycle. Converts wastepacks back into pollution and tox gas</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>

@@ -69,7 +69,7 @@
 		<titleFemale>skirmisher droid</titleFemale>
 		<titleShortFemale>skirmisher droid</titleShortFemale>
 		<slot>Childhood</slot>
-		<baseDesc>A battle droid speicalized in hit and run tactics.</baseDesc>
+		<baseDesc>A battle droid specialized in hit and run tactics.</baseDesc>
 		<skillGains>
 			<Shooting>15</Shooting>
 			<Melee>15</Melee>

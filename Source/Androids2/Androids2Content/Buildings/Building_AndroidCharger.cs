@@ -51,9 +51,9 @@ namespace Androids2
         //    return sb.ToString().TrimEndNewlines();
         //}
 
-        public override void Tick()
+        public override void TickInterval(int delta)
         {
-            base.Tick();
+            base.TickInterval(delta);
             var occupant = CurOccupant;
             if (occupant != null)
             {
@@ -75,24 +75,24 @@ namespace Androids2
                             Log.Error("PowerNet found, super charging!");
                             if (compPower.PowerNet.CurrentEnergyGainRate() >= 5000f)
                             {
-                                powerGain += chargeRate * 100;
+                                powerGain += chargeRate * 100 * delta;
                                 compPower.PowerOutput = -5000f;
                             }
                             else
                             {
-                                powerGain += chargeRate * 100 * (compPower.PowerNet.CurrentEnergyGainRate() / 5000f);
+                                powerGain += chargeRate * 100 * (compPower.PowerNet.CurrentEnergyGainRate() / 5000f) * delta;
                                 compPower.PowerOutput = -compPower.PowerNet.CurrentEnergyGainRate();
                             }
                         }
                         else if (occupant.HasActiveGene(A2_Defof.VREA_A2_AuxBattery))
                         {
-                            powerGain += chargeRate;
+                            powerGain += chargeRate * delta;
                             compPower.PowerOutput = -chargeRate * 100;
 
                         }
                         else
                         {
-                            powerGain += chargeRate * 2;
+                            powerGain += chargeRate * 2 * delta;
                             compPower.PowerOutput = -chargeRate * 200;
 
                         }

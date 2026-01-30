@@ -17,7 +17,7 @@
 		<techLevel>Industrial</techLevel>
 		<prerequisites>
 			<li>MicroelectronicsBasics</li>
-			<li>BasicMechtech</li>
+			<li>Machining</li>
 		</prerequisites>
 		<researchViewX>0</researchViewX>
 		<researchViewY>1</researchViewY>
@@ -36,7 +36,7 @@
 		<techLevel>Spacer</techLevel>
 		<prerequisites>
 			<li>MultiAnalyzer</li>
-			<li>StandardMechtech</li>
+			<li>BasicMechtech</li>
 			<li>A2_BasicDroid</li>
 		</prerequisites>
 		<researchViewX>1</researchViewX>
@@ -74,7 +74,7 @@
 		<techLevel>Spacer</techLevel>
 		<prerequisites>
 			<li>VREA_AndroidTech</li>
-			<li>UltraMechtech</li>
+			<li>HighMechtech</li>
 		</prerequisites>
 		<researchViewX>3</researchViewX>
 		<researchViewY>1</researchViewY>
@@ -93,6 +93,7 @@
 		<techLevel>Spacer</techLevel>
 		<prerequisites>
 			<li>A2_Synthetics</li>
+			<li>UltraMechtech</li>
 		</prerequisites>
 		<researchViewX>3</researchViewX>
 		<researchViewY>2</researchViewY>

@@ -99,10 +99,13 @@
     <Compile Include="Androids2Content\Buildings\Building_Converter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_DroidFab.cs" />
     <Compile Include="Androids2Content\Buildings\Building_PawnCrafter.cs" />
+    <Compile Include="Androids2Content\Buildings\Building_SubcoreMaker.cs" />
     <Compile Include="Androids2Content\Buildings\Building_SynthPrinter.cs" />
     <Compile Include="Androids2Content\Buildings\Building_AndroidCharger.cs" />
     <Compile Include="Androids2Content\Buildings\IPawnCrafter.cs" />
+    <Compile Include="Androids2Content\Comps\CompAbilityEffect_EndFormatting.cs" />
     <Compile Include="Androids2Content\Comps\CompAssignableToPawn_AndroidCharger.cs" />
+    <Compile Include="Androids2Content\Comps\CompProperties_EndFormatting.cs" />
     <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry.cs" />
     <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_BaseCycle.cs" />
     <Compile Include="Androids2Content\Comps\CompProperties_RepairGantry_GantryCycle.cs" />
@@ -111,11 +114,14 @@
     <Compile Include="Androids2Content\Comps\CompRepairGantry_Cycle.cs" />
     <Compile Include="Androids2Content\Comps\CompRepairGantry_MaintainenceCycle.cs" />
     <Compile Include="Androids2Content\Comps\CompRepairGantry_RepairCycle.cs" />
+    <Compile Include="Androids2Content\Comps\A2Subcore.cs" />
     <Compile Include="Androids2Content\Comps\RepairGantryState.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
+    <Compile Include="Androids2Content\Genes\Gene_ReconstructionMechanites.cs" />
     <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
     <Compile Include="Androids2Content\Genes\Gene_NeutroCatalyst.cs" />
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
+    <Compile Include="Androids2Content\Hediffs\Hediff_DataFrag.cs" />
     <Compile Include="Androids2Content\Hediffs\VanometricCell.cs" />
     <Compile Include="Androids2Content\UI\FloatMenuOptionProvider_CarryAndroidToCharger.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_CancelConvert.cs" />
@@ -145,9 +151,10 @@
     <Compile Include="VREPatches\Patch_CharacterCardUtility.cs" />
     <Compile Include="VREPatches\Patch_EnergyDrain.cs" />
     <Compile Include="VREPatches\Patch_GeneUIUtility_DrawGenesInfo_Patch.cs" />
+    <Compile Include="VREPatches\Patch_NeedMemory.cs" />
     <Compile Include="VREPatches\Patch_Psylink.cs" />
     <Compile Include="VREPatches\Patch_ShouldBeDead.cs" />
-    <Compile Include="VREPatches\Patch_SynthFlesh.cs" />
+    <Compile Include="VREPatches\Patch_CanNaturallyHeal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="VanillaPatches\" />

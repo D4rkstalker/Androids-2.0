@@ -15,7 +15,7 @@ namespace Androids2.VREPatches
     {
         public static bool Prefix(Building_AndroidCreationStation __instance, Pawn creator)
         {
-            Debug.LogError("Androids2: Patching CallAndroidCreationWindow to use custom window.");
+            //Debug.LogError("Androids2: Patching CallAndroidCreationWindow to use custom window.");
             Find.WindowStack.Add(new Window_CustomizeAndroid(__instance, creator, null));
             return false;
         }

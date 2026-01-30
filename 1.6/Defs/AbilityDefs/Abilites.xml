@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <AbilityDef>
+    <defName>EndMemoryFreeing</defName>
+    <label>Interrupt reformatting</label>
+    <description>Stop reformatting. Useful for when you really need someone to run or fight instead of just standing there. Incomplete memory formatting causes data fragmentation, temporarily decreasing consiousness</description>
+    <iconPath>UI/Abilities/FireSpew</iconPath>
+    <cooldownTicksRange>1</cooldownTicksRange>
+    <targetRequired>false</targetRequired>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+    <aiCanUse>false</aiCanUse>
+    <ai_IsIncendiary>false</ai_IsIncendiary>
+    <showCastingProgressBar>true</showCastingProgressBar>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <range>1</range>
+      <warmupTime>3</warmupTime>
+      <drawAimPie>false</drawAimPie>      
+      <requireLineOfSight>false</requireLineOfSight>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="Androids2.CompProperties_EndFormatting"/>
+    </comps>
+  </AbilityDef>
+
+</Defs>

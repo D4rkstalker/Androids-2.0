@@ -2,9 +2,9 @@
 <Defs>
 	<ThingDef ParentName="BuildingBase">
 		<defName>A2_Converter</defName>
-		<label>conversion chamber</label>
+		<label>Synthesis Pod</label>
 		<thingClass>Androids2.Building_Converter</thingClass>
-		<description>A standard android conversion chamber. Replaces a willing individuals organic components with android analogs. It can also be used to improve already existing androids.</description>
+		<description>A standard android conversion chamber. Replaces a willing individual's organic components with mechanical analogs.</description>
 		<graphicData>
 			<texPath>Things/Building/ConversionChamber/ConversionChamber</texPath>
 			<graphicClass>Graphic_Multi</graphicClass>

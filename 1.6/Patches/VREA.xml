@@ -7,7 +7,7 @@
 				<value>
 					<prerequisites>
 						<li>AdvancedFabrication</li>
-						<li>HighMechtech</li>
+						<li>StandardMechtech</li>
 						<li>A2_AdvanceDroid</li>
 					</prerequisites>
 				</value>
@@ -70,6 +70,38 @@
 	<Operation Class="PatchOperationAdd">
 			<xpath>Defs/VREAndroids.AndroidConvertableGenesDef[defName="VREA_AndroidConvertableGenes"]/geneCategories</xpath>
 			<value><li>A2_Jobs</li></value>
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+			<xpath>Defs/ThingDef[defName="VREA_SubcorePolyanalyzer"]/thingClass</xpath>
+			<value>
+				    <thingClass>Androids2.Building_SubcoreMaker</thingClass>
+			</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+			<xpath>Defs/ThingDef[defName="VREA_PersonaSubcore"]</xpath>
+			<value>
+				<thingClass>Androids2.A2Subcore</thingClass>
+			</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+			<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_MemoryProcessing"]</xpath>
+			<value>
+				<abilities>
+				  <li>EndMemoryFreeing</li>
+				</abilities>
+			</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+			<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_MemoryProcessing"]</xpath>
+			<value>
+				<descriptionHyperlinks>
+				  <AbilityDef>EndMemoryFreeing</AbilityDef>
+				</descriptionHyperlinks>
+			</value>
 	</Operation>
 
 </Patch>

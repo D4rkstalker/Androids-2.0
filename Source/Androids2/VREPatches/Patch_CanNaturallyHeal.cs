@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using VREAndroids;
+using static UnityEngine.TouchScreenKeyboard;
 
 namespace Androids2.VREPatches
 {
 
-    public class Patch_SynthFlesh
+    public class Patch_CanNaturallyHeal
     {
-        static Patch_SynthFlesh()
+        static Patch_CanNaturallyHeal()
         {
             LongEventHandler.ExecuteWhenFinished(() =>
             {
@@ -35,12 +36,9 @@ namespace Androids2.VREPatches
         {
             public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh))
-                {
-                    __result = false;
-                    return false;
-                }
-                return true;
+                __result = CanNaturallyRepair(hd.pawn);
+
+                return __result;
             }
         }
         [HarmonyPatch(typeof(HediffUtility), "CanHealFromTending")]
@@ -49,12 +47,9 @@ namespace Androids2.VREPatches
             [HarmonyPriority(int.MinValue)]
             public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                if (hd.pawn.IsAndroid() && !hd.pawn.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh))
-                {
-                    __result = false;
-                    return false;
-                }
-                return true;
+                __result = CanNaturallyRepair(hd.pawn);
+
+                return __result;
             }
         }
         // Target: public static bool JobDriver_RepairAndroid.CanRepairAndroid(Pawn android)
@@ -72,6 +67,13 @@ namespace Androids2.VREPatches
                 }
                 return true;
             }
+        }
+        static bool CanNaturallyRepair(Pawn android)
+        {
+            if (!android.IsAndroid()) return true;
+            if (android.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh)) return true;
+            if (android.HasActiveGene(A2_Defof.VREA_A2_ReconstructionMechanite)) return true;
+            return false;
         }
     }
 
