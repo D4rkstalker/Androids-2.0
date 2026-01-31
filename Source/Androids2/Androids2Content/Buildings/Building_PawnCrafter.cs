@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Verse;
 using Verse.Sound;
+using static UnityEngine.TouchScreenKeyboard;
 
 namespace Androids2
 {
@@ -39,7 +40,9 @@ namespace Androids2
     /// </summary>
     public class Building_PawnCrafter : Building, IThingHolder, IStoreSettingsParent, IPawnCrafter
     {
+        public bool useSubpersonaCore = false;
 
+        public List<SkillRecord> srs = new List<SkillRecord>();
         public void Notify_SettingsChanged()
         {
 
@@ -293,6 +296,17 @@ namespace Androids2
             craftingTicksLeft = recipe.timeCost;
             nextResourceTick = recipe.resourceTick;
             crafterStatus = CrafterStatus.Crafting;
+            if (useSubpersonaCore)
+            {
+                foreach(Thing t in ingredients)
+                {
+                    if(t is A2Subcore core && core.srs.Count > 0)
+                    {
+                        srs = core.srs;
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -360,7 +374,7 @@ namespace Androids2
             if (crafterStatus == CrafterStatus.Filling)
             {
                 bool needsFulfilled = true;
-
+                //Log.Warning("no of requests: " + orderProcessor.requestedItems.Count);
                 foreach (ThingOrderRequest thingOrderRequest in orderProcessor.requestedItems)
                 {
                     if (thingOrderRequest.nutrition)
@@ -554,6 +568,18 @@ namespace Androids2
 
                 //Clear remaining materials.
                 ingredients.ClearAndDestroyContents();
+                foreach (SkillRecord record in srs)
+                {
+                    foreach (SkillRecord androidRecord in pawnBeingCrafted.skills.skills)
+                    {
+                        if (androidRecord.def == record.def)
+                        {
+                            if (androidRecord.passion < record.passion)
+                                androidRecord.passion = record.passion;
+                            break;
+                        }
+                    }
+                }
 
                 //Spawn
                 GenSpawn.Spawn(pawnBeingCrafted, InteractionCell, Map);

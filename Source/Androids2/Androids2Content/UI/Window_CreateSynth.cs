@@ -2,6 +2,7 @@
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
@@ -102,7 +103,7 @@ namespace Androids2
             {
                 collapsedCategories.Add(allDef, value: false);
             }
-            selectedGenes = A2_Defof.A2_Synth.xenotypeDef.genes;
+            selectedGenes = A2_Defof.A2_Synth.xenotypeDef.genes.ToList();
             newAndroid = GetNewPawn();
             OnGenesChanged();
         }
@@ -1171,18 +1172,34 @@ namespace Androids2
             }
             station.orderProcessor.requestedItems = requestedItems;
             station.crafterStatus = CrafterStatus.Filling;
-            station.recipe = A2_Defof.A2_Synth;
+            station.recipe = A2_Defof.A2_Synth.Clone();
             station.recipe.customXenotype = customXenotype;
-            station.recipe.costList = A2_Defof.A2_Synth.costList;
-            station.recipe.costList.AddRange(requestedItems);
+            foreach (ThingOrderRequest item in requestedItems)
+            {
+                station.recipe.costList.Add(new ThingOrderRequest(item));
+            }
+            //station.recipe.costList.AddRange(requestedItems);
+
             station.recipe.timeCost += finalExtraPrintingTimeCost;
             if (hi != null)
             {
+                Log.Warning("Applying hardware integration multipliers: " + hi.timeMult + " time, " + hi.costMult + " cost.");
                 station.recipe.timeCost = (int)(station.recipe.timeCost * hi.timeMult);
                 station.requestedNutrition = (int)(station.requestedNutrition * hi.costMult);
                 foreach (var item in station.recipe.costList)
                 {
+                    Log.Warning("Initial cost list includes " + item.thingDef.defName + ": " + item.amount);
+                }
+
+                foreach (var item in station.recipe.costList)
+                {
+
                     item.amount = (int)(item.amount * hi.costMult);
+                    Log.Warning("New cost for " + item.thingDef.defName + ": " + item.amount);
+                }
+                foreach (var item in station.recipe.costList)
+                {
+                    Log.Warning("Final cost list includes " + item.thingDef.defName + ": " + item.amount);
                 }
             }
         }

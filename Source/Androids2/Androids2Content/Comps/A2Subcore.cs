@@ -14,9 +14,10 @@ namespace Androids2
 
     public class A2Subcore : ThingWithComps
     {
-        List<SkillRecord> srs = new List<SkillRecord>();
+        public List<SkillRecord> srs = new List<SkillRecord>();
         public void InitializeWithPawns(List<Pawn> pawns)
         {
+            Log.Warning("Initializing A2Subcore with " + pawns.Count + " pawns.");
             Dictionary<SkillDef,Passion> possiblePassions = new Dictionary<SkillDef, Passion>();
             foreach (var pawn in pawns)
             {

@@ -1,5 +1,4 @@
-﻿
-using AlienRace;
+﻿using AlienRace;
 using Androids2.Utils;
 using RimWorld;
 using System;
@@ -131,7 +130,7 @@ namespace Androids2
         public void InitiatePawnModing()
         {
             //pawnBeingCrafted = (Pawn)currentPawn.CloneObjectShallowly();
-            if(currentPawn.IsAndroid())
+            if (currentPawn.IsAndroid())
             {
                 mode = ConversionMode.Modify;
             }
@@ -157,10 +156,9 @@ namespace Androids2
         {
 
             ingredients.ClearAndDestroyContents(0);
-            
+
             if (!currentPawn.IsAndroid())
             {
-
                 for (int i = currentPawn.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
                 {
                     Hediff hediff = currentPawn.health.hediffSet.hediffs[i];
@@ -170,7 +168,8 @@ namespace Androids2
                     }
                 }
             }
-            if(currentPawn.kindDef.race.defName != newAndroid.kindDef.race.defName)
+
+            if (currentPawn.kindDef.race.defName != newAndroid.kindDef.race.defName)
             {
                 currentPawn.gender = newAndroid.gender;
                 currentPawn.def = newAndroid.def;
@@ -181,23 +180,24 @@ namespace Androids2
                 currentPawn.story.hairDef = null;
                 currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
                 currentPawn.RaceProps.body = newAndroid.RaceProps.body;
-                if (currentPawn.def is ThingDef_AlienRace alien && newAndroid.def is ThingDef_AlienRace src_alien)
+
+                // Check if AlienRace mod is loaded before performing alien-specific operations
+                if (AlienRaceCompat.HasAlienRace())
                 {
-                    AlienPartGenerator.AlienComp alienComp = currentPawn.GetComp<AlienPartGenerator.AlienComp>();
-                    if (alienComp != null)
+                    try
                     {
-                        alienComp.UpdateColors();
-                        alienComp.RegenerateAddonsForced();
+                        AlienRaceCompat.UpdateAlienRaceFeatures(currentPawn);
+                    }
+
+
+                    catch (Exception ex)
+                    {
+                        Log.Warning($"[Androids2] Failed to update alien race features: {ex.Message}");
                     }
                 }
             }
 
             AndroidMakerPatch.ApplyXenotype(currentPawn, recipe.xenotypeDef.genes, false, false, true);
-            //foreach (GeneDef gene in selectedGenes)
-            //{
-            //    currentPawn.genes.AddGene(gene, false);
-            //    recipe.customXenotype.genes.Add(gene);
-            //}
 
             Open();
             ResetProcess();
@@ -206,6 +206,7 @@ namespace Androids2
         // Token: 0x0600004C RID: 76 RVA: 0x00003D70 File Offset: 0x00001F70
         public override IEnumerable<Gizmo> GetGizmos()
         {
+            if(!HasAnyContents) return base.GetGizmos();
             List<Gizmo> list = new List<Gizmo>(base.GetGizmos());
             if (crafterStatus == CrafterStatus.Idle)
             {

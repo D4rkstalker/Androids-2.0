@@ -134,6 +134,7 @@
 		<biostatCpx>3</biostatCpx>
 		<biostatMet>0</biostatMet>
 		<moddable>false</moddable>
+
 	</Androids2.A2GeneDef>
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">

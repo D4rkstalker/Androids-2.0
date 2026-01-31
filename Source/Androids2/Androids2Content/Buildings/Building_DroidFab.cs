@@ -95,7 +95,7 @@ namespace Androids2
                 orderProcessor.requestedItems.Add(costCopy);
             }
 
-            if(def == null)
+            if (def == null)
             {
                 Log.Error("No recipedef for droid crafting!");
                 return;

@@ -1,11 +1,12 @@
-﻿using HarmonyLib;
-using System.Linq;
-using Verse;
-using RimWorld;
-using VREAndroids;
-using UnityEngine;
-using Androids2.Androids2Content;
+﻿using Androids2.Androids2Content;
 using Androids2.Utils;
+using HarmonyLib;
+using RimWorld;
+using System.Linq;
+using System.Xml.Schema;
+using UnityEngine;
+using Verse;
+using VREAndroids;
 
 
 namespace Androids2.VREPatches
@@ -20,32 +21,69 @@ namespace Androids2.VREPatches
             return false;
         }
     }
-    //[HarmonyPatch(typeof(Building_AndroidCreationStation), "FinishAndroidProject")]
-    //public static class Patch_FinishAndroidProject
-    //{
-    //    public static bool Prefix(Building_AndroidCreationStation __instance)
-    //    {
-    //        var newPawn = PawnGenerator.GeneratePawn(new PawnGenerationRequest(VREA_DefOf.VREA_AndroidBasic, Faction.OfPlayer,
-    //            allowDowned: true, allowAddictions: false));
-    //        AndroidMakerPatch.ApplyXenotype(newPawn, __instance.curAndroidProject.genes);
+    [HarmonyPatch(typeof(Building_AndroidCreationStation), "FinishAndroidProject")]
+    public static class Patch_FinishAndroidProject
+    {
+        public static bool Prefix(Building_AndroidCreationStation __instance)
+        {
+            var android = PawnGenerator.GeneratePawn(new PawnGenerationRequest(VREA_DefOf.VREA_AndroidBasic, Faction.OfPlayer,
+                allowDowned: true, allowAddictions: false));
+            android.apparel.wornApparel.Clear();
+            android.equipment.equipment.Clear();
+            android.inventory.innerContainer.Clear();
 
-    //        __instance.curAndroidProject = null;
-    //        //if(extra == null)
-    //        //{
-    //        //    Log.Warning("extra is null");
-    //        //}
-    //        //Log.Warning(extra.generatedAndroid.ToString() + "");
-    //        //Log.Warning(extra.generatedAndroid.needs + "");
-    //        //Log.Warning(extra.generatedAndroid.needs.TryGetNeed(VREA_DefOf.VREA_ReactorPower).CurLevelPercentage + "");
-    //        GenSpawn.Spawn(newPawn, __instance.Position, __instance.Map);
-    //        __instance.currentWorkAmountDone = 0;
-    //        __instance.totalWorkAmount = 0;
+            android.ageTracker.AgeBiologicalTicks = 0;
+            android.ageTracker.AgeChronologicalTicks = 0;
+            var neutroloss = HediffMaker.MakeHediff(VREA_DefOf.VREA_NeutroLoss, android);
+            neutroloss.Severity = 1;
+            android.health.AddHediff(neutroloss);
+            android.genes.xenotypeName = __instance.curAndroidProject.name;
+            android.genes.iconDef = __instance.curAndroidProject.IconDef;
+            foreach (var gene in VREAndroids.Utils.allAndroidGenes)
+            {
+                var existingGene = android.genes.GetGene(gene);
+                if (existingGene != null)
+                {
+                    android.genes.RemoveGene(existingGene);
+                }
+            }
 
-    //        __instance.unfinishedAndroid?.Destroy();
-    //        __instance.unfinishedAndroid = null;
+            foreach (GeneDef gene in __instance.curAndroidProject.genes.OrderByDescending(x => x.CanBeRemovedFromAndroid() is false).ToList())
+            {
+                android.genes.AddGene(gene, true);
+            }
+            __instance.curAndroidProject = null;
+            GenSpawn.Spawn(android, __instance.Position, __instance.Map);
+            __instance.currentWorkAmountDone = 0;
+            __instance.totalWorkAmount = 0;
 
-    //        return false; // skip original method
-    //    }
-    //}
+            foreach(Thing t in __instance.unfinishedAndroid.resources){
+                if(t is A2Subcore core)
+                {
+                    if( core.srs.Count > 0)
+                    {
+                        foreach(SkillRecord record in core.srs)
+                        {
+                            foreach (SkillRecord androidRecord in android.skills.skills)
+                            {
+                                if(androidRecord.def == record.def )
+                                {
+                                    if(androidRecord.passion < record.passion)
+                                        androidRecord.passion = record.passion;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+
+            __instance.unfinishedAndroid?.Destroy();
+            __instance.unfinishedAndroid = null;
+
+            return false; // skip original method
+        }
+    }
 
 }

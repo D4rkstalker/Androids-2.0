@@ -106,7 +106,7 @@ namespace Androids2
             }
             if (station.mode == ConversionMode.Convert)
             {
-                selectedGenes = A2_Defof.A2_Synth.xenotypeDef.genes;
+                selectedGenes = A2_Defof.A2_Synth.xenotypeDef.genes.ToList();
 
             }
             else if (station.mode == ConversionMode.Modify)
@@ -1115,8 +1115,7 @@ namespace Androids2
                 customXenotype.iconDef = iconDef;
                 station.orderProcessor.requestedItems = requestedItems;
                 station.crafterStatus = CrafterStatus.Filling;
-                station.recipe = A2_Defof.A2_Synth;
-                station.recipe.costList = A2_Defof.A2_Synth.costList;
+                station.recipe = A2_Defof.A2_Synth.Clone();
                 station.recipe.costList.AddRange(requestedItems);
                 station.recipe.timeCost += finalExtraPrintingTimeCost;
                 station.newAndroid = newAndroid;

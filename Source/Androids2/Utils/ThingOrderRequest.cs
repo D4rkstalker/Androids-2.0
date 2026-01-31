@@ -34,6 +34,31 @@ namespace Androids2
         public float amount;
 
         /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public ThingOrderRequest()
+        {
+        }
+
+        /// <summary>
+        /// Copy constructor.
+        /// </summary>
+        /// <param name="other">ThingOrderRequest to copy from.</param>
+        public ThingOrderRequest(ThingOrderRequest other)
+        {
+            this.thingDef = other.thingDef;
+            this.nutrition = other.nutrition;
+            this.amount = other.amount;
+            
+            // Deep copy thingFilter if it exists
+            if (other.thingFilter != null)
+            {
+                this.thingFilter = new ThingFilter();
+                this.thingFilter.CopyAllowancesFrom(other.thingFilter);
+            }
+        }
+
+        /// <summary>
         /// Constructs the ThingRequest for the orderer.
         /// </summary>
         /// <returns>Thing request</returns>

@@ -75,7 +75,7 @@
 	<Operation Class="PatchOperationReplace">
 			<xpath>Defs/ThingDef[defName="VREA_SubcorePolyanalyzer"]/thingClass</xpath>
 			<value>
-				    <thingClass>Androids2.Building_SubcoreMaker</thingClass>
+				   <thingClass>Androids2.Building_SubcoreMaker</thingClass>
 			</value>
 	</Operation>
 	
@@ -86,22 +86,22 @@
 			</value>
 	</Operation>
 
-	<Operation Class="PatchOperationAdd">
-			<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_MemoryProcessing"]</xpath>
-			<value>
-				<abilities>
-				  <li>EndMemoryFreeing</li>
-				</abilities>
-			</value>
-	</Operation>
+	<!-- <Operation Class="PatchOperationAdd"> -->
+			<!-- <xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_MemoryProcessing"]</xpath> -->
+			<!-- <value> -->
+				<!-- <abilities> -->
+				  <!-- <li>EndMemoryFreeing</li> -->
+				<!-- </abilities> -->
+			<!-- </value> -->
+	<!-- </Operation> -->
 
-	<Operation Class="PatchOperationAdd">
-			<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_MemoryProcessing"]</xpath>
-			<value>
-				<descriptionHyperlinks>
-				  <AbilityDef>EndMemoryFreeing</AbilityDef>
-				</descriptionHyperlinks>
-			</value>
-	</Operation>
+	<!-- <Operation Class="PatchOperationAdd"> -->
+			<!-- <xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_MemoryProcessing"]</xpath> -->
+			<!-- <value> -->
+				<!-- <descriptionHyperlinks> -->
+				  <!-- <AbilityDef>EndMemoryFreeing</AbilityDef> -->
+				<!-- </descriptionHyperlinks> -->
+			<!-- </value> -->
+	<!-- </Operation> -->
 
 </Patch>

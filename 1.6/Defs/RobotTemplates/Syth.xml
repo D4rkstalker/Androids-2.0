@@ -7,7 +7,7 @@
 		<xenotypeDef>A2_Synth</xenotypeDef>
 		<nutrition>0</nutrition>
 		<costList>
-			<Steel>225</Steel>
+			<VREA_PersonaSubcore>1</VREA_PersonaSubcore>
 		</costList>
 		<hidden>true</hidden>
 	</Androids2.AndroidRecipe>

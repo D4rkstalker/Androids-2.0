@@ -26,13 +26,15 @@ namespace Androids2
                 var frag = Pawn.health.hediffSet.GetFirstHediffOfDef(A2_Defof.A2_DataFragmentation);
                 if (frag != null)
                 {
-                    frag.Severity += 0.1f;
+                    frag.Severity += 0.3f;
 
                 }
                 else
                 {
                     frag = HediffMaker.MakeHediff(A2_Defof.A2_DataFragmentation, Pawn);
-                    frag.Severity = 0.1f;
+                    frag.Severity = 0.3f;
+                    Pawn.health.AddHediff(frag);
+
                 }
 
                 base.Apply(target, dest);

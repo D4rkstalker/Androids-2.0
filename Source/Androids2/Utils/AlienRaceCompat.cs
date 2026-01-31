@@ -1,4 +1,5 @@
 ﻿
+using AlienRace;
 using HarmonyLib;
 using RimWorld;
 using System;
@@ -89,6 +90,20 @@ namespace Androids2.Utils
             var dbType = typeof(DefDatabase<>).MakeGenericType(defType);
             var prop = dbType.GetProperty("AllDefs", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
             return prop?.GetValue(null) as IEnumerable<object>;
+        }
+
+        /// <summary>
+        /// Safely updates alien race features if the AlienRace mod is loaded.
+        /// </summary>
+        public static void UpdateAlienRaceFeatures(Pawn currentPawn)
+        {
+
+                AlienPartGenerator.AlienComp alienComp = currentPawn.GetComp<AlienPartGenerator.AlienComp>();
+                if (alienComp != null)
+                {
+                    alienComp.UpdateColors();
+                    alienComp.RegenerateAddonsForced();
+                }
         }
     }
 }

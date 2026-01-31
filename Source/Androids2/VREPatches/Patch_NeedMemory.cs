@@ -49,11 +49,20 @@ namespace Androids2.VREPatches
                     else
                     {
                         frag = HediffMaker.MakeHediff(A2_Defof.A2_DataFragmentation, __instance.pawn);
-                        frag.Severity = 0.01f;
+                        frag.Severity = 0.1f;
+                        __instance.pawn.health.AddHediff(frag);
                     }
 
                 }
 
+            }
+            else
+            {
+                var frag = __instance.pawn.health.hediffSet.GetFirstHediffOfDef(A2_Defof.A2_DataFragmentation);
+                if(frag != null)
+                {
+                    frag.Severity -= 0.01f;
+                }
             }
             return false; // skip original NeedInterval()
         }

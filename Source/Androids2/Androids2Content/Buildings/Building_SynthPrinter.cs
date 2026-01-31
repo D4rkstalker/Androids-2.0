@@ -41,7 +41,7 @@ namespace Androids2
                 orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
 
             }
-
+            useSubpersonaCore = true;
             AdjustPowerNeed();
         }
 
