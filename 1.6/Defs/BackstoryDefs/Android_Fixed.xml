@@ -58,6 +58,8 @@
 		  <li>ManualSkilled</li>
 		  <li>Social</li>
 		  <li>Caring</li>
+		  <li>Artistic</li>
+		  <li>Animals</li>
 		</workDisables>
 
 	</BackstoryDef>
@@ -83,6 +85,8 @@
 		  <li>ManualSkilled</li>
 		  <li>Social</li>
 		  <li>Caring</li>
+		  <li>Artistic</li>
+		  <li>Animals</li>
 		</workDisables>
 	</BackstoryDef>
 
@@ -107,6 +111,8 @@
 		  <li>ManualSkilled</li>
 		  <li>Social</li>
 		  <li>Caring</li>
+		  <li>Artistic</li>
+		  <li>Animals</li>
 		</workDisables>
 	</BackstoryDef>
 

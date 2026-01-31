@@ -30,6 +30,7 @@ namespace Androids2.Utils
                 pawn.equipment?.equipment?.Clear();
                 pawn.inventory?.innerContainer?.Clear();
             }
+            Log.Warning(pawn.story.adulthood?.defName + " " + pawn.story.childhood?.defName);
             foreach (var gene in VREAndroids.Utils.allAndroidGenes)
             {
                 var existing = pawn.genes.GetGene(gene);
@@ -38,7 +39,6 @@ namespace Androids2.Utils
             }
             int skillFloor = 0;
             int skillCeiling = 20;
-            Debug.LogWarning(pawn.story.adulthood?.defName + " " + pawn.story.childhood?.defName);
             bool isNeuralLocked = false;
             foreach (var gene in genes.OrderByDescending(g => !g.CanBeRemovedFromAndroid()))
             {
@@ -71,15 +71,16 @@ namespace Androids2.Utils
                 var years = Rand.Range(0f, 25f);
                 pawn.ageTracker.AgeBiologicalTicks = (long)(years * 3600000f);
                 pawn.ageTracker.AgeChronologicalTicks = pawn.ageTracker.AgeBiologicalTicks;
-                pawn.Notify_DisabledWorkTypesChanged();
             }
 
             List<SkillDef> allDefsListForReading = DefDatabase<SkillDef>.AllDefsListForReading;
+            Log.Warning("skill defs count: " + allDefsListForReading.Count);
             for (int i = 0; i < allDefsListForReading.Count; i++)
             {
                 SkillDef skillDef = allDefsListForReading[i];
                 var skillRecord = pawn.skills.GetSkill(skillDef);
                 int tempLevel = FinalLevelOfSkill(pawn, skillDef);
+                Log.Warning("Final level for skill " + skillDef.defName + " is " + tempLevel);
                 if (keepBaseSkill)
                 {
                     if (tempLevel < skillRecord.Level)
@@ -91,6 +92,7 @@ namespace Androids2.Utils
                 {
                     skillRecord.Level = tempLevel;
                 }
+                
                 if (pawn.HasActiveGene(VREA_DefOf.VREA_NoSkillGain))
                 {
                     skillRecord.passion = Passion.None;
@@ -212,20 +214,21 @@ namespace Androids2.Utils
 
             }
 
+           pawn.Notify_DisabledWorkTypesChanged();
 
         }
         private static int FinalLevelOfSkill(Pawn pawn, SkillDef sk)
         {
             float num = 0;
-            Debug.LogWarning("Calculating final level of skill: " + sk.defName);
+            Log.Warning("Calculating final level of skill: " + sk.defName);
             foreach (BackstoryDef item in pawn.story.AllBackstories.Where((BackstoryDef bs) => bs != null))
             {
-                // Debug.LogWarning("Checking backstory: " + item.defName);
+                Log.Warning("Checking backstory: " + item.defName);
                 foreach (var skillGain in item.skillGains)
                 {
                     if (skillGain.skill == sk)
                     {
-                        //Debug.LogWarning("Found skill gain in backstory: " + item.defName + " for skill: " + sk.defName);
+                        Log.Warning("Found skill gain in backstory: " + item.defName + " for skill: " + sk.defName);
                         num += (float)skillGain.amount;
                     }
                 }

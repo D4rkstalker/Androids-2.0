@@ -127,15 +127,15 @@ namespace Androids2
             //{
             //    pawnBeingCrafted.genes.AddGene(gene, false);
             //}
-            AndroidMakerPatch.ApplyXenotype(pawnBeingCrafted, def.customXenotype.genes,false);
             pawnBeingCrafted.apparel?.wornApparel?.Clear();
             pawnBeingCrafted.equipment?.equipment?.Clear();
             pawnBeingCrafted.inventory?.innerContainer?.Clear();
             pawnBeingCrafted.story.traits.allTraits.Clear();
-            pawnBeingCrafted.story.adulthood = null;
+            pawnBeingCrafted.story.Adulthood = null;
             if(recipe.backstory != null)
-                pawnBeingCrafted.story.childhood = recipe.backstory;
+                pawnBeingCrafted.story.Childhood = recipe.backstory;
             crafterStatus = CrafterStatus.Filling;
+            AndroidMakerPatch.ApplyXenotype(pawnBeingCrafted, def.customXenotype.genes, false);
             pawnBeingCrafted.Drawer.renderer.EnsureGraphicsInitialized();
 
             //Log.Warning("Has battery: " + pawnBeingCrafted.genes.GetGene(A2_Defof.A2_BatteryPower).def.defName);
