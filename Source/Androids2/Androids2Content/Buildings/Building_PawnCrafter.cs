@@ -197,9 +197,18 @@ namespace Androids2
                 }
             }
 
-            orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
-            //orderProcessor.requestedItems.AddRange(printerProperties.costList);
-
+            // Preserve deserialized orderProcessor when loading saves.
+            if (orderProcessor == null)
+            {
+                orderProcessor = new ThingOrderProcessor(ingredients, inputSettings);
+            }
+            else
+            {
+                // Restore references that aren't serialized inside the nested object so
+                // the already-loaded requestedItems (from save) aren't discarded.
+                orderProcessor.thingHolder = ingredients;
+                orderProcessor.storageSettings = inputSettings;
+            }
 
             AdjustPowerNeed();
         }

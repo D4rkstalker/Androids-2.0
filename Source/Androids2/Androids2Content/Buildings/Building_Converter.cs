@@ -317,7 +317,7 @@ namespace Androids2
             Scribe_Deep.Look(ref ingredients, "ingredients");
             Scribe_Values.Look(ref nextResourceTick, "nextResourceTick");
             Scribe_Deep.Look(ref inputSettings, "inputSettings");
-            Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
+           // Scribe_Deep.Look(ref orderProcessor, "orderProcessor", ingredients, inputSettings);
 
         }
 
