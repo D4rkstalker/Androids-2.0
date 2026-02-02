@@ -351,15 +351,15 @@ namespace Androids2
                 {
                     stringBuilder.AppendLine(TranslatorFormattedStringExtensions.Translate("AndroidModdingProgress", GenText.ToStringPercent(((float)recipe.timeCost - (float)craftingTicksLeft) / (float)recipe.timeCost)));
                 }
-                if (crafterStatus == CrafterStatus.Filling)
-                {
-                    bool flag = true;
-                    stringBuilder.Append(FormatIngredientCosts(out flag, orderProcessor.requestedItems, true));
-                    if (!flag)
-                    {
-                        stringBuilder.AppendLine();
-                    }
-                }
+                //if (crafterStatus == CrafterStatus.Filling)
+                //{
+                //    bool flag = true;
+                //    stringBuilder.Append(FormatIngredientCosts(out flag, orderProcessor.requestedItems, true));
+                //    if (!flag)
+                //    {
+                //        stringBuilder.AppendLine();
+                //    }
+                //}
                 if (ingredients.Count > 0)
                 {
                     stringBuilder.Append(Translator.Translate("AndroidPrinterMaterials") + " ");

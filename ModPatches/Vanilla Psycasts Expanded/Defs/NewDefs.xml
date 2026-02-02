@@ -10,12 +10,12 @@
 		<biostatCpx>3</biostatCpx>
 		<timeCost>1200</timeCost>
 		<statFactors>
-			<MeditationFocusGain>0.4</MeditationFocusGain>
-			<PsychicEntropyRecoveryRate>0.4</PsychicEntropyRecoveryRate>
-			<PsychicSensitivity>0.5</PsychicSensitivity>
+			<MeditationFocusGain>1.4</MeditationFocusGain>
+			<PsychicEntropyRecoveryRate>1.4</PsychicEntropyRecoveryRate>
+			<PsychicSensitivity>1.5</PsychicSensitivity>
 		</statFactors>
 		<costList>
-			<VPE_Eltex>100</VPE_Eltex>
+			<VPE_Eltex>5</VPE_Eltex>
 			<ComponentSpacer>5</ComponentSpacer>
 		</costList>
 	</Androids2.A2GeneDef>
