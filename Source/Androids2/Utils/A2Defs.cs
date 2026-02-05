@@ -40,7 +40,8 @@ namespace Androids2
 
         public static readonly HediffDef A2_HediffVanometric;
         public static readonly HediffDef A2_DataFragmentation;
-        
+        public static readonly HediffDef A2_Reboot;
+
         public static readonly ThingDef A2_AndroidCharger;
         public static readonly ThingDef A2_Converter;
 

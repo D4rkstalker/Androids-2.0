@@ -37,6 +37,7 @@
 			<li>VREA_ATK_AnthrowolfFur</li>
 			<li>VREA_ATK_AnthrowolfEars</li>
 			<li>VREA_ATK_AnthrowolfTail</li>
+			<li>VREA_A2_ZeroFertility</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -79,6 +80,7 @@
 			<li>VREA_ATK_AnthrodrakeHeadbone_Spiraled</li>
 			<li>VREA_ATK_AnthrodrakeEars</li>
 			<li>VREA_ATK_AnthrodrakeTail</li>
+			<li>VREA_A2_ZeroFertility</li>
 		</genes>
 	</XenotypeDef>
 
@@ -98,6 +100,7 @@
 			<li>VREA_A2_BatteryPower</li>
 			<li>VREA_A2_MechFlesh</li>
 			<li>VREA_A2_Synth</li>
+			<li>VREA_A2_ZeroFertility</li>
 		</genes>
 	</XenotypeDef>
 	

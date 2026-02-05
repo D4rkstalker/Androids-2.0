@@ -70,6 +70,14 @@ namespace Androids2
 
             return removed;
         }
+        public static bool CanNaturallyRepair(Pawn android)
+        {
+            if (!android.IsAndroid()) return true;
+            if (android.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh)) return true;
+            if (android.HasActiveGene(A2_Defof.VREA_A2_AuxMechanite)) return true;
+            if (android.HasActiveGene(A2_Defof.VREA_A2_ReconstructionMechanite)) return true;
+            return false;
+        }
 
     }
 }

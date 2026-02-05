@@ -113,7 +113,7 @@ namespace Androids2
             {
                 selectedGenes = station.currentPawn.genes.GenesListForReading.Select(g => g.def).ToList();
             }
-            newAndroid = GetNewPawn(station.currentPawn.gender);
+            newAndroid = station.currentPawn;//GetNewPawn(station.currentPawn.gender);
 
             OnGenesChanged();
         }
@@ -1113,12 +1113,13 @@ namespace Androids2
                 customXenotype.name = xenotypeName?.Trim();
                 customXenotype.inheritable = false;
                 customXenotype.iconDef = iconDef;
-                station.orderProcessor.requestedItems = requestedItems;
                 station.crafterStatus = CrafterStatus.Filling;
                 station.recipe = A2_Defof.A2_Synth.Clone();
-                station.recipe.costList.AddRange(requestedItems);
-                station.recipe.timeCost += finalExtraPrintingTimeCost;
                 station.newAndroid = newAndroid;
+                if (!station.currentPawn.IsAndroid())
+                {
+                    station.orderProcessor.requestedItems = station.recipe.costList;
+                }
                 if (station.currentPawn == null)
                 {
                     Log.Error("No pawn to convert!");
@@ -1131,12 +1132,13 @@ namespace Androids2
                     {
                         finalExtraPrintingTimeCost += geneAndroid.timeCost;
                         station.requestedNutrition += geneAndroid.nutrition;
-                        requestedItems.AddRange(geneAndroid.costList);
+                        station.orderProcessor.requestedItems.AddRange(geneAndroid.costList);
                     }
                     station.newAndroid.genes.AddGene(gene, true);
 
                 }
-                //station.recipe.customXenotype = customXenotype;
+                station.recipe.costList.AddRange(station.orderProcessor.requestedItems.ToArray());
+                station.recipe.timeCost += finalExtraPrintingTimeCost;
 
 
             }

@@ -1170,15 +1170,15 @@ namespace Androids2
                     }
                 }
             }
-            station.orderProcessor.requestedItems = requestedItems;
             station.crafterStatus = CrafterStatus.Filling;
             station.recipe = A2_Defof.A2_Synth.Clone();
             station.recipe.customXenotype = customXenotype;
+
             foreach (ThingOrderRequest item in requestedItems)
             {
                 station.recipe.costList.Add(new ThingOrderRequest(item));
             }
-            //station.recipe.costList.AddRange(requestedItems);
+            station.orderProcessor.requestedItems = station.recipe.costList;
 
             station.recipe.timeCost += finalExtraPrintingTimeCost;
             if (hi != null)

@@ -5,7 +5,7 @@
 		<xpath>Defs/Androids2.A2GeneDef[defName="A2_EltexPsyChip"]/costList</xpath>
 		<value>
 			<costList>
-				<VPE_Eltex>25</VPE_Eltex>
+				<VPE_Eltex>10</VPE_Eltex>
 				<ComponentSpacer>5</ComponentSpacer>
 			</costList>
 		</value>

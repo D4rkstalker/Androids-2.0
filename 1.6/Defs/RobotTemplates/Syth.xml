@@ -8,6 +8,9 @@
 		<nutrition>0</nutrition>
 		<costList>
 			<VREA_PersonaSubcore>1</VREA_PersonaSubcore>
+			<Plasteel>125</Plasteel>
+			<Uranium>30</Uranium>
+			<ComponentSpacer>7</ComponentSpacer>
 		</costList>
 		<hidden>true</hidden>
 	</Androids2.AndroidRecipe>

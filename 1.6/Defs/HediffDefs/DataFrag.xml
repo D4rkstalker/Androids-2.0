@@ -24,6 +24,7 @@
 			<li>
 				<minSeverity>0.30</minSeverity>
 				<label>moderate</label>
+        <lifeThreatening>true</lifeThreatening>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
@@ -34,6 +35,7 @@
 			<li>
 				<minSeverity>0.45</minSeverity>
 				<label>severe</label>
+        <lifeThreatening>true</lifeThreatening>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
@@ -44,6 +46,7 @@
 			<li>
 				<minSeverity>0.6</minSeverity>
 				<label>severe</label>
+        <lifeThreatening>true</lifeThreatening>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
@@ -54,6 +57,7 @@
 			<li>
 				<minSeverity>0.7</minSeverity>
 				<label>severe</label>
+        <lifeThreatening>true</lifeThreatening>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
@@ -65,6 +69,7 @@
 				<minSeverity>0.90</minSeverity>
 				<label>extreme</label>
 				<lifeThreatening>true</lifeThreatening>
+        <lifeThreatening>true</lifeThreatening>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>

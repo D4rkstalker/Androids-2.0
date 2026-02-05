@@ -36,6 +36,7 @@
 			<li>VREA_ATK_AnthrohyenaFur</li>
 			<li>VREA_ATK_AnthrohyenaEars</li>
 			<li>VREA_ATK_AnthrohyenaTail</li>
+			<li>VREA_A2_ZeroFertility</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -76,6 +77,7 @@
 			<li>VREA_ATK_AnthrocatFur</li>
 			<li>VREA_ATK_AnthrocatEars</li>
 			<li>VREA_ATK_AnthrocatTail</li>
+			<li>VREA_A2_ZeroFertility</li>
 		</genes>
 	</XenotypeDef>
 	
@@ -119,6 +121,7 @@
 			<li>VREA_ATK_AnthrogriffEars</li>
 			<li>VREA_ATK_AnthrogriffTail</li>
 			<li>VREA_ATK_AnthrogriffBackbone</li>
+			<li>VREA_A2_ZeroFertility</li>
 		</genes>
 	</XenotypeDef>
 	

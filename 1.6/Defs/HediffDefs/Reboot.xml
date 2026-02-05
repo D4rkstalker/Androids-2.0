@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<HediffDef>
+		<defName>A2_Reboot</defName>
+		<label>rebooting</label>
+		<description>Due to prolonged memory corruption, the robot has been forced to reboot.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<maxSeverity>1</maxSeverity>
+		<comps>
+		  <li Class="HediffCompProperties_Disappears">
+			<disappearsAfterTicks>45000</disappearsAfterTicks>
+			<showRemainingTime>true</showRemainingTime>
+		  </li>
+		  <li Class="HediffCompProperties_SeverityPerDay">
+			<severityPerDay>-1</severityPerDay>
+		  </li>
+		  <li Class="Androids2.HediffCompProperties_Reboot">
+		  </li>
+		</comps>
+		<stages>
+			<li>
+				<label>Your robot has ran into a problem and needs to restart :(</label>
+				<lifeThreatening>true</lifeThreatening>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.1</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+</Defs>

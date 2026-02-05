@@ -121,7 +121,9 @@
     <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
     <Compile Include="Androids2Content\Genes\Gene_NeutroCatalyst.cs" />
     <Compile Include="Androids2Content\Genes\SkillFloor.cs" />
+    <Compile Include="Androids2Content\Hediffs\HediffCompProperties_Reboot.cs" />
     <Compile Include="Androids2Content\Hediffs\Hediff_DataFrag.cs" />
+    <Compile Include="Androids2Content\Hediffs\HediffComp_Reboot.cs" />
     <Compile Include="Androids2Content\Hediffs\VanometricCell.cs" />
     <Compile Include="Androids2Content\UI\FloatMenuOptionProvider_CarryAndroidToCharger.cs" />
     <Compile Include="Androids2Content\UI\Gizmo_CancelConvert.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VREPatches\Patch_AndroidCreationStation.cs" />
     <Compile Include="VREPatches\Patch_AndroidPartShowOnDamaged.cs" />
+    <Compile Include="VREPatches\Patch_CanBeRemoved.cs" />
     <Compile Include="VREPatches\Patch_CharacterCardUtility.cs" />
     <Compile Include="VREPatches\Patch_EnergyDrain.cs" />
     <Compile Include="VREPatches\Patch_GeneUIUtility_DrawGenesInfo_Patch.cs" />
@@ -155,6 +158,7 @@
     <Compile Include="VREPatches\Patch_Psylink.cs" />
     <Compile Include="VREPatches\Patch_ShouldBeDead.cs" />
     <Compile Include="VREPatches\Patch_CanNaturallyHeal.cs" />
+    <Compile Include="VREPatches\Patch_WorkGiver_Repair.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="VanillaPatches\" />

@@ -30,6 +30,38 @@
 	</Androids2.A2GeneDef>
 
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_Gilded</defName>
+		<label>gilded chassis</label>
+		<description>Decorative gold inlays etched into the robot's chassis significantly increases beauty</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statOffsets>
+		  <PawnBeauty>1</PawnBeauty>
+		</statOffsets>
+		<costList>
+			<Gold>5</Gold>
+		</costList>
+	</Androids2.A2GeneDef>
+	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_Devilstrand</defName>
+		<label>devilstrand fireproofing</label>
+		<description>devilstrand fibers are mixed into the subdermal weave to significantly boost heat resistence </description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statFactors>
+			<ArmorRating_Heat>0.5</ArmorRating_Heat>
+		</statFactors>
+		<costList>
+			<DevilstrandCloth>25</DevilstrandCloth>
+		</costList>
+	</Androids2.A2GeneDef>
+	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_SynthWeave</defName>
 		<label>synthweave composite</label>
 		<description>A layer of hyperweave composite is placed under the robot's exterior skin, giving it a minor increase in survivability</description>
@@ -40,8 +72,29 @@
 		<statFactors>
 			<IncomingDamageFactor>0.9</IncomingDamageFactor>
 		</statFactors>
+		<statOffsets>
+			<ArmorRating_Blunt>0.1</ArmorRating_Blunt>
+		</statOffsets>
 		<costList>
 			<Hyperweave>25</Hyperweave>
+		</costList>
+	</Androids2.A2GeneDef>
+	
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_ImpactGel</defName>
+		<label>impact gel</label>
+		<description>A thin layer of impact absorbent gel helps dampen concussive impacts</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<timeCost>1200</timeCost>
+		<statOffsets>
+			<ArmorRating_Blunt>0.25</ArmorRating_Blunt>
+		</statOffsets>
+		<costList>
+			<Chemfuel>25</Chemfuel>
+			<Neutroamine>10</Neutroamine>
+			<Cloth>30</Cloth>
 		</costList>
 	</Androids2.A2GeneDef>
 
@@ -254,7 +307,7 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_AuxMechanite</defName>
 		<label>Auxiliary mechanite</label>
-		<description>[WIP] Allows robots to regenrate damage, and lost neutromine. For robots with the synth flesh hardware, enables lost part regeneration</description>
+		<description>[WIP] Allows robots to regenrate damage, and rapidly stops wounds leaking neutroamine. For robots with the synth flesh hardware, enables lost part regeneration</description>
 		<!-- <geneClass>Androids2.Gene_NeuralLock</geneClass> -->
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
@@ -269,16 +322,35 @@
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_ReconstructionMechanite</defName>
 		<label>Reconstruction mechanite</label>
-		<description>[WIP] Increases regeneration rate, emables lost part regeneration for robots with mech flesh hardware. Grants an ability to inject healer mechanites into other targets </description>
+		<description>[WIP] Increases regeneration rate, emables lost part regeneration. Grants an ability to inject healer mechanites into other targets </description>
 		<geneClass>Androids2.Gene_ReconstructionMechanites</geneClass>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
 		<timeCost>1200</timeCost>
+        <statFactors>
+          <InjuryHealingFactor>2</InjuryHealingFactor>
+        </statFactors>
 		<costList>
 			<MechSerumResurrector>1</MechSerumResurrector>
 			<ComponentSpacer>5</ComponentSpacer>
 		</costList>
+	</Androids2.A2GeneDef>
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>A2_Fertility</defName>
+		<label>artificial womb</label>
+		<description>life finds a way</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<biostatMet>0</biostatMet>
+		<statOffsets>
+					<Fertility>10</Fertility>
+		</statOffsets>
+		<costList>
+			<ComponentSpacer>5</ComponentSpacer>
+		</costList>
+
 	</Androids2.A2GeneDef>
 
 </Defs>

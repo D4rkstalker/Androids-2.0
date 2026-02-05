@@ -7,7 +7,7 @@
 	</Androids2.A2GeneDef>
 
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_SkillFloor_8</defName>
+		<defName>VREA_A2_SkillFloor_8</defName>
 		<label>Skill Floor: 8</label>
 		<description>A baseline package of skills.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
@@ -23,10 +23,11 @@
 				<floor>8</floor>
 			</li>
 		</modExtensions>	
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_SkillFloor_10</defName>
+		<defName>VREA_A2_SkillFloor_10</defName>
 		<label>Skill Floor: 10</label>
 		<description>An advanced package of skills.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
@@ -43,9 +44,10 @@
 				<floor>10</floor>
 			</li>
 		</modExtensions>	
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_SkillCeil_8</defName>
+		<defName>VREA_A2_SkillCeil_8</defName>
 		<label>Skill Ceiling: 8</label>
 		<description>A baseline package of skills.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
@@ -58,10 +60,11 @@
 				<ceiling>8</ceiling>
 			</li>
 		</modExtensions>	
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_SkillCeil_10</defName>
+		<defName>VREA_A2_SkillCeil_10</defName>
 		<label>Skill Ceiling: 10</label>
 		<description>An advanced package of skills.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
@@ -75,10 +78,11 @@
 				<ceiling>10</ceiling>
 			</li>
 		</modExtensions>	
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_WorkSpeed_6</defName>
+		<defName>VREA_A2_WorkSpeed_6</defName>
 		<label>Work Speed: 60%</label>
 		<description>Basic droids are built to be cheap and flexible, at the expense of efficiency and speed.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
@@ -88,10 +92,11 @@
 			<WorkSpeedGlobal>0.6</WorkSpeedGlobal>
 		</statFactors>
 		<moddable>false</moddable>
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_WorkSpeed_8</defName>
+		<defName>VREA_A2_WorkSpeed_8</defName>
 		<label>Work Speed: 80%</label>
 		<description>Advanced droids are packed with more sophisticated hardware, allowing them to be more efficient and faster at work compared to basic droids.</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_MemoryProcessing</iconPath>
@@ -100,11 +105,12 @@
 			<WorkSpeedGlobal>0.8</WorkSpeedGlobal>
 		</statFactors>
 		<moddable>false</moddable>
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 
 
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_BasicDroid</defName>
+		<defName>VREA_A2_BasicDroid</defName>
 		<label>Configuration: Basic Droid</label>
 		<description>Beep Boop I'm a droid</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
@@ -112,10 +118,11 @@
 		<biostatCpx>3</biostatCpx>
 		<biostatMet>2</biostatMet>
 		<moddable>false</moddable>
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_AdvancedDroid</defName>
+		<defName>VREA_A2_AdvancedDroid</defName>
 		<label>Configuration: Advanced Droid</label>
 		<description>Beep Boop I'm an advanced droid</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
@@ -123,10 +130,11 @@
 		<biostatCpx>3</biostatCpx>
 		<biostatMet>1</biostatMet>
 		<moddable>false</moddable>
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_Synth</defName>
+		<defName>VREA_A2_Synth</defName>
 		<label>Configuration: Synthetic</label>
 		<description>Beep Boop I'm a synth</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
@@ -134,17 +142,18 @@
 		<biostatCpx>3</biostatCpx>
 		<biostatMet>0</biostatMet>
 		<moddable>false</moddable>
-
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 	
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
-		<defName>A2_DroidDiscount</defName>
+		<defName>VREA_A2_DroidDiscount</defName>
 		<label>mass produced</label>
 		<description>The robot's design is standardized, reducing the build costs involved in making this unit</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
 		<timeCost>0</timeCost>
+		<moddable>false</moddable>
 		<exclusionTags>
 			<li>A2_HardwareIntegration</li>
 		</exclusionTags>
@@ -155,7 +164,25 @@
 				<costMult>0.8</costMult>
 			</li>
 		</modExtensions>	
+		<displayCategory>VREA_Hardware</displayCategory>
+	</Androids2.A2GeneDef>
 
+	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
+		<defName>VREA_A2_ZeroFertility</defName>
+		<label>infertile</label>
+		<description>robots are infertile (duh)</description>
+		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>3</biostatCpx>
+		<biostatMet>0</biostatMet>
+		<moddable>false</moddable>
+		<statOffsets>
+			<Fertility>-10</Fertility>
+		</statOffsets>
+		<exclusionTags>
+			<li>A2_Fertility</li>
+		</exclusionTags>
+		<displayCategory>VREA_Hardware</displayCategory>
 	</Androids2.A2GeneDef>
 
 </Defs>

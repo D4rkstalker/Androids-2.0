@@ -5,8 +5,24 @@
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_MechFlesh"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
-			<ArmorRating_Sharp>2</ArmorRating_Sharp>
+			<ArmorRating_Sharp>5</ArmorRating_Sharp>
 			<ArmorRating_Blunt>1</ArmorRating_Blunt>
+		</statOffsets>
+	  </value>
+	</Operation>
+	 <Operation Class="PatchOperationReplace">
+	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_SynthWeave"]/statOffsets</xpath>
+	  <value>
+		<statOffsets>
+			<ArmorRating_Blunt>5</ArmorRating_Blunt>
+		</statOffsets>
+	  </value>
+	</Operation>
+	 <Operation Class="PatchOperationReplace">
+	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_ImpactGel"]/statOffsets</xpath>
+	  <value>
+		<statOffsets>
+			<ArmorRating_Blunt>15</ArmorRating_Blunt>
 		</statOffsets>
 	  </value>
 	</Operation>
@@ -14,7 +30,7 @@
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_HeavyArmor"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
-			<ArmorRating_Sharp>5</ArmorRating_Sharp>
+			<ArmorRating_Sharp>8</ArmorRating_Sharp>
 			<ArmorRating_Blunt>5</ArmorRating_Blunt>
 			<ArmorRating_Heat>0.25</ArmorRating_Heat>
 		</statOffsets>
@@ -24,7 +40,7 @@
 	  <xpath>Defs/Androids2.A2GeneDef[defName="A2_FortressArmor"]/statOffsets</xpath>
 	  <value>
 		<statOffsets>
-			<ArmorRating_Sharp>15</ArmorRating_Sharp>
+			<ArmorRating_Sharp>20</ArmorRating_Sharp>
 			<ArmorRating_Blunt>15</ArmorRating_Blunt>
 			<ArmorRating_Heat>0.25</ArmorRating_Heat>
 			<MeleeDamageFactor>0.25</MeleeDamageFactor>

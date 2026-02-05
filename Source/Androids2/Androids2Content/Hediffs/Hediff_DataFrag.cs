@@ -25,5 +25,21 @@ namespace Androids2
             pawn.health.hediffSet.DirtyCache();
             base.PostRemoved();
         }
+
+        public override void TickInterval(int delta)
+        {
+            base.TickInterval(delta);
+            if(pawn.Downed)
+            {
+                var reboot = pawn.health.hediffSet.GetFirstHediffOfDef(A2_Defof.A2_Reboot);
+                if (reboot == null)
+                {
+                    reboot = HediffMaker.MakeHediff(A2_Defof.A2_Reboot, pawn);
+                    reboot.Severity = 1f;
+                    pawn.health.AddHediff(reboot);
+                }
+                pawn.health.RemoveHediff(this);
+            }
+        }
     }
 }

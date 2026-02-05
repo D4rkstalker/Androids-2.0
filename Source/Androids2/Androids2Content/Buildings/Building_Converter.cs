@@ -26,11 +26,11 @@ namespace Androids2
         public ThingOwner innerContainer;
         public ConversionMode mode = ConversionMode.Convert;
         public Pawn newAndroid;
-
+        //JobDriver_HaulToContainer
         public Building_Converter()
         {
             innerContainer = new ThingOwner<Thing>(this, false, LookMode.Deep);
-            ingredients = new ThingOwner<Thing>(this, true, LookMode.Deep);
+            ingredients = new ThingOwner<Thing>(this, false, LookMode.Deep);
         }
         public bool HasAnyContents
         {
@@ -180,7 +180,7 @@ namespace Androids2
                 currentPawn.story.hairDef = null;
                 currentPawn.story.SkinColorBase = newAndroid.story.SkinColor;
                 currentPawn.RaceProps.body = newAndroid.RaceProps.body;
-
+               
                 // Check if AlienRace mod is loaded before performing alien-specific operations
                 if (AlienRaceCompat.HasAlienRace())
                 {
@@ -197,7 +197,7 @@ namespace Androids2
                 }
             }
 
-            AndroidMakerPatch.ApplyXenotype(currentPawn, recipe.xenotypeDef.genes, false, false, true);
+            AndroidMakerPatch.ApplyXenotype(currentPawn, newAndroid.genes.GenesListForReading.Select(g => g.def).ToList(), false, false, true);
 
             Open();
             ResetProcess();

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using VREAndroids;
-using static UnityEngine.TouchScreenKeyboard;
 
 namespace Androids2.VREPatches
 {
@@ -36,7 +35,7 @@ namespace Androids2.VREPatches
         {
             public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                __result = CanNaturallyRepair(hd.pawn);
+                __result = Helpers.CanNaturallyRepair(hd.pawn);
 
                 return __result;
             }
@@ -47,7 +46,7 @@ namespace Androids2.VREPatches
             [HarmonyPriority(int.MinValue)]
             public static bool Prefix(Hediff_Injury hd, ref bool __result)
             {
-                __result = CanNaturallyRepair(hd.pawn);
+                __result = Helpers.CanNaturallyRepair(hd.pawn);
 
                 return __result;
             }
@@ -67,13 +66,6 @@ namespace Androids2.VREPatches
                 }
                 return true;
             }
-        }
-        static bool CanNaturallyRepair(Pawn android)
-        {
-            if (!android.IsAndroid()) return true;
-            if (android.HasActiveGene(A2_Defof.VREA_A2_SynthFlesh)) return true;
-            if (android.HasActiveGene(A2_Defof.VREA_A2_ReconstructionMechanite)) return true;
-            return false;
         }
     }
 

@@ -46,7 +46,15 @@
 				<xpath>/Defs/ThingDef[defName="VREA_AndroidStand"]/designationCategory</xpath>
 			</li>
 			<li Class="PatchOperationRemove">
-				<xpath>/Defs/ThingDef[defName="VREA_AndroidStand"]/researchPrerequisites</xpath>
+				<xpath>/Defs/VREAndroids.AndroidGeneDef[defName="VREA_SyntheticBody"]/statFactors</xpath>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/VREAndroids.AndroidGeneDef[defName="VREA_SyntheticBody"]</xpath>
+				<value>
+				<statOffsets>
+							<Fertility>-100</Fertility>
+				</statOffsets>
+				</value>
 			</li>
 			<li Class="PatchOperationAdd">
 				<xpath>Defs/VREAndroids.AndroidGeneDef[defName="VREA_PsychicallyDeaf"]</xpath>

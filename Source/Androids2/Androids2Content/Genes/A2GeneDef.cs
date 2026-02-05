@@ -11,7 +11,7 @@ namespace Androids2
 {
     public class A2GeneDef : AndroidGeneDef
     {
-        public bool moddable;
+        public bool moddable = true;
         public List<ThingOrderRequest> costList = new List<ThingOrderRequest>();
         public int timeCost = 0;
         public float nutrition = 0;
