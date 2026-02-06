@@ -117,6 +117,8 @@
     <Compile Include="Androids2Content\Comps\A2Subcore.cs" />
     <Compile Include="Androids2Content\Comps\RepairGantryState.cs" />
     <Compile Include="Androids2Content\Genes\A2GeneDef.cs" />
+    <Compile Include="Androids2Content\Genes\Gene_SynthFlesh.cs" />
+    <Compile Include="Androids2Content\Genes\Gene_AuxMechanite.cs" />
     <Compile Include="Androids2Content\Genes\Gene_ReconstructionMechanites.cs" />
     <Compile Include="Androids2Content\Genes\HardwareIntegration.cs" />
     <Compile Include="Androids2Content\Genes\Gene_NeutroCatalyst.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="VREPatches\Patch_GeneUIUtility_DrawGenesInfo_Patch.cs" />
     <Compile Include="VREPatches\Patch_NeedMemory.cs" />
     <Compile Include="VREPatches\Patch_Psylink.cs" />
+    <Compile Include="VREPatches\Patch_RepairAndroid.cs" />
     <Compile Include="VREPatches\Patch_ShouldBeDead.cs" />
     <Compile Include="VREPatches\Patch_CanNaturallyHeal.cs" />
     <Compile Include="VREPatches\Patch_WorkGiver_Repair.cs" />

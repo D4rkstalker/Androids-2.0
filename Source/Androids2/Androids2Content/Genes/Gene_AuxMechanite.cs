@@ -4,7 +4,7 @@ using VREAndroids;
 
 namespace Androids2
 {
-    public class Gene_ReconstructionMechanites : Gene
+    public class Gene_AuxMechanite : Gene
     {
         private uint cycles_since_last_repair = 0;
         private bool has_synthflesh = false;
@@ -19,16 +19,16 @@ namespace Androids2
                     if (hediff is Hediff_Injury injury && injury.Bleeding)
                     {
                         injury.Tended(1f, 1f);
-                        
+                        return;
                     }
-                    else if (hediff is Hediff_MissingPart _injury)
+                    else if (has_synthflesh && hediff is Hediff_MissingPart _injury)
                     {
                         if(cycles_since_last_repair >= 10)
                         {
                             pawn.health.RestorePart(_injury.Part);
                             cycles_since_last_repair = 0;
+                            return;
                         }
-                        return;
                     }
                 }
                 cycles_since_last_repair++;

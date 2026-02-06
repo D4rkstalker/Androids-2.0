@@ -24,9 +24,10 @@
 		<biostatCpx>3</biostatCpx>
 		<timeCost>500</timeCost>
 		<nutrition>100</nutrition>
-		<costList>
-			<ComponentIndustrial>2</ComponentIndustrial>
-		</costList>
+		<geneClass>Androids2.Gene_SynthFlesh</geneClass>
+		<!-- <costList> -->
+			<!-- <ComponentIndustrial>2</ComponentIndustrial> -->
+		<!-- </costList> -->
 	</Androids2.A2GeneDef>
 
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
@@ -308,7 +309,7 @@
 		<defName>A2_AuxMechanite</defName>
 		<label>Auxiliary mechanite</label>
 		<description>[WIP] Allows robots to regenrate damage, and rapidly stops wounds leaking neutroamine. For robots with the synth flesh hardware, enables lost part regeneration</description>
-		<!-- <geneClass>Androids2.Gene_NeuralLock</geneClass> -->
+		<geneClass>Androids2.Gene_AuxMechanite</geneClass>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>
