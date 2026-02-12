@@ -46,7 +46,6 @@ namespace Androids2
                 return;
             }
 
-            Log.Warning("Unpatching backstories");
             Androids2.harmony.Unpatch(target, HarmonyPatchType.Prefix, "VREAndroidsMod");
 
 

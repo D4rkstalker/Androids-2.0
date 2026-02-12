@@ -339,8 +339,8 @@
 	</Androids2.A2GeneDef>
 	<Androids2.A2GeneDef ParentName="A2_ModdableHardware">
 		<defName>A2_Fertility</defName>
-		<label>artificial womb</label>
-		<description>life finds a way</description>
+		<label>synthetic fertility</label>
+		<description>life, uh, finds a way</description>
 		<iconPath>UI/Icons/Genes/Hardware/Gene_Power</iconPath>
 		<displayOrderInCategory>2</displayOrderInCategory>
 		<biostatCpx>3</biostatCpx>

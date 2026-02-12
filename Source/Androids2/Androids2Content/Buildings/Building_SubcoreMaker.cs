@@ -51,10 +51,8 @@ namespace Androids2
                         scanProgress.ToStringPercent()), Occupant, MessageTypeDefOf.PositiveEvent);
                     scannedPawns.Add(Occupant);
                     EjectContents();
-                    Log.Warning("Scan progress:" + scanProgress );
                     if (scanProgress >= 1)
                     {
-                        Log.Warning("Subcore Maker completed scan with pawns count: " + scannedPawns.Count);
                         A2Subcore subcore = (A2Subcore)ThingMaker.MakeThing(def.building.subcoreScannerOutputDef);
                         subcore.InitializeWithPawns(scannedPawns);
                         GenPlace.TryPlaceThing(subcore, InteractionCell, base.Map, ThingPlaceMode.Near);

@@ -17,7 +17,6 @@ namespace Androids2
         public List<SkillRecord> srs = new List<SkillRecord>();
         public void InitializeWithPawns(List<Pawn> pawns)
         {
-            Log.Warning("Initializing A2Subcore with " + pawns.Count + " pawns.");
             Dictionary<SkillDef,Passion> possiblePassions = new Dictionary<SkillDef, Passion>();
             foreach (var pawn in pawns)
             {
@@ -31,7 +30,6 @@ namespace Androids2
                 });
                 if(_p == Passion.None)
                 {
-                    Log.Warning("Pawn " + pawn.Name.ToStringFull + " has no passions. Skipping.");
                     continue;
                 }
                 pawn.skills.skills.ForEach(skill =>
@@ -51,7 +49,6 @@ namespace Androids2
                         }
                     }
                 });
-                Log.Warning("Pawn " + pawn.Name.ToStringFull + " contributed passions. Current possible passions count: " + possiblePassions.Count);
             }
             for(int i = 0; i< pawns.Count; i++)
             {
@@ -63,7 +60,6 @@ namespace Androids2
                     sr.passion = chosenSkill.value;
                     srs.Add(sr);
                     possiblePassions.Remove(chosenSkill.key);
-                    Log.Warning("Added skill " + sr.def.defName + " with passion " + sr.passion.ToString() + " to subcore.");
                 }
                 else 
                 {

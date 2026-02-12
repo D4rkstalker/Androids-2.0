@@ -157,7 +157,7 @@ namespace Androids2
 
             ingredients.ClearAndDestroyContents(0);
 
-            if (!currentPawn.IsAndroid())
+            if (mode == ConversionMode.Convert)
             {
                 for (int i = currentPawn.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
                 {
